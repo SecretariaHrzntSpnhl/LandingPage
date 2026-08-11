@@ -10,34 +10,39 @@ interface Props {
 
 const QUESTIONS = [
   {
-    q: 'Como se diz "obrigado" em espanhol?',
-    options: ['Por favor', 'Gracias', 'De nada'],
+    id: 1,
+    question: 'Qual é a tradução direta para a cor "vermelho" em espanhol?',
+    options: ['Azul', 'Rojo', 'Verde', 'Amarillo'],
     correct: 1,
-    explanation: '"Gracias" é a forma correta de dizer "obrigado" em espanhol.',
+    explanation: '"Rojo" é a tradução direta de "vermelho". "Azul" é azul, "verde" é verde e "amarillo" é amarelo.',
   },
   {
-    q: 'Qual é o número 5 em espanhol?',
-    options: ['Cuatro', 'Cinco', 'Seis'],
-    correct: 1,
-    explanation: '"Cinco" é o número 5 em espanhol.',
-  },
-  {
-    q: 'Que cor é "rojo" em português?',
-    options: ['Azul', 'Verde', 'Vermelho'],
+    id: 2,
+    question: 'O que você usa para tomar café?',
+    options: ['Vaso', 'Cuchara', 'Taza', 'Tenedor'],
     correct: 2,
-    explanation: '"Rojo" em espanhol significa "vermelho" em português.',
+    explanation: '"Taza" é a xícara. "Vaso" é o copo, "cuchara" é a colher e "tenedor" é o garfo.',
   },
   {
-    q: 'Qual é a forma correta de "Yo soy" para uma mulher?',
-    options: ['Yo soy', 'Yo so', 'Yo son'],
-    correct: 0,
-    explanation: '"Yo soy" é a forma correta para ambos os gêneros.',
+    id: 3,
+    question: 'O que você usa para tomar sopa?',
+    options: ['Vaso', 'Cuchara', 'Taza', 'Tenedor'],
+    correct: 1,
+    explanation: '"Cuchara" é a colher. "Vaso" é o copo, "taza" é a xícara e "tenedor" é o garfo.',
   },
   {
-    q: 'O que significa "adiós"?',
-    options: ['Tchau', 'Olá', 'Obrigado'],
+    id: 4,
+    question: 'O que você usa para assar um bolo?',
+    options: ['Sartén', 'Olla', 'Cacerola', 'Horno'],
+    correct: 3,
+    explanation: '"Horno" é o forno. "Sartén" é a frigideira, "olla" é a panela de pressão e "cacerola" é a panela funda.',
+  },
+  {
+    id: 5,
+    question: 'O que você diz quando alguém espirra?',
+    options: ['Salud', 'Gracias', 'Por favor', 'Perdón'],
     correct: 0,
-    explanation: '"Adiós" significa "tchau" em português.',
+    explanation: '"Salud" é o que se diz ao espirro. "Gracias" é obrigado, "por favor" é por favor e "perdón" é desculpa.',
   },
 ];
 
@@ -45,32 +50,37 @@ export default function Game1({ onComplete, isCompleted }: Props) {
   const [currentQ, setCurrentQ] = useState(0);
   const [selectedAns, setSelectedAns] = useState<string | null>(null);
   const [answers, setAnswers] = useState<GameAnswer[]>([]);
+  const [showSummary, setShowSummary] = useState(false);
+
+  const correctCount = answers.filter((item) => item.isCorrect).length;
+  const incorrectCount = answers.length - correctCount;
+
+  const resetLevel = () => {
+    setCurrentQ(0);
+    setAnswers([]);
+    setSelectedAns(null);
+    setShowSummary(false);
+  };
 
   const handleSelect = (opt: string) => {
-    if (selectedAns) return;
+    if (selectedAns || showSummary) return;
     setSelectedAns(opt);
 
     const isCorrect = QUESTIONS[currentQ].options.indexOf(opt) === QUESTIONS[currentQ].correct;
-    const nextAnswers = [...answers, { question: QUESTIONS[currentQ].q, isCorrect }];
+    const nextAnswers = [...answers, { question: QUESTIONS[currentQ].question, isCorrect }];
     setAnswers(nextAnswers);
 
-    if (isCorrect) {
-      playSound('success');
-      if ('vibrate' in navigator) navigator.vibrate(100);
+    playSound(isCorrect ? 'success' : 'error');
+    if ('vibrate' in navigator) navigator.vibrate(isCorrect ? 100 : [100, 50, 100]);
 
-      setTimeout(() => {
-        setSelectedAns(null);
-        if (currentQ < QUESTIONS.length - 1) {
-          setCurrentQ((c) => c + 1);
-        } else {
-          onComplete(nextAnswers, nextAnswers.filter((item) => item.isCorrect).length);
-        }
-      }, 1000);
-    } else {
-      playSound('error');
-      if ('vibrate' in navigator) navigator.vibrate([100, 50, 100]);
-      setTimeout(() => setSelectedAns(null), 1000);
-    }
+    setTimeout(() => {
+      setSelectedAns(null);
+      if (currentQ < QUESTIONS.length - 1) {
+        setCurrentQ((c) => c + 1);
+      } else {
+        setShowSummary(true);
+      }
+    }, 800);
   };
 
   if (isCompleted) {
@@ -83,9 +93,10 @@ export default function Game1({ onComplete, isCompleted }: Props) {
   }
 
   return (
-    <div className={styles.gameCard}>
-      <h3 className={styles.gameTitle}>Nível 1 · Primeiros Passos</h3>
-      <p className={styles.questionText}>{QUESTIONS[currentQ].q}</p>
+    <>
+      <div className={styles.gameCard}>
+      <h3 className={styles.gameTitle}>Nível 1 · Objetos e Cores</h3>
+      <p className={styles.questionText}>{QUESTIONS[currentQ].question}</p>
 
       <div className={styles.optionsGrid}>
         {QUESTIONS[currentQ].options.map((opt) => (
@@ -99,6 +110,42 @@ export default function Game1({ onComplete, isCompleted }: Props) {
           </button>
         ))}
       </div>
-    </div>
-  );
+      </div>
+
+      {showSummary && (
+        <div className={styles.finishModalOverlay}>
+          <div className={styles.finishModalContent}>
+            <h3 className={styles.finishModalTitle}>¡Excelente!</h3>
+            <p className={styles.finishModalText}>
+              Você terminou o módulo com {correctCount} acertos e {incorrectCount} erros.
+            </p>
+            <div className={styles.summaryStats}>
+              <div className={styles.summaryStat}>✅ Acertos: {correctCount}</div>
+              <div className={styles.summaryStat}>❌ Erros: {incorrectCount}</div>
+            </div>
+            <a
+              className={styles.whatsappLink}
+              href="https://api.whatsapp.com/send/?phone=5549998212897&text=Ol%C3%A1%2C%20gostaria%20de%20aprender%20mais%20espanhol!"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              📲 Aprender mais no WhatsApp
+            </a>
+            <div className={styles.finishModalButtons}>
+              <button type="button" className={styles.finishModalBtn} onClick={resetLevel}>
+                Tentar novamente
+              </button>
+              <button
+                type="button"
+                className={styles.finishModalBtn}
+                onClick={() => onComplete(answers, correctCount)}
+              >
+                Finalizar desafio
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+    </>
+ );
 }

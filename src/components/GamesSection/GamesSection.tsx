@@ -18,7 +18,7 @@ type GameMeta = {
 };
 
 const GAMES: GameMeta[] = [
-  { level: 1, title: 'Primeiros Passos', subtitle: 'Saudações, números e vocabulário cotidiano.' },
+  { level: 1, title: 'Objetos e Cores', subtitle: 'Você sabe o nome dos objetos e das cores em espanhol?' },
   { level: 2, title: 'Descrevendo o Mundo', subtitle: 'Descrição, rotina e uso de verbos básicos.' },
   { level: 3, title: 'Contando Histórias', subtitle: 'Experiências e conectores para narrar.' },
   { level: 4, title: 'Narrativas e Opiniões', subtitle: 'Estruturas mais avançadas e organização de ideias.' },

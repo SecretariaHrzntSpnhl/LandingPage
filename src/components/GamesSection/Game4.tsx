@@ -17,21 +17,6 @@ function shuffleArray<T>(array: T[]) {
   return copy;
 }
 
-function getWeeklyReloadMessage() {
-  const now = new Date();
-  const day = now.getDay();
-  const hour = now.getHours();
-
-  const isMondayBeforeReload = day === 1 && hour < 10;
-  const daysUntilNextMonday = isMondayBeforeReload ? 0 : ((8 - day) % 7) || 7;
-
-  if (daysUntilNextMonday === 0) {
-    return 'Faltam 0 dias para novos jogos - chegam hoje!';
-  }
-
-  return `Faltam ${daysUntilNextMonday} dias para novos jogos.`;
-}
-
 const QUESTIONS = [
   {
     words: ['Cuando', 'era', 'niño', 'vivía', 'en', 'un', 'pueblo', 'pequeño.'],
@@ -67,8 +52,9 @@ export default function Game4({ onComplete, isCompleted }: Props) {
   const [answers, setAnswers] = useState<GameAnswer[]>([]);
   const [shuffledWords, setShuffledWords] = useState<string[]>([]);
   const [completionModalVisible, setCompletionModalVisible] = useState(false);
-  const [completionCountdown, setCompletionCountdown] = useState(15);
-  const [pendingResult, setPendingResult] = useState<{ answers: GameAnswer[]; correctCount: number } | null>(null);
+
+  const correctCount = answers.filter((item) => item.isCorrect).length;
+  const incorrectCount = answers.length - correctCount;
 
   useEffect(() => {
     setShuffledWords(shuffleArray(QUESTIONS[currentQ].words));
@@ -76,26 +62,6 @@ export default function Game4({ onComplete, isCompleted }: Props) {
     setStatus('idle');
   }, [currentQ]);
 
-  useEffect(() => {
-    if (!completionModalVisible) return;
-
-    setCompletionCountdown(15);
-    const interval = setInterval(() => {
-      setCompletionCountdown((count) => Math.max(0, count - 1));
-    }, 1000);
-
-    const timeout = setTimeout(() => {
-      if (pendingResult) {
-        setCompletionModalVisible(false);
-        onComplete(pendingResult.answers, pendingResult.correctCount);
-      }
-    }, 15000);
-
-    return () => {
-      clearInterval(interval);
-      clearTimeout(timeout);
-    };
-  }, [completionModalVisible, onComplete, pendingResult]);
 
   const handleWordClick = (word: string) => {
     if (status !== 'idle') return;
@@ -107,52 +73,34 @@ export default function Game4({ onComplete, isCompleted }: Props) {
     setSelectedWords(selectedWords.filter((_, i) => i !== index));
   };
 
-  const resetGame = () => {
+  const resetLevel = () => {
     setCurrentQ(0);
     setSelectedWords([]);
     setAnswers([]);
     setStatus('idle');
     setShuffledWords(shuffleArray(QUESTIONS[0].words));
     setCompletionModalVisible(false);
-    setPendingResult(null);
   };
-
-  const handleContinue = () => {
-    if (pendingResult) {
-      setCompletionModalVisible(false);
-      onComplete(pendingResult.answers, pendingResult.correctCount);
-    }
-  };
-
-  const weeklyReloadMessage = getWeeklyReloadMessage();
 
   const checkAnswer = () => {
+    if (status !== 'idle') return;
+
     const currentAns = selectedWords.join(' ').toLowerCase();
     const isCorrect = currentAns === QUESTIONS[currentQ].expected.toLowerCase();
     const nextAnswers = [...answers, { question: QUESTIONS[currentQ].expected, isCorrect }];
     setAnswers(nextAnswers);
+    setStatus(isCorrect ? 'correct' : 'incorrect');
+    playSound(isCorrect ? 'success' : 'error');
 
-    if (isCorrect) {
-      setStatus('correct');
-      playSound('success');
-      setTimeout(() => {
-        setStatus('idle');
-        setSelectedWords([]);
-        if (currentQ < QUESTIONS.length - 1) {
-          setCurrentQ((c) => c + 1);
-        } else {
-          setPendingResult({
-            answers: nextAnswers,
-            correctCount: nextAnswers.filter((item) => item.isCorrect).length,
-          });
-          setCompletionModalVisible(true);
-        }
-      }, 1500);
-    } else {
-      setStatus('incorrect');
-      playSound('error');
-      setTimeout(() => setStatus('idle'), 1500);
-    }
+    setTimeout(() => {
+      setStatus('idle');
+      setSelectedWords([]);
+      if (currentQ < QUESTIONS.length - 1) {
+        setCurrentQ((c) => c + 1);
+      } else {
+        setCompletionModalVisible(true);
+      }
+    }, 1200);
   };
 
   if (isCompleted) {
@@ -188,29 +136,35 @@ export default function Game4({ onComplete, isCompleted }: Props) {
         ))}
       </div>
 
-      <button onClick={checkAnswer} disabled={status !== 'idle' || selectedWords.length !== QUESTIONS[currentQ].words.length} className={styles.nextBtn} style={{ width: '100%' }}>
+      <button onClick={checkAnswer} disabled={status !== 'idle'} className={styles.nextBtn} style={{ width: '100%' }}>
         Verificar Frase
       </button>
 
-      {completionModalVisible && pendingResult && (
+      {completionModalVisible && (
         <div className={styles.finishModalOverlay}>
           <div className={styles.finishModalContent}>
-            <h3 className={styles.finishModalTitle}>¡Felicidades!</h3>
+            <h3 className={styles.finishModalTitle}>¡Excelente!</h3>
             <p className={styles.finishModalText}>
-              Você completou o nível 4 com sucesso.
+              Você terminou o módulo com {correctCount} acertos e {incorrectCount} erros.
             </p>
-            <p className={styles.finishModalText}>
-              {weeklyReloadMessage}
-            </p>
-            <p className={styles.finishModalText}>
-              O modal fecha em {completionCountdown} segundos.
-            </p>
+            <div className={styles.summaryStats}>
+              <div className={styles.summaryStat}>✅ Acertos: {correctCount}</div>
+              <div className={styles.summaryStat}>❌ Erros: {incorrectCount}</div>
+            </div>
+            <a
+              className={styles.whatsappLink}
+              href="https://api.whatsapp.com/send/?phone=5549998212897&text=Ol%C3%A1%2C%20gostaria%20de%20aprender%20mais%20espanhol!"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              📲 Aprender mais no WhatsApp
+            </a>
             <div className={styles.finishModalButtons}>
-              <button onClick={resetGame} className={styles.finishModalBtn} type="button">
-                Refazer este nível
+              <button onClick={resetLevel} className={styles.finishModalBtn} type="button">
+                Tentar novamente
               </button>
-              <button onClick={handleContinue} className={styles.finishModalBtn} type="button">
-                Concluir
+              <button onClick={() => onComplete(answers, correctCount)} className={styles.finishModalBtn} type="button">
+                Finalizar desafio
               </button>
             </div>
           </div>
