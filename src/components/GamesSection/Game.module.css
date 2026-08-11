@@ -112,7 +112,7 @@
 .finishModalTitle {
   margin-bottom: 10px;
   font-size: clamp(1.8rem, 3vw, 2.2rem);
-  color: #0f172a;
+  color: #0b1f3d;
 }
 
 .finishModalText {
@@ -120,7 +120,7 @@
   max-width: 420px;
   font-size: 1rem;
   line-height: 1.7;
-  color: #1f2e40;
+  color: #0f2f5b;
 }
 
 .summaryStats {
