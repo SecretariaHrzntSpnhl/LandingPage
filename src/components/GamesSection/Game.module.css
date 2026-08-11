@@ -76,7 +76,7 @@
 .finishModalOverlay {
   position: fixed;
   inset: 0;
-  background: rgba(4, 21, 45, 0.85);
+  background: rgba(15, 23, 42, 0.88);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -85,19 +85,62 @@
 }
 
 .finishModalContent {
-  background: rgba(253, 248, 239, 0.98);
+  background: #ffffff;
   color: #0f172a;
-  border-radius: 24px;
-  padding: var(--section-container-padding);
+  border-radius: 28px;
+  padding: calc(var(--section-container-padding) + 10px);
   max-width: 520px;
   width: 100%;
   text-align: center;
-  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 40px 90px rgba(15, 23, 42, 0.18);
+  border: 1px solid rgba(15, 23, 42, 0.08);
 }
 
 .finishModalTitle {
   margin-bottom: 14px;
   font-size: 2rem;
+  color: var(--yellow-horizon);
+}
+
+.finishModalText {
+  margin-bottom: 22px;
+  font-size: 1rem;
+  line-height: 1.7;
+  color: rgba(15, 23, 42, 0.9);
+}
+
+.finishModalButtons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.finishModalBtn {
+  background: #f3f4f6;
+  color: #0f172a;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 999px;
+  font-weight: 700;
+  min-width: 160px;
+  transition: transform 0.18s ease, box-shadow 0.18s ease, background-color 0.18s ease;
+}
+
+.finishModalBtn:hover {
+  background: #e2e8f0;
+  transform: translateY(-1px);
+}
+
+.primaryBtn {
+  background: var(--button-accent-bg);
+  color: var(--button-accent-text);
+  box-shadow: 0 10px 30px rgba(59, 130, 246, 0.18);
+}
+
+.primaryBtn:hover {
+  background: var(--button-accent-hover);
 }
 
 .finishModalText {

@@ -137,14 +137,14 @@ export default function Game5({ onComplete, isCompleted }: Props) {
             </a>
             <div className={styles.finishModalButtons}>
               <button type="button" className={styles.finishModalBtn} onClick={resetLevel}>
-                Tentar novamente
+                Repetir nivel
               </button>
               <button
                 type="button"
-                className={styles.finishModalBtn}
+                className={`${styles.finishModalBtn} ${styles.primaryBtn}`}
                 onClick={() => onComplete(answers, correctCount)}
               >
-                Finalizar desafio
+                Ver resultados
               </button>
             </div>
           </div>

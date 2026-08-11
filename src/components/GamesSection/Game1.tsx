@@ -132,15 +132,15 @@ export default function Game1({ onComplete, isCompleted }: Props) {
               📲 Aprender mais no WhatsApp
             </a>
             <div className={styles.finishModalButtons}>
-              <button type="button" className={styles.finishModalBtn} onClick={resetLevel}>
-                Tentar novamente
+                <button type="button" className={styles.finishModalBtn} onClick={resetLevel}>
+                  Repetir nivel
               </button>
               <button
                 type="button"
-                className={styles.finishModalBtn}
+                  className={`${styles.finishModalBtn} ${styles.primaryBtn}`}
                 onClick={() => onComplete(answers, correctCount)}
               >
-                Finalizar desafio
+                  Seguir al próximo nivel 2
               </button>
             </div>
           </div>

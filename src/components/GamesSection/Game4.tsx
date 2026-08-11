@@ -161,10 +161,10 @@ export default function Game4({ onComplete, isCompleted }: Props) {
             </a>
             <div className={styles.finishModalButtons}>
               <button onClick={resetLevel} className={styles.finishModalBtn} type="button">
-                Tentar novamente
+                Repetir nivel
               </button>
-              <button onClick={() => onComplete(answers, correctCount)} className={styles.finishModalBtn} type="button">
-                Finalizar desafio
+              <button onClick={() => onComplete(answers, correctCount)} className={`${styles.finishModalBtn} ${styles.primaryBtn}`} type="button">
+                Seguir al próximo nivel 5
               </button>
             </div>
           </div>
