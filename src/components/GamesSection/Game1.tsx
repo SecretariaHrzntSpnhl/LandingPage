@@ -129,7 +129,7 @@ export default function Game1({ onComplete, isCompleted }: Props) {
               target="_blank"
               rel="noopener noreferrer"
             >
-              📲 Aprender mais no WhatsApp
+              🟢 Aprender mais...
             </a>
             <div className={styles.finishModalButtons}>
                 <button type="button" className={styles.finishModalBtn} onClick={resetLevel}>

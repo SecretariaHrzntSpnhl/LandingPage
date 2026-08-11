@@ -157,7 +157,7 @@ export default function Game4({ onComplete, isCompleted }: Props) {
               target="_blank"
               rel="noopener noreferrer"
             >
-              📲 Aprender mais no WhatsApp
+              🟢 Aprender mais...
             </a>
             <div className={styles.finishModalButtons}>
               <button onClick={resetLevel} className={styles.finishModalBtn} type="button">
