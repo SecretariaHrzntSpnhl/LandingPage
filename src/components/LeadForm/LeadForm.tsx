@@ -114,7 +114,7 @@ export default function LeadForm() {
           <p>Preencha o formulário abaixo e receba um atendimento personalizado da nossa equipe acadêmica.</p>
         </div>
         
-        <form className={styles.form} onSubmit={handleSubmit} data-netlify="true" name="consulta-directa">
+        <form className={styles.form} onSubmit={handleSubmit} data-netlify="true" name="consulta-directa" method="POST" action="/">
           <input type="hidden" name="form-name" value="consulta-directa" />
           
           <div className={styles.formGroup}>
