@@ -88,6 +88,16 @@ export function calculateStats(gameHistory: Record<string, GameResult>): TotalSt
   };
 }
 
+export function getUnlockedLevel(gameHistory: Record<string, GameResult>): number {
+  let unlockedLevel = 1;
+
+  while (unlockedLevel <= 5 && gameHistory[`game${unlockedLevel}`]?.completed) {
+    unlockedLevel += 1;
+  }
+
+  return unlockedLevel;
+}
+
 export function loadProgress(): ProgressData {
   if (typeof window === 'undefined') {
     return createEmptyProgress();

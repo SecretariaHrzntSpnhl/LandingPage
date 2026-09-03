@@ -9,7 +9,7 @@ import Game5 from './Game5';
 import RegistrationModal from './RegistrationModal';
 import { fireConfetti } from '../../utils/confetti';
 import { playSound } from '../../utils/sound';
-import { calculateStats, loadProgress, saveProgress, type GameResult, type ProgressData } from './gameStorage';
+import { calculateStats, getUnlockedLevel, loadProgress, saveProgress, type GameResult, type ProgressData } from './gameStorage';
 
 type GameMeta = {
   level: number;
@@ -26,7 +26,7 @@ const GAMES: GameMeta[] = [
 ];
 
 export default function GamesSection() {
-  const [unlockedLevel, setUnlockedLevel] = useState(0);
+  const [unlockedLevel, setUnlockedLevel] = useState(() => getUnlockedLevel(loadProgress().gameHistory));
   const [showModal, setShowModal] = useState(false);
   const [progress, setProgress] = useState<ProgressData>(() => loadProgress());
   const [showResults, setShowResults] = useState(false);
@@ -41,7 +41,7 @@ export default function GamesSection() {
 
   const handleRegistrationSuccess = () => {
     setShowModal(false);
-    setUnlockedLevel(1);
+    setUnlockedLevel((current) => Math.max(current, 1));
     playSound('success');
     fireConfetti();
   };
@@ -203,9 +203,9 @@ export default function GamesSection() {
       </div>
 
       {showModal && (
-        <RegistrationModal 
-          onClose={() => setShowModal(false)} 
-          onSuccess={handleRegistrationSuccess} 
+        <RegistrationModal
+          onClose={() => setShowModal(false)}
+          onSuccess={handleRegistrationSuccess}
         />
       )}
     </section>

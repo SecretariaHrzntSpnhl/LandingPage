@@ -25,7 +25,7 @@ const QUESTIONS = [
   },
   {
     q: '"Cuando era niño, yo ____ (vivir) en un pueblo pequeño."',
-    verb: 'vivir',    tense: 'Pretérito imperfecto',    a: 'vivía',
+    verb: 'vivir', tense: 'Pretérito imperfecto', a: 'vivía',
     explanation: '"Cuando era niño" descreve hábito ou contexto no passado, usa-se o Pretérito Imperfeito "vivía".',
   },
   {
@@ -43,6 +43,14 @@ const QUESTIONS = [
     explanation: '"Alguna vez" refere-se a uma experiência de vida, usa-se o Pretérito Perfeito "has visitado".',
   },
 ];
+
+const normalizeAnswer = (answer: string) =>
+  answer
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase()
+    .trim()
+    .replace(/\s+/g, ' ');
 
 export default function Game3({ onComplete, isCompleted }: Props) {
   const [currentQ, setCurrentQ] = useState(0);
@@ -64,8 +72,8 @@ export default function Game3({ onComplete, isCompleted }: Props) {
 
   const checkAnswer = () => {
     if (status !== 'idle') return;
-    const normalized = inputVal.toLowerCase().trim();
-    const isCorrect = normalized === QUESTIONS[currentQ].a;
+    const normalized = normalizeAnswer(inputVal);
+    const isCorrect = normalized === normalizeAnswer(QUESTIONS[currentQ].a);
     const nextAnswers = [...answers, { question: QUESTIONS[currentQ].q, isCorrect }];
     setAnswers(nextAnswers);
     setStatus(isCorrect ? 'correct' : 'incorrect');

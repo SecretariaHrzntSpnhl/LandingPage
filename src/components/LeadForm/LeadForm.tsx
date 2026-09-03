@@ -76,7 +76,7 @@ const PHONE_OPTIONS = [
 ];
 
 export default function LeadForm() {
-  const [status, setStatus] = useState<'idle' | 'submitting' | 'success'>('idle');
+  const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
   const [selectedCountry, setSelectedCountry] = useState(PHONE_OPTIONS[0].code);
 
   const selectedCountryData = PHONE_OPTIONS.find((option) => option.code === selectedCountry) ?? PHONE_OPTIONS[0];
@@ -84,7 +84,7 @@ export default function LeadForm() {
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
     setStatus('submitting');
-    
+
     const form = e.target as HTMLFormElement;
     const formData = new FormData(form);
 
@@ -93,7 +93,11 @@ export default function LeadForm() {
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
       body: new URLSearchParams(formData as any).toString()
     })
-      .then(() => {
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`Form submission failed with status ${response.status}`);
+        }
+
         setStatus('success');
         playSound('success');
         form.reset();
@@ -102,7 +106,7 @@ export default function LeadForm() {
       .catch((error) => {
         console.error(error);
         playSound('error');
-        setStatus('idle');
+        setStatus('error');
       });
   };
 
@@ -113,10 +117,10 @@ export default function LeadForm() {
           <h2>Dê o próximo passo na sua carreira</h2>
           <p>Preencha o formulário abaixo e receba um atendimento personalizado da nossa equipe acadêmica.</p>
         </div>
-        
+
         <form className={styles.form} onSubmit={handleSubmit} data-netlify="true" name="consulta-directa" method="POST" action="/">
           <input type="hidden" name="form-name" value="consulta-directa" />
-          
+
           <div className={styles.formGroup}>
             <input type="text" name="nome" placeholder="Nombre" required />
           </div>
@@ -156,10 +160,11 @@ export default function LeadForm() {
           <div className={styles.formGroup}>
             <textarea name="consulta" placeholder="Consulta" required rows={4}></textarea>
           </div>
-          
+
           <button type="submit" className={styles.submitBtn} disabled={status === 'submitting'}>
-            {status === 'submitting' ? 'Enviando...' : status === 'success' ? 'Enviado!' : 'Enviar consulta'}
+            {status === 'submitting' ? 'Enviando...' : status === 'success' ? 'Enviado!' : status === 'error' ? 'Tentar novamente' : 'Enviar consulta'}
           </button>
+          {status === 'error' && <p role="alert">Não foi possível enviar agora. Tente novamente.</p>}
         </form>
       </div>
     </section>
