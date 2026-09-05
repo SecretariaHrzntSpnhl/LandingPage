@@ -37,7 +37,7 @@
   align-items: center;
   margin-top: clamp(10px, 2vw, 18px);
   will-change: transform;
-  transform: translateX(var(--track-offset, 0px));
+  transform: translate3d(var(--track-offset, 0px), 0, 0);
   cursor: grab;
   user-select: none;
   -webkit-user-select: none;

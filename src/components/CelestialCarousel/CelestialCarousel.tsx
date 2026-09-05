@@ -28,6 +28,17 @@ export default function CelestialCarousel() {
     return normalized > 0 ? normalized - loopWidth : normalized;
   };
 
+  const advancePosition = (value: number, distance: number) => {
+    const loopWidth = loopWidthRef.current;
+
+    if (loopWidth <= 0) {
+      return value - distance;
+    }
+
+    const nextPosition = value - distance;
+    return nextPosition <= -loopWidth ? nextPosition + loopWidth : nextPosition;
+  };
+
   useEffect(() => {
     if (!containerRef.current || !trackRef.current) {
       return;
@@ -45,7 +56,11 @@ export default function CelestialCarousel() {
         return;
       }
 
-      loopWidthRef.current = firstDuplicate.getBoundingClientRect().left - firstSlide.getBoundingClientRect().left;
+      const nextLoopWidth = firstDuplicate.getBoundingClientRect().left - firstSlide.getBoundingClientRect().left;
+      if (nextLoopWidth > 0 && loopWidthRef.current > 0 && nextLoopWidth !== loopWidthRef.current) {
+        position = normalizePosition(position * (nextLoopWidth / loopWidthRef.current));
+      }
+      loopWidthRef.current = nextLoopWidth;
     };
 
     const applyPosition = () => {
@@ -54,7 +69,7 @@ export default function CelestialCarousel() {
 
     const animate = () => {
       if (!dragStateRef.current.active) {
-        position = normalizePosition(position - 1.35);
+        position = advancePosition(position, 1.35);
         applyPosition();
       }
 
@@ -97,7 +112,7 @@ export default function CelestialCarousel() {
 
     const animate = () => {
       if (!dragStateRef.current.active) {
-        position = normalizePosition(position - 1.35);
+        position = advancePosition(position, 1.35);
         container.style.setProperty('--track-offset', `${position}px`);
       }
 
@@ -182,8 +197,8 @@ export default function CelestialCarousel() {
         onPointerUp={handlePointerUp}
         onPointerCancel={handlePointerUp}
       >
-        {/* Duplicate the array to create an infinite scroll illusion */}
-        {[...IMAGES, ...IMAGES].map((src, idx) => (
+        {/* Keep a third copy so the loop seam never exposes the empty track area. */}
+        {[...IMAGES, ...IMAGES, ...IMAGES].map((src, idx) => (
           <div key={idx} className={styles.slide}>
             <div className={styles.imagePlaceholder} style={{ backgroundImage: `url(${src})` }} />
           </div>

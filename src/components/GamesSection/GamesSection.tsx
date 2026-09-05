@@ -52,12 +52,26 @@ export default function GamesSection() {
       return;
     }
 
-    if (unlockedLevel > 1 && unlockedLevel < 6) {
-      document.querySelector(`[data-level-card="${unlockedLevel}"]`)?.scrollIntoView({
-        behavior: 'smooth',
-        block: 'center',
-      });
+    if (unlockedLevel <= 1 || unlockedLevel >= 6) {
+      return;
     }
+
+    let secondFrame = 0;
+    const firstFrame = window.requestAnimationFrame(() => {
+      secondFrame = window.requestAnimationFrame(() => {
+        const nextCard = document.querySelector<HTMLElement>(`[data-level-card="${unlockedLevel}"]`);
+        if (!nextCard) return;
+
+        const cardTop = window.scrollY + nextCard.getBoundingClientRect().top;
+        const centeredTop = cardTop - Math.max((window.innerHeight - nextCard.offsetHeight) / 2, 96);
+        window.scrollTo({ top: Math.max(0, centeredTop), behavior: 'smooth' });
+      });
+    });
+
+    return () => {
+      window.cancelAnimationFrame(firstFrame);
+      window.cancelAnimationFrame(secondFrame);
+    };
   }, [unlockedLevel]);
 
   const handleRegistrationSuccess = () => {
