@@ -368,6 +368,16 @@
     perspective: 1400px;
   }
 
+  .deckStackActive {
+    row-gap: var(--space-5);
+    perspective: none;
+  }
+
+  .deckStackActive .levelCard {
+    margin-top: 0;
+    transform: none !important;
+  }
+
   .levelCard {
     width: 100%;
     margin-top: -76px;

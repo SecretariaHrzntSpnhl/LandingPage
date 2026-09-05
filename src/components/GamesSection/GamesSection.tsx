@@ -116,6 +116,7 @@ export default function GamesSection() {
 
   const progressLevel = unlockedLevel === 0 ? 1 : Math.min(unlockedLevel, 5);
   const completedGames = Math.min(progress.totalStats.completedGames, GAMES.length);
+  const hasActiveGame = unlockedLevel > 0 && unlockedLevel < 6;
   const resultMessage = progress.totalStats.overallPercentage >= 80
     ? 'Você já construiu uma base excelente. Continue praticando para transformar esse avanço em fluência real.'
     : progress.totalStats.overallPercentage >= 60
@@ -146,7 +147,7 @@ export default function GamesSection() {
                 ))}
                 <span className={styles.constellationLine} aria-hidden="true" />
               </div>
-              <div className={styles.deckStack}>
+              <div className={`${styles.deckStack} ${hasActiveGame ? styles.deckStackActive : ''}`}>
               {GAMES.map((game) => {
                 const isCompleted = unlockedLevel > game.level;
                 const isCurrent = game.level === progressLevel;
