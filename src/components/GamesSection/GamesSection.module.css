@@ -23,9 +23,20 @@
   accent-color: var(--yellow-horizon);
 }
 
+.modalContent .consent {
+  gap: 0.7rem;
+  margin: 0.2rem 0 0.35rem;
+  color: #475569;
+}
+
+.modalContent .consent span {
+  flex: 1;
+}
+
 .termsLink {
   display: inline;
   min-height: auto;
+  margin-left: 0.2rem;
   padding: 0;
   border: 0;
   background: transparent;
@@ -34,6 +45,10 @@
   font-weight: 700;
   text-decoration: underline;
   cursor: pointer;
+}
+
+.modalContent .consent + .submitModalBtn {
+  margin-top: 0.35rem;
 }
 
 .termsOverlay {
