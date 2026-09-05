@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import styles from './Game.module.css';
 import { playSound } from '../../utils/sound';
 import type { GameAnswer } from './gameStorage';
+import { clearGameSession, loadGameSession, saveGameSession } from './gameSession';
 
 interface Props {
   onComplete: (answers: GameAnswer[], correctCount: number) => void;
@@ -41,19 +42,23 @@ const QUESTIONS = [
 ];
 
 export default function Game4({ onComplete, isCompleted }: Props) {
-  const [currentQ, setCurrentQ] = useState(0);
-  const [selectedWords, setSelectedWords] = useState<string[]>([]);
+  const savedSession = loadGameSession(4, { currentQ: 0, selectedWords: [] as string[], answers: [] as GameAnswer[], completionModalVisible: false });
+  const [currentQ, setCurrentQ] = useState(Math.min(savedSession.answers.length, QUESTIONS.length - 1));
+  const [selectedWords, setSelectedWords] = useState<string[]>(savedSession.selectedWords);
   const [status, setStatus] = useState<'idle' | 'correct' | 'incorrect'>('idle');
-  const [answers, setAnswers] = useState<GameAnswer[]>([]);
+  const [answers, setAnswers] = useState<GameAnswer[]>(savedSession.answers);
   const [shuffledWords, setShuffledWords] = useState<string[]>([]);
-  const [completionModalVisible, setCompletionModalVisible] = useState(false);
+  const [completionModalVisible, setCompletionModalVisible] = useState(savedSession.completionModalVisible || savedSession.answers.length >= QUESTIONS.length);
 
   const correctCount = answers.filter((item) => item.isCorrect).length;
   const incorrectCount = answers.length - correctCount;
 
   useEffect(() => {
+    saveGameSession(4, { currentQ, selectedWords, answers, completionModalVisible });
+  }, [currentQ, selectedWords, answers, completionModalVisible]);
+
+  useEffect(() => {
     setShuffledWords(shuffleArray(QUESTIONS[currentQ].words));
-    setSelectedWords([]);
     setStatus('idle');
   }, [currentQ]);
 
@@ -69,6 +74,7 @@ export default function Game4({ onComplete, isCompleted }: Props) {
   };
 
   const resetLevel = () => {
+    clearGameSession(4);
     setCurrentQ(0);
     setSelectedWords([]);
     setAnswers([]);

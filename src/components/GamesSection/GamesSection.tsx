@@ -10,6 +10,7 @@ import RegistrationModal from './RegistrationModal';
 import { fireConfetti } from '../../utils/confetti';
 import { playSound } from '../../utils/sound';
 import { calculateStats, createEmptyProgress, getUnlockedLevel, loadProgress, saveProgress, type GameResult, type ProgressData } from './gameStorage';
+import { clearGameSession } from './gameSession';
 
 type GameMeta = {
   level: number;
@@ -53,6 +54,7 @@ export default function GamesSection() {
   };
 
   const handleLevelComplete = (level: number, answers: GameResult['answers'], correctCount: number) => {
+    clearGameSession(level);
     const nextEntry: GameResult = {
       gameId: level,
       completed: true,
@@ -87,6 +89,9 @@ export default function GamesSection() {
   };
 
   const handleReplay = () => {
+    for (let level = 1; level <= 5; level += 1) {
+      clearGameSession(level);
+    }
     setProgress({ ...createEmptyProgress(), registered: true });
     setUnlockedLevel(1);
     setShowResults(false);

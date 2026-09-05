@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import styles from './Game.module.css';
 import { playSound } from '../../utils/sound';
 import { shuffleArray, type GameAnswer } from './gameStorage';
+import { clearGameSession, loadGameSession, saveGameSession } from './gameSession';
 
 interface Props {
   onComplete: (answers: GameAnswer[], correctCount: number) => void;
@@ -42,20 +43,26 @@ const QUESTIONS = [
 ];
 
 export default function Game2({ onComplete, isCompleted }: Props) {
-  const [currentQ, setCurrentQ] = useState(0);
+  const savedSession = loadGameSession(2, { currentQ: 0, answers: [] as GameAnswer[], showSummary: false });
+  const [currentQ, setCurrentQ] = useState(Math.min(savedSession.answers.length, QUESTIONS.length - 1));
   const [selectedAns, setSelectedAns] = useState<string | null>(null);
-  const [answers, setAnswers] = useState<GameAnswer[]>([]);
-  const [showSummary, setShowSummary] = useState(false);
+  const [answers, setAnswers] = useState<GameAnswer[]>(savedSession.answers);
+  const [showSummary, setShowSummary] = useState(savedSession.showSummary || savedSession.answers.length >= QUESTIONS.length);
   const [shuffledOptions, setShuffledOptions] = useState<string[]>([]);
 
   const correctCount = answers.filter((item) => item.isCorrect).length;
   const incorrectCount = answers.length - correctCount;
 
   useEffect(() => {
+    saveGameSession(2, { currentQ, answers, showSummary });
+  }, [currentQ, answers, showSummary]);
+
+  useEffect(() => {
     setShuffledOptions(shuffleArray(QUESTIONS[currentQ].options));
   }, [currentQ]);
 
   const resetLevel = () => {
+    clearGameSession(2);
     setCurrentQ(0);
     setAnswers([]);
     setSelectedAns(null);

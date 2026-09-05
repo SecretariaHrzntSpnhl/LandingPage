@@ -1,7 +1,8 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import styles from './Game.module.css';
 import { playSound } from '../../utils/sound';
 import type { GameAnswer } from './gameStorage';
+import { clearGameSession, loadGameSession, saveGameSession } from './gameSession';
 
 interface Props {
   onComplete: (answers: GameAnswer[], correctCount: number) => void;
@@ -47,15 +48,21 @@ const QUESTIONS = [
 ];
 
 export default function Game1({ onComplete, isCompleted }: Props) {
-  const [currentQ, setCurrentQ] = useState(0);
+  const savedSession = loadGameSession(1, { currentQ: 0, answers: [] as GameAnswer[], showSummary: false });
+  const [currentQ, setCurrentQ] = useState(Math.min(savedSession.answers.length, QUESTIONS.length - 1));
   const [selectedAns, setSelectedAns] = useState<string | null>(null);
-  const [answers, setAnswers] = useState<GameAnswer[]>([]);
-  const [showSummary, setShowSummary] = useState(false);
+  const [answers, setAnswers] = useState<GameAnswer[]>(savedSession.answers);
+  const [showSummary, setShowSummary] = useState(savedSession.showSummary || savedSession.answers.length >= QUESTIONS.length);
 
   const correctCount = answers.filter((item) => item.isCorrect).length;
   const incorrectCount = answers.length - correctCount;
 
+  useEffect(() => {
+    saveGameSession(1, { currentQ, answers, showSummary });
+  }, [currentQ, answers, showSummary]);
+
   const resetLevel = () => {
+    clearGameSession(1);
     setCurrentQ(0);
     setAnswers([]);
     setSelectedAns(null);
