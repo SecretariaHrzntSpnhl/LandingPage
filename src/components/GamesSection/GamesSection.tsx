@@ -9,7 +9,7 @@ import Game5 from './Game5';
 import RegistrationModal from './RegistrationModal';
 import { fireConfetti } from '../../utils/confetti';
 import { playSound } from '../../utils/sound';
-import { calculateStats, getUnlockedLevel, loadProgress, saveProgress, type GameResult, type ProgressData } from './gameStorage';
+import { calculateStats, createEmptyProgress, getUnlockedLevel, loadProgress, saveProgress, type GameResult, type ProgressData } from './gameStorage';
 
 type GameMeta = {
   level: number;
@@ -84,6 +84,12 @@ export default function GamesSection() {
         setUnlockedLevel(level + 1);
       }
     }, 1200);
+  };
+
+  const handleReplay = () => {
+    setProgress({ ...createEmptyProgress(), registered: true });
+    setUnlockedLevel(1);
+    setShowResults(false);
   };
 
   const renderGame = (level: number) => {
@@ -202,11 +208,14 @@ export default function GamesSection() {
                 <div><span className={`${styles.resultIcon} ${styles.incorrectIcon}`} aria-hidden="true">!</span>Erros: {progress.totalStats.incorrectAnswers}</div>
                 <div>🎮 Jogos concluídos: {progress.totalStats.completedGames}/5</div>
               </div>
-              {showResults && (
-                <p className={styles.resultMessage}>
-                  Continue praticando e transforme esse avanço em fluência real com nossos cursos de espanhol.
-                </p>
-              )}
+              <p className={styles.resultMessage}>
+                {showResults
+                  ? 'Continue praticando e transforme esse avanço em fluência real com nossos cursos de espanhol.'
+                  : 'Seu percurso está salvo. Você pode revisar todos os desafios quando quiser.'}
+              </p>
+              <button type="button" className={styles.replayBtn} onClick={handleReplay}>
+                JOGAR NOVAMENTE
+              </button>
             </div>
           )}
         </div>

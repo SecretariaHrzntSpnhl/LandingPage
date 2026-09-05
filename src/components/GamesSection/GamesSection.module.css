@@ -480,6 +480,32 @@
   font-size: 1rem;
 }
 
+.replayBtn {
+  margin-top: 22px;
+  min-height: 50px;
+  padding: 0.85rem 1.35rem;
+  border: 1px solid rgba(255, 183, 0, 0.72);
+  border-radius: 999px;
+  background: rgba(255, 183, 0, 0.12);
+  color: var(--yellow-horizon);
+  font: inherit;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  transition: transform 0.25s ease, background-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .replayBtn:hover {
+    transform: translateY(-2px);
+    background: rgba(255, 183, 0, 0.22);
+    box-shadow: 0 10px 24px rgba(255, 183, 0, 0.2);
+  }
+}
+
+.replayBtn:active {
+  transform: translateY(1px) scale(0.98);
+}
+
 .modalOverlay {
   position: fixed;
   top: 0;
