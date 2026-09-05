@@ -206,7 +206,7 @@ export default function LeadForm() {
           </div>
         </div>
 
-        <form ref={formRef} className={`${styles.form} ${consentAttention ? styles.formShake : ''}`} onInput={handleFormInput} onSubmit={handleSubmit} noValidate data-netlify="true" name="consulta-directa" method="POST" action="/" data-reveal data-effect="panel-sweep" data-delay="180">
+        <form ref={formRef} className={`${styles.form} ${consentAttention ? styles.formShake : ''}`} onInput={handleFormInput} onSubmit={handleSubmit} noValidate data-netlify="true" netlify-honeypot="bot-field" name="consulta-directa" method="POST" action="/" data-reveal data-effect="panel-sweep" data-delay="180">
           <input type="hidden" name="form-name" value="consulta-directa" />
           <input type="hidden" name="utmSource" value={getLeadTrackingFields().utmSource} />
           <input type="hidden" name="utmMedium" value={getLeadTrackingFields().utmMedium} />

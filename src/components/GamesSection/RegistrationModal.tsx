@@ -55,7 +55,7 @@ export default function RegistrationModal({ onClose, onSuccess }: Props) {
         <h3>Cadastro de Nivelamento</h3>
         <p>Preencha os dados abaixo para liberar seu acesso ao teste prático e iniciar seu jogo.</p>
 
-        <form onSubmit={handleSubmit} data-netlify="true" name="registro-juego">
+        <form onSubmit={handleSubmit} data-netlify="true" netlify-honeypot="bot-field" name="registro-juego" method="POST" action="/">
           <input type="hidden" name="form-name" value="registro-juego" />
           <input type="hidden" name="utmSource" value={getLeadTrackingFields().utmSource} />
           <input type="hidden" name="utmMedium" value={getLeadTrackingFields().utmMedium} />
