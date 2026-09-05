@@ -21,7 +21,7 @@ export default function Header({ theme, onToggleTheme }: HeaderProps) {
     <header className={styles.header}>
       <div className={styles.logoContainer}>
         <a
-          href="https://api.whatsapp.com/send?phone=5549998212897&text=Ol%C3%A1%2C%20gostaria%20de%20saber%20mais%20sobre%20o%20curso%21"
+          href="https://api.whatsapp.com/send?phone=5549998212897&text=Ol%C3%A1!%20Gostaria%20de%20receber%20mais%20informa%C3%A7%C3%B5es%20sobre%20os%20cursos%20de%20espanhol%20da%20Horizonte%20Espanhol."
           target="_blank"
           rel="noopener noreferrer"
           className={styles.logoButton}

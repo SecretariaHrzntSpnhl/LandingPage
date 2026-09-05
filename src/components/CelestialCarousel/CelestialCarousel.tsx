@@ -7,6 +7,7 @@ export default function CelestialCarousel() {
   const containerRef = useRef<HTMLDivElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
   const animationFrameRef = useRef<number | null>(null);
+  const loopWidthRef = useRef(0);
   const dragStateRef = useRef({
     active: false,
     startX: 0,
@@ -15,6 +16,17 @@ export default function CelestialCarousel() {
     lastTime: 0,
     velocity: 0,
   });
+
+  const normalizePosition = (value: number) => {
+    const loopWidth = loopWidthRef.current;
+
+    if (loopWidth <= 0) {
+      return value;
+    }
+
+    const normalized = value % loopWidth;
+    return normalized > 0 ? normalized - loopWidth : normalized;
+  };
 
   useEffect(() => {
     if (!containerRef.current || !trackRef.current) {
@@ -25,29 +37,37 @@ export default function CelestialCarousel() {
     const track = trackRef.current;
     const container = containerRef.current;
 
+    const updateLoopWidth = () => {
+      const firstSlide = track.children[0] as HTMLElement | undefined;
+      const firstDuplicate = track.children[IMAGES.length] as HTMLElement | undefined;
+
+      if (!firstSlide || !firstDuplicate) {
+        return;
+      }
+
+      loopWidthRef.current = firstDuplicate.getBoundingClientRect().left - firstSlide.getBoundingClientRect().left;
+    };
+
     const applyPosition = () => {
       container.style.setProperty('--track-offset', `${position}px`);
     };
 
     const animate = () => {
       if (!dragStateRef.current.active) {
-        position -= 1.35;
-        const halfWidth = track.scrollWidth / 2;
-
-        if (position <= -halfWidth) {
-          position += halfWidth;
-        }
-
+        position = normalizePosition(position - 1.35);
         applyPosition();
       }
 
       animationFrameRef.current = window.requestAnimationFrame(animate);
     };
 
+    updateLoopWidth();
+    window.addEventListener('resize', updateLoopWidth);
     applyPosition();
     animationFrameRef.current = window.requestAnimationFrame(animate);
 
     return () => {
+      window.removeEventListener('resize', updateLoopWidth);
       if (animationFrameRef.current !== null) {
         window.cancelAnimationFrame(animationFrameRef.current);
       }
@@ -77,13 +97,7 @@ export default function CelestialCarousel() {
 
     const animate = () => {
       if (!dragStateRef.current.active) {
-        position -= 1.35;
-        const halfWidth = track.scrollWidth / 2;
-
-        if (position <= -halfWidth) {
-          position += halfWidth;
-        }
-
+        position = normalizePosition(position - 1.35);
         container.style.setProperty('--track-offset', `${position}px`);
       }
 
@@ -127,17 +141,8 @@ export default function CelestialCarousel() {
     dragStateRef.current.lastX = event.clientX;
     dragStateRef.current.lastTime = now;
 
-    const halfWidth = trackRef.current.scrollWidth / 2;
     let nextPosition = dragStateRef.current.startPosition + deltaX;
-
-    if (halfWidth > 0) {
-      while (nextPosition <= -halfWidth) {
-        nextPosition += halfWidth;
-      }
-      while (nextPosition > 0) {
-        nextPosition -= halfWidth;
-      }
-    }
+    nextPosition = normalizePosition(nextPosition);
 
     containerRef.current.style.setProperty('--track-offset', `${nextPosition}px`);
   };
@@ -156,17 +161,7 @@ export default function CelestialCarousel() {
       const container = containerRef.current;
       if (track && container) {
         const currentPosition = Number.parseFloat(container.style.getPropertyValue('--track-offset') || '0');
-        const halfWidth = track.scrollWidth / 2;
-        let nextPosition = currentPosition + dragStateRef.current.velocity * 90;
-
-        if (halfWidth > 0) {
-          while (nextPosition <= -halfWidth) {
-            nextPosition += halfWidth;
-          }
-          while (nextPosition > 0) {
-            nextPosition -= halfWidth;
-          }
-        }
+        const nextPosition = normalizePosition(currentPosition + dragStateRef.current.velocity * 90);
 
         container.style.setProperty('--track-offset', `${nextPosition}px`);
       }

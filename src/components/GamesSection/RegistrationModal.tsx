@@ -69,13 +69,13 @@ export default function RegistrationModal({ onClose, onSuccess }: Props) {
           </div>
 
           <div className={styles.formGroup}>
-            <input type="text" name="nome" placeholder="Seu Nome" required />
+            <input type="text" name="nome" placeholder="Seu Nome" autoComplete="name" required />
           </div>
           <div className={styles.formGroup}>
-            <input type="email" name="email" placeholder="Seu E-mail" required />
+            <input type="email" name="email" placeholder="Seu E-mail" autoComplete="email" inputMode="email" required />
           </div>
           <div className={styles.formGroup}>
-            <input type="tel" name="telefone" placeholder="Seu Telefone" required />
+            <input type="tel" name="telefone" placeholder="Seu Telefone" autoComplete="tel" inputMode="tel" required />
           </div>
           <div className={styles.formGroup}>
             <textarea

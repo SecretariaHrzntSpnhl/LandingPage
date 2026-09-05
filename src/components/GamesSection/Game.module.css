@@ -331,10 +331,21 @@
   font-weight: 700;
   border: 1px solid rgba(37, 211, 102, 0.35);
   box-shadow: 0 14px 28px rgba(37, 211, 102, 0.22);
+  animation: whatsappPulse 3.2s ease-in-out infinite;
 }
 
 .whatsappLink:hover {
   background: #1ebe5d;
+  animation-play-state: paused;
+}
+
+@keyframes whatsappPulse {
+  0%, 100% {
+    box-shadow: 0 14px 28px rgba(37, 211, 102, 0.22);
+  }
+  50% {
+    box-shadow: 0 16px 34px rgba(37, 211, 102, 0.38);
+  }
 }
 
 .wordChip {
@@ -407,7 +418,8 @@
 @media (prefers-reduced-motion: reduce) {
   .summaryStat,
   .summaryStat::after,
-  .summaryStat .resultIcon {
+  .summaryStat .resultIcon,
+  .whatsappLink {
     animation: none;
   }
 }

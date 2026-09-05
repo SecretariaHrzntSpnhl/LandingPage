@@ -92,9 +92,10 @@ export default function GamesSection() {
     for (let level = 1; level <= 5; level += 1) {
       clearGameSession(level);
     }
-    setProgress({ ...createEmptyProgress(), registered: true });
-    setUnlockedLevel(1);
+    setProgress(createEmptyProgress());
+    setUnlockedLevel(0);
     setShowResults(false);
+    setShowModal(true);
   };
 
   const renderGame = (level: number) => {
@@ -114,6 +115,12 @@ export default function GamesSection() {
   };
 
   const progressLevel = unlockedLevel === 0 ? 1 : Math.min(unlockedLevel, 5);
+  const completedGames = Math.min(progress.totalStats.completedGames, GAMES.length);
+  const resultMessage = progress.totalStats.overallPercentage >= 80
+    ? 'Você já construiu uma base excelente. Continue praticando para transformar esse avanço em fluência real.'
+    : progress.totalStats.overallPercentage >= 60
+      ? 'Você está no caminho certo. Pratique um pouco a cada semana e avance com mais confiança.'
+      : 'Cada tentativa fortalece seu aprendizado. Continue praticando e evolua no seu ritmo.';
 
   return (
     <section className={`${styles.section} ${styles.heroAfterHero} reveal`}>
@@ -126,7 +133,20 @@ export default function GamesSection() {
 
         <div className={styles.gamesContainer} data-reveal data-effect="stack-appear" data-delay="80">
           {unlockedLevel < 6 && (
-            <div className={styles.deckStack}>
+            <>
+              <div className={styles.progressConstellation} aria-label={`${completedGames} de ${GAMES.length} desafios concluídos`}>
+                {GAMES.map((game, index) => (
+                  <span
+                    key={game.level}
+                    className={`${styles.constellationStar} ${index < completedGames ? styles.constellationStarActive : ''}`}
+                    aria-hidden="true"
+                  >
+                    ★
+                  </span>
+                ))}
+                <span className={styles.constellationLine} aria-hidden="true" />
+              </div>
+              <div className={styles.deckStack}>
               {GAMES.map((game) => {
                 const isCompleted = unlockedLevel > game.level;
                 const isCurrent = game.level === progressLevel;
@@ -195,12 +215,14 @@ export default function GamesSection() {
                   </article>
                 );
               })}
-            </div>
+              </div>
+            </>
           )}
 
           {unlockedLevel === 6 && (
-            <div className={styles.finalSuccess}>
+            <div className={`${styles.finalSuccess} ${styles.finalSuccessCelebration}`}>
               <h3>🎉 Parabéns! Você completou a escalada!</h3>
+              <span className={styles.newContentBadge}>NOVO CONTEÚDO</span>
               <p className={styles.resultHighlight}>
                 Sua performance atual é de {progress.totalStats.overallPercentage}% de acertos.
               </p>
@@ -215,7 +237,7 @@ export default function GamesSection() {
               </div>
               <p className={styles.resultMessage}>
                 {showResults
-                  ? 'Toda semana, conteúdo novo para praticar. Continue praticando e transforme esse avanço em fluência real com nossos cursos de espanhol.'
+                  ? `Toda semana, conteúdo novo para praticar. ${resultMessage}`
                   : 'Seu percurso está salvo. Você pode revisar todos os desafios quando quiser.'}
               </p>
               <button type="button" className={styles.replayBtn} onClick={handleReplay}>

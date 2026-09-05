@@ -32,7 +32,7 @@
 .track {
   display: flex;
   width: max-content;
-  max-width: 100%;
+  flex: none;
   justify-content: center;
   align-items: center;
   margin-top: clamp(10px, 2vw, 18px);
