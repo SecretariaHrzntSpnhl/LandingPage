@@ -9,6 +9,7 @@ interface Props {
 
 export default function RegistrationModal({ onClose, onSuccess }: Props) {
   const [status, setStatus] = useState<'idle' | 'submitting' | 'error'>('idle');
+  const [showTerms, setShowTerms] = useState(false);
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
@@ -52,7 +53,7 @@ export default function RegistrationModal({ onClose, onSuccess }: Props) {
       <div className={styles.modalContent}>
         <button type="button" className={styles.closeBtn} onClick={onClose} aria-label="Fechar cadastro">×</button>
         <h3>Cadastro de Nivelamento</h3>
-        <p>Preencha os dados abaixo para liberar seu acesso ao teste prático e iniciar sua avaliação.</p>
+        <p>Preencha os dados abaixo para liberar seu acesso ao teste prático e iniciar seu jogo.</p>
 
         <form onSubmit={handleSubmit} data-netlify="true" name="registro-juego">
           <input type="hidden" name="form-name" value="registro-juego" />
@@ -70,10 +71,6 @@ export default function RegistrationModal({ onClose, onSuccess }: Props) {
           <div className={styles.formGroup}>
             <input type="text" name="nome" placeholder="Seu Nome" required />
           </div>
-          <label className={styles.consent}>
-            <input type="checkbox" name="consentimentoContato" value="sim" required />
-            <span>Autorizo o contato da equipe sobre cursos e atendimento.</span>
-          </label>
           <div className={styles.formGroup}>
             <input type="email" name="email" placeholder="Seu E-mail" required />
           </div>
@@ -88,13 +85,54 @@ export default function RegistrationModal({ onClose, onSuccess }: Props) {
               rows={3}
             ></textarea>
           </div>
+          <label className={styles.consent}>
+            <input type="checkbox" name="consentimentoContato" value="sim" required />
+            <span>
+              Aceito os{' '}
+              <button
+                type="button"
+                className={styles.termsLink}
+                onClick={(event) => {
+                  event.preventDefault();
+                  setShowTerms(true);
+                }}
+              >
+                termos e condições
+              </button>
+              .
+            </span>
+          </label>
 
           <button type="submit" className={styles.submitModalBtn} disabled={status === 'submitting'}>
-            {status === 'submitting' ? 'Aguarde...' : 'INICIAR AVALIAÇÃO'}
+            {status === 'submitting' ? 'Aguarde...' : 'INICIAR JOGO'}
           </button>
           {status === 'error' && <p role="alert">Não foi possível enviar agora. Tente novamente.</p>}
         </form>
       </div>
+      {showTerms && (
+        <div className={styles.termsOverlay} role="presentation" onClick={() => setShowTerms(false)}>
+          <div
+            className={styles.termsDialog}
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="terms-title"
+            onClick={(event) => event.stopPropagation()}
+          >
+            <h3 id="terms-title">Termos e condições</h3>
+            <p>
+              Os dados informados neste cadastro serão utilizados exclusivamente pelo departamento de vendas da
+              Horizonte Espanhol para contato sobre cursos, atendimento e oportunidades de matrícula.
+            </p>
+            <p>
+              O tratamento dos dados segue a Lei Geral de Proteção de Dados Pessoais (LGPD), Lei nº 13.709/2018,
+              vigente no Brasil.
+            </p>
+            <button type="button" className={styles.termsCloseBtn} onClick={() => setShowTerms(false)}>
+              Entendi
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
