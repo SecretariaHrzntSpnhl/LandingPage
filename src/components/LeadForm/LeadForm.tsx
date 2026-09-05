@@ -190,9 +190,9 @@ export default function LeadForm() {
   };
 
   return (
-    <section className={`${styles.section} reveal`} data-reveal data-effect="panel-sweep" data-delay="0">
+    <section className={styles.section}>
       <div className={styles.container}>
-        <div className={styles.content} data-reveal data-effect="soft-glow" data-delay="90">
+        <div className={styles.content}>
           <h2>Dê o próximo passo na sua carreira</h2>
           <p>Preencha o formulário abaixo e receba um atendimento personalizado da nossa equipe acadêmica.</p>
           <div className={styles.formProgress} aria-live="polite">
