@@ -1,4 +1,4 @@
-﻿import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import type { CSSProperties } from 'react';
 import styles from './GamesSection.module.css';
 import Game1 from './Game1';
@@ -36,6 +36,7 @@ export default function GamesSection() {
   const [showModal, setShowModal] = useState(false);
   const [progress, setProgress] = useState<ProgressData>(() => loadProgress());
   const [showResults, setShowResults] = useState(false);
+  const hasMounted = useRef(false);
 
   const handleStartClick = () => {
     setShowModal(true);
@@ -44,6 +45,20 @@ export default function GamesSection() {
   useEffect(() => {
     saveProgress(progress);
   }, [progress]);
+
+  useEffect(() => {
+    if (!hasMounted.current) {
+      hasMounted.current = true;
+      return;
+    }
+
+    if (unlockedLevel > 1 && unlockedLevel < 6) {
+      document.querySelector(`[data-level-card="${unlockedLevel}"]`)?.scrollIntoView({
+        behavior: 'smooth',
+        block: 'center',
+      });
+    }
+  }, [unlockedLevel]);
 
   const handleRegistrationSuccess = () => {
     setShowModal(false);
@@ -168,6 +183,7 @@ export default function GamesSection() {
                   <article
                     key={game.level}
                     className={cardClass}
+                    data-level-card={game.level}
                     data-reveal
                     data-effect="card-float"
                     data-delay={game.level * 90}
