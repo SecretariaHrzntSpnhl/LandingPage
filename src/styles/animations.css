@@ -4,27 +4,191 @@
 }
 
 @keyframes slideUp {
-  from { opacity: 0.4; transform: translateY(6px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0.3;
+    transform: translateY(18px) scale(0.985);
+    filter: blur(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+  }
 }
 
-.reveal {
+@keyframes sweepInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(30px) scale(0.98);
+    filter: blur(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+    filter: blur(0);
+  }
+}
+
+@keyframes riseInSoft {
+  from {
+    opacity: 0;
+    transform: translateY(26px) rotateX(8deg);
+    filter: blur(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) rotateX(0deg);
+    filter: blur(0);
+  }
+}
+
+@keyframes floatIn {
+  from {
+    opacity: 0;
+    transform: translateY(22px) rotate(-1.5deg);
+    filter: blur(5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) rotate(0deg);
+    filter: blur(0);
+  }
+}
+
+.reveal,
+[data-reveal] {
+  opacity: 0;
+  transform: translateY(18px) scale(0.985);
+  filter: blur(6px);
+  transition:
+    opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.9s cubic-bezier(0.22, 1, 0.36, 1),
+    filter 0.8s ease;
+  will-change: opacity, transform, filter;
+}
+
+.reveal.is-visible,
+[data-reveal].is-visible {
   opacity: 1;
+  transform: translateY(0) scale(1);
+  filter: blur(0);
 }
 
-.reveal.visible {
+.reveal[data-effect='hero-rise'],
+[data-reveal][data-effect='hero-rise'] {
+  opacity: 0;
+  transform: translateY(36px) scale(0.98);
+  filter: blur(3px);
+}
+
+.reveal[data-effect='hero-rise'].is-visible,
+[data-reveal][data-effect='hero-rise'].is-visible {
   opacity: 1;
+  transform: translateY(0) scale(1);
+  filter: blur(0);
+  animation: riseInSoft 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
-.reveal > * {
-  opacity: 0.4;
-  transform: translateY(6px);
-  transition: opacity 0.45s ease, transform 0.45s ease;
+.reveal[data-effect='stack-appear'],
+[data-reveal][data-effect='stack-appear'] {
+  opacity: 0;
+  transform: translateY(26px) rotateX(10deg);
+  filter: blur(5px);
 }
 
-.reveal.visible > * {
+.reveal[data-effect='stack-appear'].is-visible,
+[data-reveal][data-effect='stack-appear'].is-visible {
+  opacity: 1;
+  transform: translateY(0) rotateX(0deg);
+  filter: blur(0);
+  animation: riseInSoft 0.8s ease both;
+}
+
+.reveal[data-effect='panel-sweep'],
+[data-reveal][data-effect='panel-sweep'] {
+  opacity: 0;
+  transform: translateX(42px) scale(0.985);
+  filter: blur(6px);
+}
+
+.reveal[data-effect='panel-sweep'].is-visible,
+[data-reveal][data-effect='panel-sweep'].is-visible {
+  opacity: 1;
+  transform: translateX(0) scale(1);
+  filter: blur(0);
+  animation: sweepInLeft 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.reveal[data-effect='card-float'],
+[data-reveal][data-effect='card-float'] {
+  opacity: 0;
+  transform: translateY(28px) rotate(-1.5deg) scale(0.985);
+  filter: blur(5px);
+}
+
+.reveal[data-effect='card-float'].is-visible,
+[data-reveal][data-effect='card-float'].is-visible {
+  opacity: 1;
+  transform: translateY(0) rotate(0deg) scale(1);
+  filter: blur(0);
+  animation: floatIn 0.75s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.reveal[data-effect='soft-glow'],
+[data-reveal][data-effect='soft-glow'] {
+  opacity: 0;
+  transform: translateY(18px) scale(0.99);
+  filter: blur(4px);
+}
+
+.reveal[data-effect='soft-glow'].is-visible,
+[data-reveal][data-effect='soft-glow'].is-visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  filter: blur(0);
+  animation: slideUp 0.8s ease both;
+}
+
+.reveal > *,
+[data-reveal] > * {
+  opacity: 0.3;
+  transform: translateY(12px);
+  transition:
+    opacity 0.7s ease,
+    transform 0.7s ease,
+    filter 0.7s ease;
+}
+
+.reveal.is-visible > *,
+[data-reveal].is-visible > * {
   opacity: 1;
   transform: translateY(0);
-  animation: slideUp 0.45s ease both;
+  animation: slideUp 0.7s ease both;
+}
+
+@media (max-width: 767px) {
+  .reveal,
+  [data-reveal],
+  .reveal > *,
+  [data-reveal] > * {
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
+    transition: opacity 0.25s ease, transform 0.25s ease !important;
+    animation: none !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal,
+  [data-reveal],
+  .reveal > *,
+  [data-reveal] > * {
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
+    transition: none !important;
+    animation: none !important;
+  }
 }
 

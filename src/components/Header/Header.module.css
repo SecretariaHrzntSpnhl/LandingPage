@@ -185,8 +185,10 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 36px;
-  height: 36px;
+  width: 42px;
+  height: 42px;
+  min-width: 42px;
+  min-height: 42px;
   border-radius: 50%;
   background: rgba(255, 255, 255, 0.12);
   border: 1px solid rgba(255, 255, 255, 0.18);
@@ -194,6 +196,8 @@
   backdrop-filter: blur(14px);
   transition: transform 0.25s ease, background 0.25s ease, border-color 0.25s ease;
   color: var(--text-color);
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .menuButton:hover {
@@ -316,7 +320,8 @@
   width: 100%;
   height: auto;
   justify-content: center;
-  padding: 6px 0;
+  padding: 8px 0;
+  min-height: 38px;
   border-radius: 10px;
   background: rgba(255, 255, 255, 0.07);
   border: 1px solid rgba(255, 255, 255, 0.1);
@@ -357,13 +362,16 @@
   gap: 0.6rem;
   padding: 0.5rem 0.7rem;
   border-radius: 999px;
-  min-height: 42px;
+  min-height: 44px;
+  min-width: 44px;
   background: linear-gradient(135deg, rgba(9, 22, 40, 0.95), rgba(20, 39, 70, 0.88));
   color: var(--text-color);
   border: 1px solid rgba(110, 170, 255, 0.28);
   box-shadow: 0 10px 22px var(--header-shadow);
   backdrop-filter: blur(10px);
   transition: transform 0.25s ease, background 0.25s ease, color 0.25s ease;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
 }
 
 :root[data-theme='light'] .themeToggle {

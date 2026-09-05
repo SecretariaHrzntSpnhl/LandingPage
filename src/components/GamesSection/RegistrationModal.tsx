@@ -1,5 +1,6 @@
 import { useState, type FormEvent } from 'react';
 import styles from './GamesSection.module.css';
+import { getLeadTrackingFields } from '../../utils/leadTracking';
 
 interface Props {
   onClose: () => void;
@@ -16,10 +17,22 @@ export default function RegistrationModal({ onClose, onSuccess }: Props) {
     const form = e.target as HTMLFormElement;
     const formData = new FormData(form);
 
+    if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+      onSuccess();
+      return;
+    }
+
     fetch('/', {
       method: 'POST',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      body: new URLSearchParams(formData as any).toString()
+      body: Array.from(formData.entries())
+        .reduce((params, [key, value]) => {
+          if (typeof value === 'string') {
+            params.append(key, value);
+          }
+          return params;
+        }, new URLSearchParams())
+        .toString()
     })
       .then((response) => {
         if (!response.ok) {
@@ -43,10 +56,24 @@ export default function RegistrationModal({ onClose, onSuccess }: Props) {
 
         <form onSubmit={handleSubmit} data-netlify="true" name="registro-juego">
           <input type="hidden" name="form-name" value="registro-juego" />
+          <input type="hidden" name="utmSource" value={getLeadTrackingFields().utmSource} />
+          <input type="hidden" name="utmMedium" value={getLeadTrackingFields().utmMedium} />
+          <input type="hidden" name="utmCampaign" value={getLeadTrackingFields().utmCampaign} />
+          <input type="hidden" name="landingPage" value={getLeadTrackingFields().landingPage} />
+          <input type="hidden" name="referrer" value={getLeadTrackingFields().referrer} />
+          <input type="hidden" name="deviceType" value={getLeadTrackingFields().deviceType} />
+          <div hidden>
+            <label htmlFor="registro-bot-field">Não preencha este campo</label>
+            <input id="registro-bot-field" name="bot-field" tabIndex={-1} autoComplete="off" />
+          </div>
 
           <div className={styles.formGroup}>
             <input type="text" name="nome" placeholder="Seu Nome" required />
           </div>
+          <label className={styles.consent}>
+            <input type="checkbox" name="consentimentoContato" value="sim" required />
+            <span>Autorizo o contato da equipe sobre cursos e atendimento.</span>
+          </label>
           <div className={styles.formGroup}>
             <input type="email" name="email" placeholder="Seu E-mail" required />
           </div>

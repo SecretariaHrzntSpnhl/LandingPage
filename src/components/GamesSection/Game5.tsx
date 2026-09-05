@@ -1,7 +1,7 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import styles from './Game.module.css';
 import { playSound } from '../../utils/sound';
-import type { GameAnswer } from './gameStorage';
+import { shuffleArray, type GameAnswer } from './gameStorage';
 
 interface Props {
   onComplete: (answers: GameAnswer[], correctCount: number) => void;
@@ -10,34 +10,29 @@ interface Props {
 
 const QUESTIONS = [
   {
-    q: 'Escolha a opção correta: "Después de comer, siempre me siento ____"',
-    options: ['lleno', 'llama', 'lento'],
+    q: 'Si yo ____ más dinero, viajaría a todos los países de América Latina.',
+    options: ['tuviera', 'tengo', 'tuve'],
     correct: 0,
-    explanation: '"Siempre me siento lleno" é a forma correta para indicar saciedade após comer.',
   },
   {
-    q: 'Complete a frase: "Si yo ____ más tiempo, viajaría por el mundo."',
-    options: ['tuviera', 'tuve', 'tendrá'],
+    q: 'No creo que ellos ____ a tiempo para la reunión.',
+    options: ['lleguen', 'llegarán', 'llegaron'],
     correct: 0,
-    explanation: 'O condicional hipotético requer o Pretérito Imperfeito de Subjuntivo: "tuviera".',
   },
   {
-    q: 'Escolha a forma correta: "Ojalá que él ____ aquí mañana."',
-    options: ['esté', 'está', 'estaba'],
+    q: 'Ojalá que tú ____ más tranquilo durante la entrevista.',
+    options: ['te sientas', 'te sentirás', 'te sentiste'],
     correct: 0,
-    explanation: '"Ojalá" exige o Subjuntivo presente para eventos futuros: "esté".',
   },
   {
-    q: 'Qual é a melhor tradução de "Eu prefiro estudar espanhol"?',
-    options: ['Prefiero estudiar español', 'Prefiero estudiar españolía', 'Prefiero estar estudiando español'],
+    q: 'Aunque todos ____ que es verdad, yo no lo creo.',
+    options: ['dicen', 'dijeron', 'dirán'],
     correct: 0,
-    explanation: 'A tradução direta e natural é "Prefiero estudiar español".',
   },
   {
-    q: 'Selecione a opção correta: "No creo que ella ____ el examen."',
-    options: ['pase', 'pasará', 'pasó'],
+    q: 'Cuando ____ al hotel, vamos a descansar un poco.',
+    options: ['lleguemos', 'llegamos', 'llegaremos'],
     correct: 0,
-    explanation: 'Depois de "No creo que" vem o Subjuntivo presente: "pase".',
   },
 ];
 
@@ -46,9 +41,14 @@ export default function Game5({ onComplete, isCompleted }: Props) {
   const [selectedAns, setSelectedAns] = useState<string | null>(null);
   const [answers, setAnswers] = useState<GameAnswer[]>([]);
   const [showSummary, setShowSummary] = useState(false);
+  const [shuffledOptions, setShuffledOptions] = useState<string[]>([]);
 
   const correctCount = answers.filter((item) => item.isCorrect).length;
   const incorrectCount = answers.length - correctCount;
+
+  useEffect(() => {
+    setShuffledOptions(shuffleArray(QUESTIONS[currentQ].options));
+  }, [currentQ]);
 
   const resetLevel = () => {
     setCurrentQ(0);
@@ -90,9 +90,16 @@ export default function Game5({ onComplete, isCompleted }: Props) {
     <>
       <div className={styles.gameCard} style={{ border: '2px solid var(--yellow-horizon)' }}>
         <h3 className={styles.gameTitle} style={{ color: 'var(--yellow-horizon)' }}>Nível 5 · O Desafio Final</h3>
+        <div className={styles.progressMeta}>
+          <span>Progresso</span>
+          <span>{currentQ + 1}/5</span>
+        </div>
+        <div className={styles.progressTrack} aria-label={`Pergunta ${currentQ + 1} de 5`}>
+          <div className={styles.progressValue} style={{ width: `${((currentQ + 1) / 5) * 100}%` }} />
+        </div>
 
         <div style={{ background: 'rgba(255, 183, 0, 0.1)', padding: 'var(--section-container-padding)', borderRadius: '15px', marginBottom: 'var(--section-gap)' }}>
-          <p style={{ marginBottom: 'var(--space-2)', color: 'var(--blue-sky)' }}>Escolha la opción correcta para completar cada frase con soltura avanzada.</p>
+          <p style={{ marginBottom: 'var(--space-2)', color: 'var(--blue-sky)' }}>Escolha a opção correta para completar cada frase com desenvoltura avançada.</p>
         </div>
 
         <div style={{ textAlign: 'left', background: 'rgba(0,0,0,0.2)', padding: 'var(--section-container-padding)', borderRadius: '15px' }}>
@@ -101,7 +108,7 @@ export default function Game5({ onComplete, isCompleted }: Props) {
           </p>
 
           <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-            {QUESTIONS[currentQ].options.map((opt) => (
+            {shuffledOptions.map((opt) => (
               <button
                 key={opt}
                 onClick={() => handleSelect(opt)}
@@ -124,8 +131,8 @@ export default function Game5({ onComplete, isCompleted }: Props) {
               Você terminou o módulo com {correctCount} acertos e {incorrectCount} erros.
             </p>
             <div className={styles.summaryStats}>
-              <div className={styles.summaryStat}>✅ Acertos: {correctCount}</div>
-              <div className={styles.summaryStat}>❌ Erros: {incorrectCount}</div>
+              <div className={styles.summaryStat}><span className={`${styles.resultIcon} ${styles.correctIcon}`} aria-hidden="true">✓</span>Acertos: {correctCount}</div>
+              <div className={styles.summaryStat}><span className={`${styles.resultIcon} ${styles.incorrectIcon}`} aria-hidden="true">!</span>Erros: {incorrectCount}</div>
             </div>
             <a
               className={styles.whatsappLink}
@@ -137,7 +144,7 @@ export default function Game5({ onComplete, isCompleted }: Props) {
             </a>
             <div className={styles.finishModalButtons}>
               <button type="button" className={styles.finishModalBtn} onClick={resetLevel}>
-                Repetir nivel
+                Repetir nível
               </button>
               <button
                 type="button"

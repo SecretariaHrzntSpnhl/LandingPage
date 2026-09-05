@@ -87,7 +87,7 @@ export default function Game1({ onComplete, isCompleted }: Props) {
     return (
       <div className={`${styles.gameCard} ${styles.completed}`}>
         <h3 className={styles.gameTitle}>Primeiros Passos</h3>
-        <p>✅ Nível concluído!</p>
+        <p><span className={`${styles.resultIcon} ${styles.correctIcon}`} aria-hidden="true">✓</span>Nível concluído!</p>
       </div>
     );
   }
@@ -96,6 +96,13 @@ export default function Game1({ onComplete, isCompleted }: Props) {
     <>
       <div className={styles.gameCard}>
       <h3 className={styles.gameTitle}>Nível 1 · Objetos e Cores</h3>
+      <div className={styles.progressMeta}>
+        <span>Progresso</span>
+        <span>{currentQ + 1}/5</span>
+      </div>
+      <div className={styles.progressTrack} aria-label={`Pergunta ${currentQ + 1} de 5`}>
+        <div className={styles.progressValue} style={{ width: `${((currentQ + 1) / 5) * 100}%` }} />
+      </div>
       <p className={styles.questionText}>{QUESTIONS[currentQ].question}</p>
 
       <div className={styles.optionsGrid}>
@@ -120,8 +127,8 @@ export default function Game1({ onComplete, isCompleted }: Props) {
               Você terminou o módulo com {correctCount} acertos e {incorrectCount} erros.
             </p>
             <div className={styles.summaryStats}>
-              <div className={styles.summaryStat}>✅ Acertos: {correctCount}</div>
-              <div className={styles.summaryStat}>❌ Erros: {incorrectCount}</div>
+              <div className={styles.summaryStat}><span className={`${styles.resultIcon} ${styles.correctIcon}`} aria-hidden="true">✓</span>Acertos: {correctCount}</div>
+              <div className={styles.summaryStat}><span className={`${styles.resultIcon} ${styles.incorrectIcon}`} aria-hidden="true">!</span>Erros: {incorrectCount}</div>
             </div>
             <a
               className={styles.whatsappLink}
@@ -133,14 +140,14 @@ export default function Game1({ onComplete, isCompleted }: Props) {
             </a>
             <div className={styles.finishModalButtons}>
                 <button type="button" className={styles.finishModalBtn} onClick={resetLevel}>
-                  Repetir nivel
+                  Repetir nível
               </button>
               <button
                 type="button"
                   className={`${styles.finishModalBtn} ${styles.primaryBtn}`}
                 onClick={() => onComplete(answers, correctCount)}
               >
-                  Seguir al próximo nivel 2
+                  Seguir para o próximo nível 2
               </button>
             </div>
           </div>

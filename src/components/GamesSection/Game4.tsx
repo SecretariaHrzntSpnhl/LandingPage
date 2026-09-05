@@ -19,29 +19,24 @@ function shuffleArray<T>(array: T[]) {
 
 const QUESTIONS = [
   {
-    words: ['Cuando', 'era', 'niño', 'vivía', 'en', 'un', 'pueblo', 'pequeño.'],
-    expected: 'Cuando era niño vivía en un pueblo pequeño.',
-    explanation: 'A estrutura correta em espanhol é: "Cuando era niño vivía en un pueblo pequeño.".',
+    words: ['Cuando', 'llegué', 'al', 'aeropuerto', 'ya', 'había', 'perdido', 'mi', 'vuelo.'],
+    expected: 'Cuando llegué al aeropuerto ya había perdido mi vuelo.',
   },
   {
-    words: ['Mientras', 'yo', 'estudiaba', 'ella', 'leía', 'un', 'libro.'],
-    expected: 'Mientras yo estudiaba ella leía un libro.',
-    explanation: '"Mientras" exige o Pretérito Imperfeito para ações simultâneas: "estudiaba / leía".',
+    words: ['Mientras', 'el', 'jefe', 'hablaba', 'yo', 'tomaba', 'notas', 'importantes.'],
+    expected: 'Mientras el jefe hablaba yo tomaba notas importantes.',
   },
   {
-    words: ['Aunque', 'era', 'tarde', 'yo', 'seguí', 'trabajando.'],
-    expected: 'Aunque era tarde yo seguí trabajando.',
-    explanation: '"Aunque era tarde" dá contexto no imperfecto, a ação pontual se expressa em Indefinido: "seguí".',
+    words: ['Aunque', 'hacía', 'frío', 'nosotros', 'salimos', 'a', 'pasear.'],
+    expected: 'Aunque hacía frío nosotros salimos a pasear.',
   },
   {
-    words: ['Cuando', 'llegué', 'a', 'casa', 'ya', 'habían', 'preparado', 'la', 'cena.'],
-    expected: 'Cuando llegué a casa ya habían preparado la cena.',
-    explanation: '"Cuando llegué" (ação pontual) + ação anterior em Pluscuamperfecto: "habían preparado".',
+    words: ['Cuando', 'vi', 'la', 'oferta', 'ya', 'había', 'comprado', 'el', 'regalo.'],
+    expected: 'Cuando vi la oferta ya había comprado el regalo.',
   },
   {
-    words: ['No', 'sabía', 'que', 'tú', 'estabas', 'aquí.'],
-    expected: 'No sabía que tú estabas aquí.',
-    explanation: '"No sabía que" dá contexto no imperfecto; a ação simultânea também se expressa no Imperfeito: "estabas".',
+    words: ['No', 'sabía', 'que', 'tus', 'amigos', 'vivían', 'en', 'esta', 'ciudad.'],
+    expected: 'No sabía que tus amigos vivían en esta ciudad.',
   },
 ];
 
@@ -107,7 +102,7 @@ export default function Game4({ onComplete, isCompleted }: Props) {
     return (
       <div className={`${styles.gameCard} ${styles.completed}`}>
         <h3 className={styles.gameTitle}>Narrativas e Opiniões</h3>
-        <p>✅ Nível concluído!</p>
+        <p><span className={`${styles.resultIcon} ${styles.correctIcon}`} aria-hidden="true">✓</span>Nível concluído!</p>
       </div>
     );
   }
@@ -117,7 +112,14 @@ export default function Game4({ onComplete, isCompleted }: Props) {
   return (
     <div className={styles.gameCard}>
       <h3 className={styles.gameTitle}>Nível 4 · Narrativas e Opiniões</h3>
-      <p className={styles.questionText}>Forma la frase correcta ordenando las palabras:</p>
+      <div className={styles.progressMeta}>
+        <span>Progresso</span>
+        <span>{currentQ + 1}/5</span>
+      </div>
+      <div className={styles.progressTrack} aria-label={`Pergunta ${currentQ + 1} de 5`}>
+        <div className={styles.progressValue} style={{ width: `${((currentQ + 1) / 5) * 100}%` }} />
+      </div>
+      <p className={styles.questionText}>Monte a frase correta ordenando as palavras:</p>
 
       <div className={styles.sentenceBuilder} style={{ minHeight: '60px', background: 'rgba(0,0,0,0.2)', borderRadius: '10px', padding: 'var(--section-container-padding)', marginBottom: 'var(--section-gap)', display: 'flex', flexWrap: 'wrap', gap: '10px', border: `2px solid ${status === 'correct' ? '#4caf50' : status === 'incorrect' ? 'var(--red-energy)' : 'var(--blue-sky)'}` }}>
         {selectedWords.map((word, i) => (
@@ -148,8 +150,8 @@ export default function Game4({ onComplete, isCompleted }: Props) {
               Você terminou o módulo com {correctCount} acertos e {incorrectCount} erros.
             </p>
             <div className={styles.summaryStats}>
-              <div className={styles.summaryStat}>✅ Acertos: {correctCount}</div>
-              <div className={styles.summaryStat}>❌ Erros: {incorrectCount}</div>
+              <div className={styles.summaryStat}><span className={`${styles.resultIcon} ${styles.correctIcon}`} aria-hidden="true">✓</span>Acertos: {correctCount}</div>
+              <div className={styles.summaryStat}><span className={`${styles.resultIcon} ${styles.incorrectIcon}`} aria-hidden="true">!</span>Erros: {incorrectCount}</div>
             </div>
             <a
               className={styles.whatsappLink}
@@ -161,10 +163,10 @@ export default function Game4({ onComplete, isCompleted }: Props) {
             </a>
             <div className={styles.finishModalButtons}>
               <button onClick={resetLevel} className={styles.finishModalBtn} type="button">
-                Repetir nivel
+                Repetir nível
               </button>
               <button onClick={() => onComplete(answers, correctCount)} className={`${styles.finishModalBtn} ${styles.primaryBtn}`} type="button">
-                Seguir al próximo nivel 5
+                Seguir para o próximo nível 5
               </button>
             </div>
           </div>

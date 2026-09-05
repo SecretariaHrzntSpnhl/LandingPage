@@ -1,6 +1,7 @@
-import { type FormEvent, useState } from 'react';
+import { type FormEvent, useRef, useState } from 'react';
 import styles from './LeadForm.module.css';
 import { playSound } from '../../utils/sound';
+import { getLeadTrackingFields } from '../../utils/leadTracking';
 
 const PHONE_OPTIONS = [
   { code: 'BR', label: 'Brasil', dialCode: '+55', emoji: '🇧🇷', example: '(11) 99999-9999' },
@@ -78,54 +79,125 @@ const PHONE_OPTIONS = [
 export default function LeadForm() {
   const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
   const [selectedCountry, setSelectedCountry] = useState(PHONE_OPTIONS[0].code);
+  const [filledFields, setFilledFields] = useState(0);
+  const [isCompletionPulse, setIsCompletionPulse] = useState(false);
+  const formRef = useRef<HTMLFormElement>(null);
 
   const selectedCountryData = PHONE_OPTIONS.find((option) => option.code === selectedCountry) ?? PHONE_OPTIONS[0];
+  const completionPercentage = isCompletionPulse ? 100 : Math.round((filledFields / 4) * 75);
 
-  const handleSubmit = (e: FormEvent) => {
+  const handleFormInput = (event: FormEvent<HTMLFormElement>) => {
+    const form = event.currentTarget;
+    const requiredFields = ['nome', 'email', 'telefone', 'consulta'];
+    const completedFields = requiredFields.filter((fieldName) => {
+      const field = form.elements.namedItem(fieldName);
+      return field instanceof HTMLInputElement || field instanceof HTMLTextAreaElement
+        ? field.value.trim().length > 0
+        : false;
+    }).length;
+
+    setFilledFields(completedFields);
+    if (status === 'error') {
+      setStatus('idle');
+      setIsCompletionPulse(false);
+    }
+  };
+
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setStatus('submitting');
+    setIsCompletionPulse(true);
+    const submissionStartedAt = Date.now();
+    const finishWithFeedback = (callback: () => void) => {
+      const remainingAnimationTime = Math.max(0, 450 - (Date.now() - submissionStartedAt));
+      window.setTimeout(callback, remainingAnimationTime);
+    };
 
-    const form = e.target as HTMLFormElement;
+    const form = e.currentTarget;
     const formData = new FormData(form);
+    const encodedFormData = new URLSearchParams();
+
+    formData.forEach((value, key) => {
+      if (typeof value === 'string') {
+        encodedFormData.append(key, value);
+      }
+    });
+
+    const invalidField = form.querySelector<HTMLElement>(':invalid');
+    if (invalidField) {
+      invalidField.focus();
+      setStatus('idle');
+      setIsCompletionPulse(false);
+      return;
+    }
 
     fetch('/', {
       method: 'POST',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      body: new URLSearchParams(formData as any).toString()
+      body: encodedFormData.toString()
     })
       .then((response) => {
         if (!response.ok) {
           throw new Error(`Form submission failed with status ${response.status}`);
         }
 
-        setStatus('success');
-        playSound('success');
-        form.reset();
-        setSelectedCountry(PHONE_OPTIONS[0].code);
+        finishWithFeedback(() => {
+          setStatus('success');
+          playSound('success');
+          form.reset();
+          setSelectedCountry(PHONE_OPTIONS[0].code);
+          setFilledFields(0);
+          setIsCompletionPulse(false);
+        });
       })
       .catch((error) => {
-        console.error(error);
-        playSound('error');
-        setStatus('error');
+        finishWithFeedback(() => {
+          console.error(error);
+          playSound('error');
+          setStatus('error');
+          setFilledFields(0);
+          setIsCompletionPulse(false);
+        });
       });
   };
 
   return (
-    <section className={`${styles.section} reveal`}>
+    <section className={`${styles.section} reveal`} data-reveal data-effect="panel-sweep" data-delay="0">
       <div className={styles.container}>
-        <div className={styles.content}>
+        <div className={styles.content} data-reveal data-effect="soft-glow" data-delay="90">
           <h2>Dê o próximo passo na sua carreira</h2>
           <p>Preencha o formulário abaixo e receba um atendimento personalizado da nossa equipe acadêmica.</p>
+          <div className={styles.formProgress} aria-live="polite">
+            <div className={styles.progressHeading}>
+              <span>Seu próximo passo</span>
+              <strong>{completionPercentage}% concluído</strong>
+            </div>
+            <div className={styles.progressTrack} aria-hidden="true">
+              <span className={styles.progressValue} style={{ width: `${completionPercentage}%` }} />
+            </div>
+          </div>
         </div>
 
-        <form className={styles.form} onSubmit={handleSubmit} data-netlify="true" name="consulta-directa" method="POST" action="/">
+        <form ref={formRef} className={styles.form} onInput={handleFormInput} onSubmit={handleSubmit} data-netlify="true" name="consulta-directa" method="POST" action="/" data-reveal data-effect="panel-sweep" data-delay="180">
           <input type="hidden" name="form-name" value="consulta-directa" />
+          <input type="hidden" name="utmSource" value={getLeadTrackingFields().utmSource} />
+          <input type="hidden" name="utmMedium" value={getLeadTrackingFields().utmMedium} />
+          <input type="hidden" name="utmCampaign" value={getLeadTrackingFields().utmCampaign} />
+          <input type="hidden" name="utmContent" value={getLeadTrackingFields().utmContent} />
+          <input type="hidden" name="utmTerm" value={getLeadTrackingFields().utmTerm} />
+          <input type="hidden" name="landingPage" value={getLeadTrackingFields().landingPage} />
+          <input type="hidden" name="referrer" value={getLeadTrackingFields().referrer} />
+          <input type="hidden" name="deviceType" value={getLeadTrackingFields().deviceType} />
+          <div hidden>
+            <label htmlFor="consulta-bot-field">Não preencha este campo</label>
+            <input id="consulta-bot-field" name="bot-field" tabIndex={-1} autoComplete="off" />
+          </div>
 
           <div className={styles.formGroup}>
-            <input type="text" name="nome" placeholder="Nombre" required />
+            <input type="text" name="nome" placeholder="Nome" autoComplete="name" aria-label="Nome" required />
           </div>
           <div className={styles.formGroup}>
-            <input type="email" name="email" placeholder="Email" required />
+            <input type="email" name="email" placeholder="Email" autoComplete="email" aria-label="Email" required />
           </div>
           <div className={styles.formGroup}>
             <div className={styles.phoneFieldGroup}>
@@ -154,16 +226,23 @@ export default function LeadForm() {
                 className={styles.phoneInput}
                 inputMode="tel"
                 aria-label="Telefone"
+                autoComplete="tel"
               />
             </div>
           </div>
           <div className={styles.formGroup}>
-            <textarea name="consulta" placeholder="Consulta" required rows={4}></textarea>
+            <textarea name="consulta" placeholder="Como podemos ajudar?" required rows={4}></textarea>
           </div>
+          <label className={styles.consent}>
+            <input type="checkbox" name="consentimentoContato" value="sim" required />
+            <span>Autorizo o contato da equipe sobre cursos e atendimento.</span>
+          </label>
 
-          <button type="submit" className={styles.submitBtn} disabled={status === 'submitting'}>
+          <button type="submit" className={`${styles.submitBtn} ${completionPercentage === 100 ? styles.submitBtnReady : ''}`} disabled={status === 'submitting'}>
             {status === 'submitting' ? 'Enviando...' : status === 'success' ? 'Enviado!' : status === 'error' ? 'Tentar novamente' : 'Enviar consulta'}
           </button>
+          <p className={styles.formTrust}>Seus dados ficam protegidos e serão usados apenas para retornarmos o seu contato.</p>
+          {status === 'success' && <p className={styles.successMessage} role="status">Recebemos sua mensagem. Em breve nossa equipe falará com você.</p>}
           {status === 'error' && <p role="alert">Não foi possível enviar agora. Tente novamente.</p>}
         </form>
       </div>

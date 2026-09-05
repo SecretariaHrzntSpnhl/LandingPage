@@ -3,7 +3,7 @@
   /* Top spacing harmonized with sections for consistent rhythm */
   padding: var(--section-top) var(--section-padding-inline) 1.25rem;
   text-align: center;
-  border-top: 1px solid var(--card-border);
+  border-top: 0;
   position: relative;
   overflow: hidden;
 }
@@ -12,9 +12,21 @@
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.04) 0%, rgba(255, 255, 255, 0.08) 100%);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.015) 0%, rgba(255, 255, 255, 0.06) 34%, rgba(255, 255, 255, 0.08) 100%);
   pointer-events: none;
   opacity: 0.65;
+}
+
+.footer::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: min(68vw, 760px);
+  height: 1px;
+  transform: translateX(-50%);
+  background: linear-gradient(90deg, transparent, rgba(255, 183, 0, 0.28), transparent);
+  pointer-events: none;
 }
 
 .content {

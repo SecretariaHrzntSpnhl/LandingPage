@@ -10,37 +10,39 @@ interface Props {
 
 const QUESTIONS = [
   {
-    q: '"Este fin de semana, yo ____ (ir) al cine con mis amigos."',
-    verb: 'ir',
+    q: '"Este año, yo ____ (viajar) a tres países diferentes."',
+    verb: 'viajar',
     tense: 'Pretérito perfecto',
-    a: 'he ido',
-    explanation: '"Este fin de semana" é um período não terminado, usa-se o Pretérito Perfeito "he ido".',
+    a: 'he viajado',
+    explanation: '"Este año" é um período não terminado, usa-se o Pretérito Perfeito "he viajado".',
   },
   {
-    q: '"¿Qué ____ (hacer) tú ayer por la tarde?"',
-    verb: 'hacer',
+    q: '"La semana pasada, nosotros ____ (presentar) el proyecto al cliente."',
+    verb: 'presentar',
     tense: 'Pretérito indefinido',
-    a: 'hiciste',
-    explanation: '"Ayer" é um tempo terminado, usa-se o Pretérito Indefinido "hiciste".',
+    a: 'presentamos',
+    explanation: '"La semana pasada" é um tempo terminado, usa-se o Pretérito Indefinido "presentamos".',
   },
   {
-    q: '"Cuando era niño, yo ____ (vivir) en un pueblo pequeño."',
-    verb: 'vivir', tense: 'Pretérito imperfecto', a: 'vivía',
-    explanation: '"Cuando era niño" descreve hábito ou contexto no passado, usa-se o Pretérito Imperfeito "vivía".',
+    q: '"De pequeño, yo ____ (jugar) en la calle con mis vecinos."',
+    verb: 'jugar',
+    tense: 'Pretérito imperfecto',
+    a: 'jugaba',
+    explanation: '"De pequeño" descreve um hábito no passado, usa-se o Pretérito Imperfeito "jugaba".',
   },
   {
-    q: '"Yo ____ (estudiar) español desde hace dos años."',
-    verb: 'estudiar',
+    q: '"¿Alguna vez ____ (trabajar) en una empresa internacional?"',
+    verb: 'trabajar',
     tense: 'Pretérito perfecto',
-    a: 'he estudiado',
-    explanation: '"Desde hace dos años" indica ação que começou no passado e continua, usa-se o Pretérito Perfeito "he estudiado".',
+    a: 'has trabajado',
+    explanation: '"Alguna vez" refere-se a uma experiência de vida, usa-se o Pretérito Perfeito "has trabajado".',
   },
   {
-    q: '"¿Alguna vez ____ (visitar) México?"',
+    q: '"El mes pasado, yo ____ (visitar) a mi familia en Madrid."',
     verb: 'visitar',
-    tense: 'Pretérito perfecto',
-    a: 'has visitado',
-    explanation: '"Alguna vez" refere-se a uma experiência de vida, usa-se o Pretérito Perfeito "has visitado".',
+    tense: 'Pretérito indefinido',
+    a: 'visité',
+    explanation: '"El mes pasado" é um tempo terminado, usa-se o Pretérito Indefinido "visité".',
   },
 ];
 
@@ -94,7 +96,7 @@ export default function Game3({ onComplete, isCompleted }: Props) {
     return (
       <div className={`${styles.gameCard} ${styles.completed}`}>
         <h3 className={styles.gameTitle}>Contando Histórias</h3>
-        <p>✅ Nível concluído!</p>
+        <p><span className={`${styles.resultIcon} ${styles.correctIcon}`} aria-hidden="true">✓</span>Nível concluído!</p>
       </div>
     );
   }
@@ -103,6 +105,13 @@ export default function Game3({ onComplete, isCompleted }: Props) {
     <>
       <div className={styles.gameCard}>
         <h3 className={styles.gameTitle}>Nível 3 · Contando Histórias</h3>
+        <div className={styles.progressMeta}>
+          <span>Progresso</span>
+          <span>{currentQ + 1}/5</span>
+        </div>
+        <div className={styles.progressTrack} aria-label={`Pergunta ${currentQ + 1} de 5`}>
+          <div className={styles.progressValue} style={{ width: `${((currentQ + 1) / 5) * 100}%` }} />
+        </div>
         <p className={styles.questionText}>
           {QUESTIONS[currentQ].q.replace('____', '_____')} <br />
           <small style={{ color: 'var(--blue-sky)', fontSize: '0.9rem' }}>
@@ -144,8 +153,8 @@ export default function Game3({ onComplete, isCompleted }: Props) {
               Você terminou o módulo com {correctCount} acertos e {incorrectCount} erros.
             </p>
             <div className={styles.summaryStats}>
-              <div className={styles.summaryStat}>✅ Acertos: {correctCount}</div>
-              <div className={styles.summaryStat}>❌ Erros: {incorrectCount}</div>
+              <div className={styles.summaryStat}><span className={`${styles.resultIcon} ${styles.correctIcon}`} aria-hidden="true">✓</span>Acertos: {correctCount}</div>
+              <div className={styles.summaryStat}><span className={`${styles.resultIcon} ${styles.incorrectIcon}`} aria-hidden="true">!</span>Erros: {incorrectCount}</div>
             </div>
             <a
               className={styles.whatsappLink}
@@ -157,14 +166,14 @@ export default function Game3({ onComplete, isCompleted }: Props) {
             </a>
             <div className={styles.finishModalButtons}>
               <button type="button" className={styles.finishModalBtn} onClick={resetLevel}>
-                Repetir nivel
+                Repetir nível
               </button>
               <button
                 type="button"
                 className={`${styles.finishModalBtn} ${styles.primaryBtn}`}
                 onClick={() => onComplete(answers, correctCount)}
               >
-                Seguir al próximo nivel 4
+                Seguir para o próximo nível 4
               </button>
             </div>
           </div>

@@ -15,6 +15,7 @@
   gap: var(--section-gap);
   padding: clamp(22px, 4vw, 40px) var(--section-padding-inline) 0;
   margin-bottom: 0;
+  touch-action: pan-y;
 }
 
 .overlay {
@@ -37,6 +38,14 @@
   margin-top: clamp(10px, 2vw, 18px);
   will-change: transform;
   transform: translateX(var(--track-offset, 0px));
+  cursor: grab;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+}
+
+.carouselContainer[data-dragging='true'] .track {
+  cursor: grabbing;
 }
 
 .heroTopBrand {
@@ -127,7 +136,7 @@
   font-size: clamp(2.2rem, 4vw, 3.8rem);
   line-height: 1.02;
   white-space: normal;
-  color: #000000;
+  color: var(--hero-title-color);
   text-shadow: 0 1px 0 rgba(255, 255, 255, 0.28), 0 8px 18px rgba(0, 0, 0, 0.08);
   margin: 0;
   max-width: 14ch;

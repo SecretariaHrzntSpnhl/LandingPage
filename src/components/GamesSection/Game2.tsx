@@ -1,7 +1,7 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import styles from './Game.module.css';
 import { playSound } from '../../utils/sound';
-import type { GameAnswer } from './gameStorage';
+import { shuffleArray, type GameAnswer } from './gameStorage';
 
 interface Props {
   onComplete: (answers: GameAnswer[], correctCount: number) => void;
@@ -10,35 +10,50 @@ interface Props {
 
 const QUESTIONS = [
   {
-    q: 'A forma correta de "Yo soy profesora" para um homem é "Yo soy profesor".',
-    a: true,
+    q: 'Você está em uma loja de roupas e quer provar uma camisa. O que você diz ao vendedor?',
+    options: ['¿Puedo probarme esta camisa?', '¿Puedo probar esta camisa?', '¿Puedo vestirme esta camisa?', '¿Puedo ponerme esta camisa?'],
+    correct: 0,
+    explanation: '"Probarse" é o verbo reflexivo correto para experimentar roupa em si mesmo.',
   },
   {
-    q: 'Em espanhol, "Eu como" se traduz como "Yo come".',
-    a: false,
+    q: 'Você está em um restaurante e quer pedir a conta. O que você diz?',
+    options: ['¿Me trae la cuenta, por favor?', '¿Me trae el recibo, por favor?', '¿Me trae el ticket, por favor?', '¿Me trae la factura, por favor?'],
+    correct: 0,
+    explanation: '"La cuenta" é a forma correta para pedir a conta no restaurante.',
   },
   {
-    q: '"Mi hermana es alta y delgada" descreve um aspecto físico.',
-    a: true,
+    q: 'Como você pergunta a idade de alguém em espanhol?',
+    options: ['¿Cuántos años tienes?', '¿Cuántas años tienes?', '¿Cuántos años tenés?', '¿Cuánta edad tienes?'],
+    correct: 0,
+    explanation: '"¿Cuántos años tienes?" é a forma correta. "Años" é masculino plural, então usamos "cuántos".',
   },
   {
-    q: 'A tradução de "Eu tenho um gato" em espanhol é "Yo tengo una casa".',
-    a: false,
+    q: 'Você quer saber o que uma pessoa faz da vida. Como você pergunta?',
+    options: ['¿A qué te dedicas?', '¿Qué haces en la vida?', '¿Qué trabajas?', '¿Cuál es tu trabajo?'],
+    correct: 0,
+    explanation: '"¿A qué te dedicas?" é a forma mais natural e comum para perguntar a profissão de alguém.',
   },
   {
-    q: 'Para dizer "estar cansado" em espanhol, usa-se o verbo "estar".',
-    a: true,
+    q: 'Você quer convidar um amigo para sair no sábado. Como você diz?',
+    options: ['¿Quieres salir el sábado?', '¿Quieres salir en sábado?', '¿Quieres salir a sábado?', '¿Quieres salir por sábado?'],
+    correct: 0,
+    explanation: '"El sábado" é a forma correta para dias da semana em espanhol.',
   },
 ];
 
 export default function Game2({ onComplete, isCompleted }: Props) {
   const [currentQ, setCurrentQ] = useState(0);
-  const [selectedAns, setSelectedAns] = useState<boolean | null>(null);
+  const [selectedAns, setSelectedAns] = useState<string | null>(null);
   const [answers, setAnswers] = useState<GameAnswer[]>([]);
   const [showSummary, setShowSummary] = useState(false);
+  const [shuffledOptions, setShuffledOptions] = useState<string[]>([]);
 
   const correctCount = answers.filter((item) => item.isCorrect).length;
   const incorrectCount = answers.length - correctCount;
+
+  useEffect(() => {
+    setShuffledOptions(shuffleArray(QUESTIONS[currentQ].options));
+  }, [currentQ]);
 
   const resetLevel = () => {
     setCurrentQ(0);
@@ -47,11 +62,11 @@ export default function Game2({ onComplete, isCompleted }: Props) {
     setShowSummary(false);
   };
 
-  const handleSelect = (opt: boolean) => {
-    if (selectedAns !== null || showSummary) return;
+  const handleSelect = (opt: string) => {
+    if (selectedAns || showSummary) return;
     setSelectedAns(opt);
 
-    const isCorrect = opt === QUESTIONS[currentQ].a;
+    const isCorrect = QUESTIONS[currentQ].options.indexOf(opt) === QUESTIONS[currentQ].correct;
     const nextAnswers = [...answers, { question: QUESTIONS[currentQ].q, isCorrect }];
     setAnswers(nextAnswers);
 
@@ -71,7 +86,7 @@ export default function Game2({ onComplete, isCompleted }: Props) {
     return (
       <div className={`${styles.gameCard} ${styles.completed}`}>
         <h3 className={styles.gameTitle}>Descrevendo o Mundo</h3>
-        <p>✅ Nível concluído!</p>
+        <p><span className={`${styles.resultIcon} ${styles.correctIcon}`} aria-hidden="true">✓</span>Nível concluído!</p>
       </div>
     );
   }
@@ -80,23 +95,26 @@ export default function Game2({ onComplete, isCompleted }: Props) {
     <>
       <div className={styles.gameCard}>
         <h3 className={styles.gameTitle}>Nível 2 · Descrevendo o Mundo</h3>
+        <div className={styles.progressMeta}>
+          <span>Progresso</span>
+          <span>{currentQ + 1}/5</span>
+        </div>
+        <div className={styles.progressTrack} aria-label={`Pergunta ${currentQ + 1} de 5`}>
+          <div className={styles.progressValue} style={{ width: `${((currentQ + 1) / 5) * 100}%` }} />
+        </div>
         <p className={styles.questionText}>{QUESTIONS[currentQ].q}</p>
 
-        <div className={styles.optionsGrid} style={{ gridTemplateColumns: '1fr 1fr' }}>
-          <button
-            onClick={() => handleSelect(true)}
-            disabled={selectedAns !== null}
-            className={`${styles.optionBtn} ${selectedAns === true ? (QUESTIONS[currentQ].a === true ? styles.correct : styles.incorrect) : ''}`}
-          >
-            Verdadeiro
-          </button>
-          <button
-            onClick={() => handleSelect(false)}
-            disabled={selectedAns !== null}
-            className={`${styles.optionBtn} ${selectedAns === false ? (QUESTIONS[currentQ].a === false ? styles.correct : styles.incorrect) : ''}`}
-          >
-            Falso
-          </button>
+        <div className={styles.optionsGrid}>
+          {shuffledOptions.map((opt) => (
+            <button
+              key={opt}
+              onClick={() => handleSelect(opt)}
+              disabled={!!selectedAns}
+              className={`${styles.optionBtn} ${selectedAns === opt ? (QUESTIONS[currentQ].options.indexOf(opt) === QUESTIONS[currentQ].correct ? styles.correct : styles.incorrect) : ''}`}
+            >
+              {opt}
+            </button>
+          ))}
         </div>
       </div>
 
@@ -108,8 +126,8 @@ export default function Game2({ onComplete, isCompleted }: Props) {
               Você concluiu o módulo com {correctCount} acertos e {incorrectCount} erros.
             </p>
             <div className={styles.summaryStats}>
-              <div className={styles.summaryStat}>✅ Acertos: {correctCount}</div>
-              <div className={styles.summaryStat}>❌ Erros: {incorrectCount}</div>
+              <div className={styles.summaryStat}><span className={`${styles.resultIcon} ${styles.correctIcon}`} aria-hidden="true">✓</span>Acertos: {correctCount}</div>
+              <div className={styles.summaryStat}><span className={`${styles.resultIcon} ${styles.incorrectIcon}`} aria-hidden="true">!</span>Erros: {incorrectCount}</div>
             </div>
             <a
               className={styles.whatsappLink}
@@ -121,14 +139,14 @@ export default function Game2({ onComplete, isCompleted }: Props) {
             </a>
             <div className={styles.finishModalButtons}>
               <button type="button" className={styles.finishModalBtn} onClick={resetLevel}>
-                Repetir nivel
+                Repetir nível
               </button>
               <button
                 type="button"
                 className={`${styles.finishModalBtn} ${styles.primaryBtn}`}
                 onClick={() => onComplete(answers, correctCount)}
               >
-                Seguir al próximo nivel 3
+                Seguir para o próximo nível 3
               </button>
             </div>
           </div>

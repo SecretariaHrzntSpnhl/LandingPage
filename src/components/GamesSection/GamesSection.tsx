@@ -26,7 +26,12 @@ const GAMES: GameMeta[] = [
 ];
 
 export default function GamesSection() {
-  const [unlockedLevel, setUnlockedLevel] = useState(() => getUnlockedLevel(loadProgress().gameHistory));
+  const [unlockedLevel, setUnlockedLevel] = useState(() => {
+    const initialProgress = loadProgress();
+    return !initialProgress.registered
+      ? 0
+      : getUnlockedLevel(initialProgress.gameHistory);
+  });
   const [showModal, setShowModal] = useState(false);
   const [progress, setProgress] = useState<ProgressData>(() => loadProgress());
   const [showResults, setShowResults] = useState(false);
@@ -41,6 +46,7 @@ export default function GamesSection() {
 
   const handleRegistrationSuccess = () => {
     setShowModal(false);
+    setProgress((current) => ({ ...current, registered: true }));
     setUnlockedLevel((current) => Math.max(current, 1));
     playSound('success');
     fireConfetti();
@@ -100,13 +106,14 @@ export default function GamesSection() {
 
   return (
     <section className={`${styles.section} ${styles.heroAfterHero} reveal`}>
+      <div className={styles.horizonBackdrop} aria-hidden="true" />
       <div className={styles.container}>
-        <div className={styles.header}>
+        <div className={styles.header} data-reveal data-effect="soft-glow" data-delay="0">
           <h2>Escalada de Proficiência</h2>
-          <p>Suba de nível enquanto se diverte. Cada jogo é um passo mais próximo da fluência em espanhol.</p>
+          <p>Cada jogo é um degrau. Cada degrau, uma conquista. Divirta-se enquanto sobe rumo à fluência.</p>
         </div>
 
-        <div className={styles.gamesContainer}>
+        <div className={styles.gamesContainer} data-reveal data-effect="stack-appear" data-delay="80">
           {unlockedLevel < 6 && (
             <div className={styles.deckStack}>
               {GAMES.map((game) => {
@@ -115,64 +122,67 @@ export default function GamesSection() {
                 const isLocked = game.level > progressLevel;
                 const isNext = isLocked && game.level === progressLevel + 1;
                 const showStartForFirst = unlockedLevel === 0 && game.level === 1;
-              const cardClass = [
-                styles.levelCard,
-                isCurrent ? styles.currentCard : '',
-                isCompleted ? styles.completedCard : '',
-                isNext ? styles.nextCard : '',
-                isLocked ? styles.lockedCard : '',
-              ]
-                .filter(Boolean)
-                .join(' ');
+                const cardClass = [
+                  styles.levelCard,
+                  isCurrent ? styles.currentCard : '',
+                  isCompleted ? styles.completedCard : '',
+                  isNext ? styles.nextCard : '',
+                  isLocked ? styles.lockedCard : '',
+                ]
+                  .filter(Boolean)
+                  .join(' ');
 
-              return (
-                <article
-                  key={game.level}
-                  className={cardClass}
-                  style={{ '--card-index': game.level } as CSSProperties}
-                >
-                  <div className={styles.cardTopLine}>
-                    <span className={styles.levelPill}>Nível {game.level}</span>
-                    <span className={styles.cardStatus}>
-                      {isCompleted
-                        ? 'Concluído'
-                        : showStartForFirst
-                          ? 'Pronto para iniciar'
-                          : isCurrent
-                            ? 'Em jogo'
-                            : isNext
-                              ? 'Próximo desafio'
-                              : 'Aguardando desbloqueio'}
-                    </span>
-                  </div>
-
-                  <h3>{game.title}</h3>
-                  <p>{game.subtitle}</p>
-
-                  {isCurrent && unlockedLevel > 0 && (
-                    <div className={styles.activeGameShell}>{renderGame(game.level)}</div>
-                  )}
-
-                  {showStartForFirst && (
-                    <div className={styles.lockedCardContent}>
-                      <p>
-                        Registre-se gratuitamente para liberar a primeira seção e iniciar o seu desafio interativo.
-                      </p>
-                      <button className={styles.startBtn} onClick={handleStartClick}>
-                        INICIAR DESAFIO
-                      </button>
+                return (
+                  <article
+                    key={game.level}
+                    className={cardClass}
+                    data-reveal
+                    data-effect="card-float"
+                    data-delay={game.level * 90}
+                    style={{ '--card-index': game.level } as CSSProperties}
+                  >
+                    <div className={styles.cardTopLine}>
+                      <span className={styles.levelPill}>Nível {game.level}</span>
+                      <span className={styles.cardStatus}>
+                        {isCompleted
+                          ? 'Concluído'
+                          : showStartForFirst
+                            ? 'Pronto para iniciar'
+                            : isCurrent
+                              ? 'Em jogo'
+                              : isNext
+                                ? 'Próximo desafio'
+                                : 'Aguardando desbloqueio'}
+                      </span>
                     </div>
-                  )}
 
-                  {isLocked && !showStartForFirst && (
-                    <div className={styles.lockHint}>
-                      {isNext
-                        ? 'Conclua a carta atual para revelar esta próxima etapa.'
-                        : 'Esta etapa permanece em sombra até seu avanço contínuo.'}
-                    </div>
-                  )}
-                </article>
-              );
+                    <h3>{game.title}</h3>
+                    <p>{game.subtitle}</p>
+
+                    {isCurrent && unlockedLevel > 0 && (
+                      <div className={styles.activeGameShell}>{renderGame(game.level)}</div>
+                    )}
+
+                    {showStartForFirst && (
+                      <div className={styles.lockedCardContent}>
+                        <p>
+                          Registre-se gratuitamente para liberar a primeira seção e iniciar o seu desafio interativo.
+                        </p>
+                        <button className={styles.startBtn} onClick={handleStartClick}>
+                          INICIAR DESAFIO
+                        </button>
+                      </div>
+                    )}
+
+                    {isLocked && !showStartForFirst && (
+                      <div className={styles.lockHint}>
+                        {isNext
+                          ? 'Conclua a carta atual para revelar esta próxima etapa.'
+                          : 'Esta etapa permanece em sombra até seu avanço contínuo.'}
+                      </div>
+                    )}
+                  </article>
+                );
               })}
             </div>
           )}
@@ -188,8 +198,8 @@ export default function GamesSection() {
                 <strong>{progress.totalStats.currentMedal.title}</strong>
               </div>
               <div className={styles.resultStats}>
-                <div>✅ Acertos: {progress.totalStats.correctAnswers}</div>
-                <div>❌ Erros: {progress.totalStats.incorrectAnswers}</div>
+                <div><span className={`${styles.resultIcon} ${styles.correctIcon}`} aria-hidden="true">✓</span>Acertos: {progress.totalStats.correctAnswers}</div>
+                <div><span className={`${styles.resultIcon} ${styles.incorrectIcon}`} aria-hidden="true">!</span>Erros: {progress.totalStats.incorrectAnswers}</div>
                 <div>🎮 Jogos concluídos: {progress.totalStats.completedGames}/5</div>
               </div>
               {showResults && (

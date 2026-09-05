@@ -50,6 +50,8 @@
   --accent-soft: rgba(255, 183, 0, 0.14);
   --hero-gradient: linear-gradient(135deg, rgba(1, 37, 97, 0.92) 0%, rgba(18, 59, 110, 0.86) 35%, rgba(7, 24, 51, 0.8) 100%);
   --hero-overlay: linear-gradient(to bottom, rgba(1, 37, 97, 0.16), rgba(1, 37, 97, 0.72));
+  --focus-ring: 0 0 0 3px rgba(255, 183, 0, 0.28);
+  --premium-glow: 0 0 0 1px rgba(255, 183, 0, 0.12), 0 18px 42px rgba(0, 0, 0, 0.22);
 }
 
 :root[data-theme='light'] {
@@ -91,6 +93,7 @@
 html {
   scroll-behavior: smooth;
   -webkit-overflow-scrolling: touch;
+  -webkit-tap-highlight-color: transparent;
 }
 
 body {
@@ -114,6 +117,16 @@ button {
   cursor: pointer;
   border: none;
   font-family: inherit;
+  -webkit-tap-highlight-color: transparent;
+}
+
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
 }
 
 input,

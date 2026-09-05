@@ -29,9 +29,19 @@ export type TotalStats = {
 export type ProgressData = {
   gameHistory: Record<string, GameResult>;
   totalStats: TotalStats;
+  registered: boolean;
 };
 
 export const STORAGE_KEY = 'horizonte-espanhol-games-v1';
+
+export function shuffleArray<T>(array: T[]): T[] {
+  const copy = [...array];
+  for (let index = copy.length - 1; index > 0; index -= 1) {
+    const randomIndex = Math.floor(Math.random() * (index + 1));
+    [copy[index], copy[randomIndex]] = [copy[randomIndex], copy[index]];
+  }
+  return copy;
+}
 
 export function createEmptyProgress(): ProgressData {
   return {
@@ -48,6 +58,7 @@ export function createEmptyProgress(): ProgressData {
       },
       completedGames: 0,
     },
+    registered: false,
   };
 }
 
@@ -113,7 +124,8 @@ export function loadProgress(): ProgressData {
     const gameHistory = parsed.gameHistory ?? {};
     return {
       gameHistory,
-      totalStats: parsed.totalStats ?? calculateStats(gameHistory),
+      totalStats: calculateStats(gameHistory),
+      registered: parsed.registered ?? Object.keys(gameHistory).length > 0,
     };
   } catch {
     return createEmptyProgress();
