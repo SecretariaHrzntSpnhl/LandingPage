@@ -215,7 +215,7 @@ export default function GamesSection() {
               </div>
               <p className={styles.resultMessage}>
                 {showResults
-                  ? 'Continue praticando e transforme esse avanço em fluência real com nossos cursos de espanhol.'
+                  ? 'Toda semana, conteúdo novo para praticar. Continue praticando e transforme esse avanço em fluência real com nossos cursos de espanhol.'
                   : 'Seu percurso está salvo. Você pode revisar todos os desafios quando quiser.'}
               </p>
               <button type="button" className={styles.replayBtn} onClick={handleReplay}>
