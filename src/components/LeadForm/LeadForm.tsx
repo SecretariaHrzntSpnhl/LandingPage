@@ -81,6 +81,9 @@ export default function LeadForm() {
   const [selectedCountry, setSelectedCountry] = useState(PHONE_OPTIONS[0].code);
   const [filledFields, setFilledFields] = useState(0);
   const [isCompletionPulse, setIsCompletionPulse] = useState(false);
+  const [showTerms, setShowTerms] = useState(false);
+  const [showConsentPrompt, setShowConsentPrompt] = useState(false);
+  const [consentAttention, setConsentAttention] = useState(false);
   const formRef = useRef<HTMLFormElement>(null);
 
   const selectedCountryData = PHONE_OPTIONS.find((option) => option.code === selectedCountry) ?? PHONE_OPTIONS[0];
@@ -105,6 +108,26 @@ export default function LeadForm() {
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    const form = e.currentTarget;
+    const consentField = form.elements.namedItem('consentimentoContato');
+    const consentInput = consentField instanceof HTMLInputElement ? consentField : null;
+
+    if (!consentInput?.checked) {
+      setConsentAttention(true);
+      consentInput?.focus();
+      setShowConsentPrompt(true);
+      if ('vibrate' in navigator) {
+        navigator.vibrate([80, 40, 80]);
+      }
+      window.setTimeout(() => setConsentAttention(false), 550);
+      return;
+    }
+
+    if (!form.checkValidity()) {
+      form.querySelector<HTMLElement>(':invalid')?.focus();
+      return;
+    }
+
     setStatus('submitting');
     setIsCompletionPulse(true);
     const submissionStartedAt = Date.now();
@@ -113,7 +136,6 @@ export default function LeadForm() {
       window.setTimeout(callback, remainingAnimationTime);
     };
 
-    const form = e.currentTarget;
     const formData = new FormData(form);
     const encodedFormData = new URLSearchParams();
 
@@ -122,14 +144,6 @@ export default function LeadForm() {
         encodedFormData.append(key, value);
       }
     });
-
-    const invalidField = form.querySelector<HTMLElement>(':invalid');
-    if (invalidField) {
-      invalidField.focus();
-      setStatus('idle');
-      setIsCompletionPulse(false);
-      return;
-    }
 
     fetch('/', {
       method: 'POST',
@@ -161,6 +175,20 @@ export default function LeadForm() {
       });
   };
 
+  const acceptAndSubmit = () => {
+    const form = formRef.current;
+    const consentField = form?.elements.namedItem('consentimentoContato');
+
+    if (!(consentField instanceof HTMLInputElement) || !form) {
+        return;
+    }
+
+    consentField.checked = true;
+    setConsentAttention(false);
+    setShowConsentPrompt(false);
+    form.requestSubmit();
+  };
+
   return (
     <section className={`${styles.section} reveal`} data-reveal data-effect="panel-sweep" data-delay="0">
       <div className={styles.container}>
@@ -178,7 +206,7 @@ export default function LeadForm() {
           </div>
         </div>
 
-        <form ref={formRef} className={styles.form} onInput={handleFormInput} onSubmit={handleSubmit} data-netlify="true" name="consulta-directa" method="POST" action="/" data-reveal data-effect="panel-sweep" data-delay="180">
+        <form ref={formRef} className={`${styles.form} ${consentAttention ? styles.formShake : ''}`} onInput={handleFormInput} onSubmit={handleSubmit} noValidate data-netlify="true" name="consulta-directa" method="POST" action="/" data-reveal data-effect="panel-sweep" data-delay="180">
           <input type="hidden" name="form-name" value="consulta-directa" />
           <input type="hidden" name="utmSource" value={getLeadTrackingFields().utmSource} />
           <input type="hidden" name="utmMedium" value={getLeadTrackingFields().utmMedium} />
@@ -221,7 +249,7 @@ export default function LeadForm() {
               <input
                 type="tel"
                 name="telefone"
-                placeholder={`${selectedCountryData.dialCode} · ${selectedCountryData.example}`}
+                placeholder={selectedCountryData.example}
                 required
                 className={styles.phoneInput}
                 inputMode="tel"
@@ -233,9 +261,22 @@ export default function LeadForm() {
           <div className={styles.formGroup}>
             <textarea name="consulta" placeholder="Como podemos ajudar?" required rows={4}></textarea>
           </div>
-          <label className={styles.consent}>
-            <input type="checkbox" name="consentimentoContato" value="sim" required />
-            <span>Autorizo o contato da equipe sobre cursos e atendimento.</span>
+          <label className={`${styles.consent} ${consentAttention ? styles.consentAttention : ''}`}>
+            <input type="checkbox" name="consentimentoContato" value="sim" required aria-invalid={consentAttention} />
+            <span>
+              Aceito os{' '}
+              <button
+                type="button"
+                className={styles.termsLink}
+                onClick={(event) => {
+                  event.preventDefault();
+                  setShowTerms(true);
+                }}
+              >
+                termos e condições
+              </button>
+              .
+            </span>
           </label>
 
           <button type="submit" className={`${styles.submitBtn} ${completionPercentage === 100 ? styles.submitBtnReady : ''}`} disabled={status === 'submitting'}>
@@ -246,6 +287,55 @@ export default function LeadForm() {
           {status === 'error' && <p role="alert">Não foi possível enviar agora. Tente novamente.</p>}
         </form>
       </div>
+      {showTerms && (
+        <div className={styles.termsOverlay} role="presentation" onClick={() => setShowTerms(false)}>
+          <div
+            className={styles.termsDialog}
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="lead-terms-title"
+            onClick={(event) => event.stopPropagation()}
+          >
+            <h3 id="lead-terms-title">Termos e condições</h3>
+            <p>
+              Os dados informados neste formulário serão utilizados exclusivamente pelo departamento de vendas da
+              Horizonte Espanhol para contato sobre cursos, atendimento e oportunidades de matrícula.
+            </p>
+            <p>
+              O tratamento dos dados segue a Lei Geral de Proteção de Dados Pessoais (LGPD), Lei nº 13.709/2018,
+              vigente no Brasil.
+            </p>
+            <button type="button" className={styles.termsCloseBtn} onClick={() => setShowTerms(false)}>
+              Entendi
+            </button>
+          </div>
+        </div>
+      )}
+      {showConsentPrompt && (
+        <div className={styles.termsOverlay} role="presentation" onClick={() => setShowConsentPrompt(false)}>
+          <div
+            className={`${styles.termsDialog} ${styles.consentPrompt}`}
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="consent-prompt-title"
+            onClick={(event) => event.stopPropagation()}
+          >
+            <h3 id="consent-prompt-title">Aceite os termos e condições</h3>
+            <p>
+              Para enviar sua consulta, é necessário aceitar os termos e condições. Seus dados serão usados
+              exclusivamente pelo departamento de vendas da Horizonte Espanhol.
+            </p>
+            <div className={styles.consentPromptActions}>
+              <button type="button" className={styles.termsCloseBtn} onClick={acceptAndSubmit}>
+                Aceitar e enviar
+              </button>
+              <button type="button" className={styles.termsSecondaryBtn} onClick={() => setShowConsentPrompt(false)}>
+                Voltar
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </section>
   );
 }
