@@ -1078,7 +1078,7 @@ export default function PodcastShowcase() {
                     className={styles.nextEpisodeButton}
                     onClick={handleContinueToNextEpisode}
                   >
-                    Conhecer episódio 2
+                    Conheça o episódio 2
                   </button>
                 </div>
               ) : (
