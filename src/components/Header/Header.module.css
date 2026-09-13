@@ -668,14 +668,20 @@
   }
 
   .menuButton {
-    width: 38px;
-    height: 38px;
-    min-width: 38px;
-    min-height: 38px;
+    width: 36px;
+    height: 36px;
+    min-width: 36px;
+    min-height: 36px;
   }
 
   .actions {
-    min-width: 38px;
+    min-width: 36px;
+  }
+
+  .menuIcon,
+  .menuIcon::before,
+  .menuIcon::after {
+    width: 15px;
   }
 
   .mobileMenu {
@@ -757,6 +763,15 @@
     grid-column: 2 / 3;
   }
 
+  .signatureTitle {
+    font-size: 0.9rem;
+  }
+
+  .signatureSubtitle {
+    font-size: 0.6rem;
+    letter-spacing: 0.14em;
+  }
+
   .actions {
     position: relative;
     gap: 4px;
@@ -765,6 +780,17 @@
     min-width: 44px;
     grid-column: 3 / 4;
     transform: none;
+  }
+}
+
+@media (max-width: 360px) {
+  .signatureTitle {
+    font-size: 0.82rem;
+  }
+
+  .signatureSubtitle {
+    font-size: 0.56rem;
+    letter-spacing: 0.12em;
   }
 }
 
