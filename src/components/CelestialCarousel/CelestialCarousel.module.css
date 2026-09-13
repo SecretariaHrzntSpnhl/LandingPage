@@ -191,7 +191,7 @@
     flex-direction: row;
     align-items: center;
     overflow: visible;
-    padding-bottom: 36px;
+    padding-bottom: 14px;
     margin-top: 38px;
   }
 
@@ -252,6 +252,7 @@
 
   .track {
     margin-top: 24px;
+    padding-bottom: 10px;
   }
 
   .heroText {
@@ -294,6 +295,7 @@
 
   .track {
     margin-top: 22px;
+    padding-bottom: 8px;
   }
 
   .heroText {
@@ -337,6 +339,7 @@
 
   .track {
     margin-top: 20px;
+    padding-bottom: 6px;
   }
 
   .heroText {
@@ -380,6 +383,7 @@
 
   .track {
     margin-top: 18px;
+    padding-bottom: 4px;
   }
 
   .heroText {
@@ -423,6 +427,7 @@
 
   .track {
     margin-top: 16px;
+    padding-bottom: 2px;
   }
 
   .heroText {
