@@ -50,7 +50,7 @@ const EPISODES: Episode[] = [
       'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=900&h=1400&q=80',
     featuredImage:
       'https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=1200&h=1500&q=80',
-    description: 'Conheça o método Horizonte e avance do vocabulário à fluência em cinco jogos.',
+    description: 'Ouça duas opiniões sobre nossos jogos e conheça os cinco níveis da escala de proficiência.',
   },
   {
     id: 2,

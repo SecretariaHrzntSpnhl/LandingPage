@@ -1,4 +1,5 @@
 import { useState, type FormEvent } from 'react';
+import { createPortal } from 'react-dom';
 import styles from './GamesSection.module.css';
 import { getLeadTrackingFields } from '../../utils/leadTracking';
 
@@ -48,7 +49,8 @@ export default function RegistrationModal({ onClose, onSuccess }: Props) {
       });
   };
 
-  return (
+  return createPortal(
+    (
     <div className={styles.modalOverlay} role="dialog" aria-modal="true" aria-labelledby="registration-title">
       <div className={styles.modalContent}>
         <button type="button" className={styles.closeBtn} onClick={onClose} aria-label="Fechar cadastro">×</button>
@@ -134,5 +136,7 @@ export default function RegistrationModal({ onClose, onSuccess }: Props) {
         </div>
       )}
     </div>
+    ),
+    document.body
   );
 }

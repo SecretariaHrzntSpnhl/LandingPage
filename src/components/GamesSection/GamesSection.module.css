@@ -276,6 +276,8 @@
 .levelCard {
   --card-index: 1;
   position: relative;
+  width: 100%;
+  min-width: 0;
   margin-top: 0;
   border-radius: 24px;
   padding: clamp(1.25rem, 2.4vw, 1.75rem);
@@ -309,6 +311,7 @@
 
 .cardTopLine {
   display: flex;
+  min-width: 0;
   justify-content: space-between;
   align-items: center;
   gap: var(--space-3);
@@ -328,6 +331,8 @@
 }
 
 .cardStatus {
+  min-width: 0;
+  overflow-wrap: anywhere;
   font-size: 0.78rem;
   color: rgba(176, 217, 247, 0.78);
   letter-spacing: 0.07em;
@@ -696,6 +701,7 @@
   max-height: calc(100dvh - 2rem);
   overflow-y: auto;
   position: relative;
+  margin: auto;
   animation: slideUp 0.4s ease-out;
 }
 
@@ -823,6 +829,14 @@
 }
 
 @media (max-width: 640px) {
+  .modalOverlay {
+    align-items: flex-start;
+  }
+
+  .modalContent {
+    margin: 0 auto;
+  }
+
   .section {
     padding: 40px 10px 24px;
   }
