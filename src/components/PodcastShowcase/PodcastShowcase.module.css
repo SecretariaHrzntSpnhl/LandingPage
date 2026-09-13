@@ -2057,16 +2057,63 @@
 
 .copyOverlay p {
   color: rgba(255, 255, 255, 0.88);
-  font-size: clamp(0.52rem, 1.9vw, 0.76rem);
-  line-height: 1.22;
+  font-size: clamp(0.72rem, 1.45vw, 0.98rem);
+  line-height: 1.4;
   font-weight: 500;
-  max-width: 20ch;
+  max-width: 42ch;
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 3;
   overflow: hidden;
   text-shadow: 0 4px 10px rgba(0,0,0,0.32);
   text-wrap: pretty;
+}
+
+.episodeComplete {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.7rem;
+  max-width: 38rem;
+  padding: 1rem 0;
+}
+
+.episodeComplete strong {
+  color: #ffe3a2;
+  font-size: clamp(1rem, 2vw, 1.35rem);
+  line-height: 1.25;
+}
+
+.episodeComplete p {
+  max-width: 58ch;
+  margin: 0;
+  color: rgba(255, 255, 255, 0.86);
+  font-size: clamp(0.82rem, 1.4vw, 1rem);
+  line-height: 1.45;
+}
+
+.nextEpisodeButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 2.9rem;
+  padding: 0.7rem 1.35rem;
+  border: 1px solid rgba(255, 222, 146, 0.7);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.08);
+  color: #fff3d0;
+  font-size: 0.72rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transition: transform 0.18s ease, background 0.18s ease, border-color 0.18s ease;
+}
+
+.nextEpisodeButton:hover,
+.nextEpisodeButton:focus-visible {
+  transform: translateY(-1px);
+  background: rgba(255, 194, 82, 0.18);
+  border-color: rgba(255, 222, 146, 1);
 }
 
 .playerRow {
@@ -2672,6 +2719,8 @@
 
   .copyOverlay p {
     max-width: 18.5ch;
+    font-size: 0.72rem;
+    line-height: 1.35;
   }
 
   .playerRow {
