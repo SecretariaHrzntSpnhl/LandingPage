@@ -667,6 +667,46 @@
     padding: 2px var(--section-padding-inline) 2px;
   }
 
+  .menuButton {
+    width: 38px;
+    height: 38px;
+    min-width: 38px;
+    min-height: 38px;
+  }
+
+  .actions {
+    min-width: 38px;
+  }
+
+  .mobileMenu {
+    min-width: 96px;
+  }
+
+  .mobileMenu .themeToggle {
+    min-height: 34px;
+    padding: 0.2rem 0.3rem;
+  }
+
+  .mobileMenu .themeIcon {
+    width: 0.9rem;
+    height: 0.9rem;
+    font-size: 0.85rem;
+  }
+
+  .mobileMenu .themeToggleTrack {
+    width: 30px;
+    height: 16px;
+  }
+
+  .mobileMenu .themeToggleThumb {
+    width: 12px;
+    height: 12px;
+  }
+
+  .mobileMenu .themeToggleThumbActive {
+    transform: translateX(12px);
+  }
+
   .logoWrapper {
     transform: none;
   }
