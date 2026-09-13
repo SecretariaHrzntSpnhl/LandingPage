@@ -1273,7 +1273,9 @@ export default function PodcastShowcase() {
               <span className={styles.streamPulse} />
             </div>
 
-            <div className={styles.filmStrip} aria-label="Próximos episódios">
+            <div className={styles.upcomingEpisodes}>
+              <h4 className={styles.upcomingTitle}>Próximos episódios</h4>
+              <div className={styles.filmStrip} aria-label="Próximos episódios">
               {EPISODES.map((episode) => (
                 <button
                   key={episode.id}
@@ -1291,6 +1293,7 @@ export default function PodcastShowcase() {
                   <span className={styles.chapterAction}>{selectedEpisodeId === episode.id && episode.id === 1 ? 'Ouvir' : 'Em breve'}</span>
                 </button>
               ))}
+              </div>
             </div>
           </div>
 
