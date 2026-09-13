@@ -45,6 +45,9 @@ export default function Header({ theme, onToggleTheme }: HeaderProps) {
       <div className={styles.actions}>
         <div className={styles.desktopActions}>
           <button type="button" className={styles.themeToggle} onClick={handleToggleTheme} aria-label={`Mudar para o modo ${isDarkMode ? 'claro' : 'escuro'}`}>
+            <span className={styles.themeIcon} aria-hidden="true">
+              {isDarkMode ? '☀' : '☾'}
+            </span>
             <span className={styles.themeToggleTrack}>
               <span className={`${styles.themeToggleThumb} ${isDarkMode ? styles.themeToggleThumbActive : ''}`} />
             </span>
@@ -64,6 +67,9 @@ export default function Header({ theme, onToggleTheme }: HeaderProps) {
 
         <div className={`${styles.mobileMenu} ${isMenuOpen ? styles.mobileMenuOpen : ''}`}>
           <button type="button" className={styles.themeToggle} onClick={handleToggleTheme} aria-label={`Mudar para o modo ${isDarkMode ? 'claro' : 'escuro'}`}>
+            <span className={styles.themeIcon} aria-hidden="true">
+              {isDarkMode ? '☀' : '☾'}
+            </span>
             <span className={styles.themeToggleTrack}>
               <span className={`${styles.themeToggleThumb} ${isDarkMode ? styles.themeToggleThumbActive : ''}`} />
             </span>

@@ -298,6 +298,12 @@
   border: 1px solid rgba(255, 255, 255, 0.12);
 }
 
+.mobileMenu .themeIcon {
+  width: 1rem;
+  height: 1rem;
+  font-size: 0.95rem;
+}
+
 .mobileMenu .themeToggleTrack {
   width: 28px;
   height: 14px;
@@ -372,6 +378,17 @@
   transition: transform 0.25s ease, background 0.25s ease, color 0.25s ease;
   touch-action: manipulation;
   -webkit-tap-highlight-color: transparent;
+}
+
+.themeIcon {
+  display: inline-grid;
+  place-items: center;
+  width: 1.15rem;
+  height: 1.15rem;
+  color: var(--yellow-horizon);
+  font-size: 1.05rem;
+  line-height: 1;
+  text-shadow: 0 0 10px rgba(255, 183, 0, 0.35);
 }
 
 :root[data-theme='light'] .themeToggle {
@@ -774,4 +791,3 @@
     margin-top: 28px !important;
   }
 }
-
