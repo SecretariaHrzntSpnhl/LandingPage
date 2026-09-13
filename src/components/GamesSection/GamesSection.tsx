@@ -185,6 +185,7 @@ export default function GamesSection() {
                 const showStartForFirst = unlockedLevel === 0 && game.level === 1;
                 const cardClass = [
                   styles.levelCard,
+                  game.level <= progressLevel + 1 ? 'is-visible' : '',
                   isCurrent ? styles.currentCard : '',
                   isCompleted ? styles.completedCard : '',
                   isNext ? styles.nextCard : '',

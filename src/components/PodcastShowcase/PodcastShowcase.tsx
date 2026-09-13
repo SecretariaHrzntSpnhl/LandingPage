@@ -843,7 +843,13 @@ export default function PodcastShowcase() {
 
   const handleReadingPanelPointerUp = (event: PointerEvent<HTMLButtonElement>) => {
     const start = readingPanelPointerStartRef.current;
-    const shouldToggleTouch = start?.pointerType === 'touch' && !readingPanelPointerMovedRef.current;
+    const deltaX = start ? event.clientX - start.x : 0;
+    const deltaY = start ? event.clientY - start.y : 0;
+    const isMobileGesture = start?.pointerType === 'touch'
+      && window.matchMedia('(max-width: 760px)').matches;
+    const isVerticalSwipe = isMobileGesture
+      && Math.abs(deltaY) >= 28
+      && Math.abs(deltaY) > Math.abs(deltaX);
 
     if (event.currentTarget.hasPointerCapture(event.pointerId)) {
       event.currentTarget.releasePointerCapture(event.pointerId);
@@ -853,8 +859,9 @@ export default function PodcastShowcase() {
     readingPanelPointerMovedRef.current = false;
     setIsResizingReadingPanel(false);
 
-    if (shouldToggleTouch) {
-      setReadingPanelWidth((width) => (width >= 69 ? 39 : 70));
+    if (isVerticalSwipe) {
+      event.preventDefault();
+      setIsStudyOpen(deltaY < 0);
     }
   };
 
@@ -962,11 +969,11 @@ export default function PodcastShowcase() {
               }}
               onKeyDown={handleReadingPanelKeyDown}
               role="slider"
-              aria-label="Ajustar o expandir el panel de lectura"
+              aria-label="Deslize para abrir ou fechar o texto do episódio"
               aria-valuemin={30}
               aria-valuemax={70}
               aria-valuenow={Math.round(readingPanelWidth)}
-              aria-valuetext={`${Math.round(readingPanelWidth)}% de ancho`}
+              aria-valuetext="Deslize para cima para abrir o texto e para baixo para fechar"
             >
               <span aria-hidden="true" />
             </button>
@@ -986,33 +993,6 @@ export default function PodcastShowcase() {
 
               {isPrimaryEpisode && (
                 <div className={styles.studyArea}>
-                  <div className={styles.readingPanelControls} aria-label="Tamaño del panel de lectura">
-                    <span className={styles.readingPanelControlsLabel}>Lectura</span>
-                    <button
-                      type="button"
-                      onClick={() => setReadingPanelWidth((width) => Math.max(30, width - 4))}
-                      aria-label="Reducir panel de lectura"
-                      title="Reducir panel de lectura"
-                    >
-                      −
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => setReadingPanelWidth(39)}
-                      aria-label="Restablecer tamaño del panel de lectura"
-                      title="Restablecer tamaño inicial"
-                    >
-                      {Math.round(readingPanelWidth)}%
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => setReadingPanelWidth((width) => Math.min(70, width + 4))}
-                      aria-label="Ampliar panel de lectura"
-                      title="Ampliar panel de lectura"
-                    >
-                      +
-                    </button>
-                  </div>
                   <button
                     type="button"
                     className={styles.studyToggle}

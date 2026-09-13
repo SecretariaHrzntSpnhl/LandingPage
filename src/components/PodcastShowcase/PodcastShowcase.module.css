@@ -426,9 +426,6 @@
     height: 0.34rem;
   }
 
-  .readingPanelControls {
-    display: none;
-  }
 }
 
 @media (max-width: 640px) {
@@ -808,7 +805,7 @@
   color: rgba(255, 255, 255, 0.83);
   font-size: clamp(0.8rem, 1.7vw, 1.05rem);
   line-height: 1.45;
-  max-width: 28ch;
+  max-width: min(100%, 48ch);
 }
 
 .featuredPlayButton,
@@ -1180,51 +1177,6 @@
   gap: 0.5rem;
   width: 100%;
   margin-top: 0.25rem;
-}
-
-.readingPanelControls {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  gap: 0.28rem;
-  min-height: 1.75rem;
-}
-
-.readingPanelControlsLabel {
-  margin-right: 0.15rem;
-  color: rgba(224, 235, 249, 0.62);
-  font-size: 0.48rem;
-  font-weight: 800;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-}
-
-.readingPanelControls button {
-  display: inline-grid;
-  place-items: center;
-  min-width: 1.7rem;
-  height: 1.7rem;
-  padding: 0 0.35rem;
-  border: 1px solid rgba(255, 221, 140, 0.3);
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.06);
-  color: #ffeab0;
-  font-size: 0.56rem;
-  font-weight: 900;
-  cursor: pointer;
-  transition: border-color 0.2s ease, background 0.2s ease, transform 0.2s ease;
-}
-
-.readingPanelControls button:first-of-type,
-.readingPanelControls button:last-of-type {
-  font-size: 0.9rem;
-}
-
-.readingPanelControls button:hover,
-.readingPanelControls button:focus-visible {
-  border-color: rgba(255, 221, 140, 0.9);
-  background: rgba(255, 194, 82, 0.16);
-  transform: translateY(-1px);
 }
 
 .studyToggle {
