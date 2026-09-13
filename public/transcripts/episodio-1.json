@@ -201,8 +201,8 @@
       "id": "episode-1-28",
       "startTime": 83.34,
       "endTime": 90.22,
-      "pt": "A nossa missão aqui para quem nos acompanha é desconstruir o que eles chamam de escalada de proficência.",
-      "es": "Nuestra misión aquí, para quienes nos acompañan, es deconstruir lo que ellos llaman escalada de competencia."
+      "pt": "A nossa missão aqui para quem nos acompanha é desconstruir o que eles chamam de escala de proficiência.",
+      "es": "Nuestra misión aquí, para quienes nos acompañan, es deconstruir lo que ellos llaman escala de dominio."
     },
     {
       "id": "episode-1-29",
@@ -278,8 +278,8 @@
       "id": "episode-1-39",
       "startTime": 127.1,
       "endTime": 131.22,
-      "pt": "Saindo do zero absoluto até a fluência de diretoria, né?",
-      "es": "Desde el cero absoluto hasta la fluidez directiva, ¿verdad?"
+      "pt": "Saindo do zero absoluto até a fluência executiva, né?",
+      "es": "Desde el cero absoluto hasta la fluidez ejecutiva, ¿verdad?"
     },
     {
       "id": "episode-1-40",
@@ -313,7 +313,7 @@
       "id": "episode-1-44",
       "startTime": 147.3,
       "endTime": 150.18,
-      "pt": "divirta-se enquanto sobe uma fluência.",
+      "pt": "divirta-se enquanto sobe rumo à fluência.",
       "es": "diviértete mientras asciendes hacia la fluidez."
     },
     {
@@ -453,7 +453,7 @@
       "id": "episode-1-64",
       "startTime": 215.94,
       "endTime": 220.66,
-      "pt": "O título é descrevendo o mundo e o foco é rotina e verbos.",
+      "pt": "O título é «Descrever o mundo» e o foco está em rotinas e verbos.",
       "es": "El título es \"Describir el mundo\" y el enfoque son las rutinas y los verbos."
     },
     {
@@ -565,7 +565,7 @@
       "id": "episode-1-80",
       "startTime": 260.98,
       "endTime": 262.66,
-      "pt": "Todos parecem meio certas, né?",
+      "pt": "Todas parecem meio certas, né?",
       "es": "Todas parecen más o menos correctas, ¿verdad?"
     },
     {
@@ -782,8 +782,8 @@
       "id": "episode-1-111",
       "startTime": 344.74,
       "endTime": 345.54,
-      "pt": "Vem-se bem.",
-      "es": "Vamos bien."
+      "pt": "Vê-se bem.",
+      "es": "Se ve claramente."
     },
     {
       "id": "episode-1-112",
@@ -845,14 +845,14 @@
       "id": "episode-1-120",
       "startTime": 367.86,
       "endTime": 369.58,
-      "pt": "Ele também, o que dizendo...",
-      "es": "Él también, ¿qué estás diciendo...?"
+      "pt": "Ele também: «O que você está dizendo...?»",
+      "es": "Él también: «¿Qué estás diciendo...?»"
     },
     {
       "id": "episode-1-121",
       "startTime": 369.58,
       "endTime": 373.02,
-      "pt": "Não confia mais no que sou aparecido com português.",
+      "pt": "Não confia mais no que eu digo em português.",
       "es": "Ya no confía en lo que digo en portugués."
     },
     {
@@ -915,7 +915,7 @@
       "id": "episode-1-130",
       "startTime": 396.1,
       "endTime": 402.78,
-      "pt": "O problema, e onde o doce é mostro uma guinada absurda, é nos níveis 3 e 4.",
+      "pt": "O problema, e onde tudo mostra uma guinada absurda, é nos níveis 3 e 4.",
       "es": "El problema, y donde todo da un giro absurdo, es en los niveles 3 y 4."
     },
     {
@@ -929,7 +929,7 @@
       "id": "episode-1-132",
       "startTime": 407.9,
       "endTime": 410.98,
-      "pt": "A mudança na interface brutal nessa parte, né?",
+      "pt": "A mudança na interface é brutal nessa parte, né?",
       "es": "El cambio en la interfaz es brutal en esta parte, ¿verdad?"
     },
     {
@@ -951,7 +951,7 @@
       "startTime": 414.98,
       "endTime": 417.98,
       "pt": "A tela do nível 3 se chama «Contando histórias»,",
-      "es": "La pantalla del nivel 3 pide contar historias,"
+      "es": "La pantalla del nivel 3 se llama «Contar historias»,"
     },
     {
       "id": "episode-1-136",
@@ -1027,7 +1027,7 @@
       "id": "episode-1-146",
       "startTime": 443.78,
       "endTime": 446.5,
-      "pt": "e um botão gigante escrito em viar.",
+      "pt": "e um botão gigante escrito «enviar».",
       "es": "y un botón gigante que dice \"enviar\"."
     },
     {
@@ -1076,7 +1076,7 @@
       "id": "episode-1-153",
       "startTime": 461.5,
       "endTime": 465.58,
-      "pt": "Aí o aplicativo exige o recall ativo, a evocação.",
+      "pt": "Aí o aplicativo exige a evocação ativa.",
       "es": "Entonces la aplicación requiere recuerdo activo, evocación."
     },
     {
@@ -1104,7 +1104,7 @@
       "id": "episode-1-157",
       "startTime": 475.94,
       "endTime": 477.54,
-      "pt": "pra que não domina gramática,",
+      "pt": "para quem não domina a gramática,",
       "es": "para que no domines la gramática,"
     },
     {
@@ -2364,15 +2364,15 @@
       "id": "episode-1-337",
       "startTime": 929.22,
       "endTime": 930.22,
-      "pt": "para adicionais.",
-      "es": "para adicional."
+      "pt": "para adultos?",
+      "es": "para adultos?"
     },
     {
       "id": "episode-1-338",
       "startTime": 930.22,
       "endTime": 932.22,
-      "pt": "O depois, né, o que acontece quando curso acaba?",
-      "es": "Después, ¿no? ¿Qué pasa cuando termina el curso?"
+      "pt": "E depois, né? O que acontece quando o curso acaba?",
+      "es": "¿Y después? ¿Qué pasa cuando termina el curso?"
     },
     {
       "id": "episode-1-339",
@@ -2840,7 +2840,7 @@
       "id": "episode-1-405",
       "startTime": 1051.22,
       "endTime": 1052.22,
-      "pt": "sobre pressão de tempo.",
+      "pt": "sob pressão de tempo.",
       "es": "bajo presión de tiempo."
     },
     {
@@ -2917,7 +2917,7 @@
       "id": "episode-1-416",
       "startTime": 1066.22,
       "endTime": 1067.22,
-      "pt": "ser lá pelo simples prazer",
+      "pt": "senão pelo simples prazer",
       "es": "estar ahí por el simple placer"
     },
     {
@@ -2973,7 +2973,7 @@
       "id": "episode-1-424",
       "startTime": 1076.22,
       "endTime": 1077.22,
-      "pt": "únicamente sobrevencer",
+      "pt": "unicamente sobreviver",
       "es": "solo en sobrevivir"
     },
     {
