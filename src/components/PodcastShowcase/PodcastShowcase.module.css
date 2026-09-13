@@ -2054,8 +2054,8 @@
 }
 
 .playButton svg {
-  width: 1.7rem;
-  height: 1.7rem;
+  width: 1.5rem;
+  height: 1.5rem;
 }
 
 .playButton::before {
