@@ -530,7 +530,7 @@ export default function PodcastShowcase() {
     }, 150);
   };
 
-  const SpeedSelector = ({ compact = false }: { compact?: boolean }) => {
+  const renderSpeedSelector = ({ compact = false }: { compact?: boolean }) => {
     const menuKey: Exclude<SpeedMenu, null> = compact ? 'compact' : 'full';
 
     return (
@@ -576,7 +576,7 @@ export default function PodcastShowcase() {
     );
   };
 
-  const CaptionSelector = ({ compact = false, onCover = false }: { compact?: boolean; onCover?: boolean }) => {
+  const renderCaptionSelector = ({ compact = false, onCover = false }: { compact?: boolean; onCover?: boolean }) => {
     const menuKey: Exclude<CaptionMenu, null> = onCover ? 'cover' : compact ? 'compact' : 'full';
     const isCaptionMenuOpen = captionMenu === menuKey;
 
@@ -934,7 +934,7 @@ export default function PodcastShowcase() {
                 coverTouchStartRef.current = null;
               }}
             >
-              <CaptionSelector onCover />
+              {renderCaptionSelector({ onCover: true })}
               {captionLanguage && (activePortugueseCue || activeSpanishCue) && (
                 <div className={styles.liveCaptionCard} role="status" aria-live="polite">
                   <span className={styles.liveCaptionLabel}>
@@ -1166,8 +1166,8 @@ export default function PodcastShowcase() {
                         <PlayIcon paused={!isPlaying} />
                       </button>
 
-                      <SpeedSelector compact />
-                      <CaptionSelector compact />
+                      {renderSpeedSelector({ compact: true })}
+                      {renderCaptionSelector({ compact: true })}
 
                       <button
                         type="button"
@@ -1334,8 +1334,8 @@ export default function PodcastShowcase() {
               <PlayIcon paused={!isPlaying} />
             </button>
 
-            <SpeedSelector />
-            <CaptionSelector />
+            {renderSpeedSelector({})}
+            {renderCaptionSelector({})}
 
             <button
               type="button"
