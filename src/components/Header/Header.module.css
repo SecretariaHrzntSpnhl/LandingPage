@@ -854,6 +854,6 @@
 /* Increase branding vertical offset on mobile to push text further down */
 @media (max-width: 900px) {
   .brandingSlot {
-    margin-top: 28px !important;
+    margin-top: 18px !important;
   }
 }
