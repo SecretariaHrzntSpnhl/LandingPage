@@ -107,14 +107,12 @@ export default function GamesSection() {
     setProgress(nextProgress);
     playSound('success');
     fireConfetti();
-    setTimeout(() => {
-      if (level >= 5) {
-        setShowResults(true);
-        setUnlockedLevel(6);
-      } else {
-        setUnlockedLevel(level + 1);
-      }
-    }, 1200);
+    if (level >= 5) {
+      setShowResults(true);
+      setUnlockedLevel(6);
+    } else {
+      setUnlockedLevel(level + 1);
+    }
   };
 
   const handleReplay = () => {
@@ -185,6 +183,7 @@ export default function GamesSection() {
                 const showStartForFirst = unlockedLevel === 0 && game.level === 1;
                 const cardClass = [
                   styles.levelCard,
+                  game.level <= progressLevel + 1 ? styles.gameVisible : '',
                   game.level <= progressLevel + 1 ? 'is-visible' : '',
                   isCurrent ? styles.currentCard : '',
                   isCompleted ? styles.completedCard : '',

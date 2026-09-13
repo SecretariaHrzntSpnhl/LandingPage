@@ -290,6 +290,11 @@
   z-index: auto;
 }
 
+.levelCard.gameVisible {
+  opacity: 1;
+  filter: none;
+}
+
 .levelCard::after {
   content: '';
   position: absolute;
