@@ -159,8 +159,24 @@
     filter 0.7s ease;
 }
 
+@keyframes titleFloat {
+  0% {
+    transform: translateY(0) scale(1);
+    filter: drop-shadow(0 0 0 rgba(255, 183, 0, 0));
+  }
+  50% {
+    transform: translateY(-1px) scale(1.004);
+    filter: drop-shadow(0 0 10px rgba(255, 183, 0, 0.12));
+  }
+  100% {
+    transform: translateY(0) scale(1);
+    filter: drop-shadow(0 0 0 rgba(255, 183, 0, 0));
+  }
+}
+
 .reveal.is-visible > *,
-[data-reveal].is-visible > * {
+[data-reveal].is-visible > *,
+.reveal.visible > * {
   opacity: 1;
   transform: translateY(0);
   animation: slideUp 0.7s ease both;
@@ -191,4 +207,3 @@
     animation: none !important;
   }
 }
-

@@ -1,0 +1,3085 @@
+{
+  "episodeId": 1,
+  "audio": "/audio/podcast-horizonte-episodio-1.mp3",
+  "translationStatus": "reviewed",
+  "translationNote": "Traducción española revisada cue por cue para uso didáctico.",
+  "languages": {
+    "pt": "Português",
+    "es": "Español"
+  },
+  "cues": [
+    {
+      "id": "episode-1-1",
+      "startTime": 0,
+      "endTime": 8.28,
+      "pt": "Imagine a seguinte situação: um profissional superqualificado, com aquele currículo impecável,",
+      "es": "Imaginemos la siguiente situación: un profesional supercalificado, con un currículum impecable,"
+    },
+    {
+      "id": "episode-1-2",
+      "startTime": 8.28,
+      "endTime": 12.28,
+      "pt": "está lá no meio de uma negociação gigantesca com executivos em Madrid.",
+      "es": "Está ahí en medio de una enorme negociación con directivos en Madrid."
+    },
+    {
+      "id": "episode-1-3",
+      "startTime": 12.28,
+      "endTime": 13.74,
+      "pt": "Ou sei lá, \"Buenos Aires\".",
+      "es": "\"O qué sé yo, Buenos Aires.\""
+    },
+    {
+      "id": "episode-1-4",
+      "startTime": 13.74,
+      "endTime": 15.34,
+      "pt": "Ah, cenário de alta pressão.",
+      "es": "Ah, escenario de alta presión."
+    },
+    {
+      "id": "episode-1-5",
+      "startTime": 15.34,
+      "endTime": 16.34,
+      "pt": "Exato.",
+      "es": "Exactamente."
+    },
+    {
+      "id": "episode-1-6",
+      "startTime": 16.34,
+      "endTime": 19.76,
+      "pt": "E aí, de repente, a conversa exige uma condicional.",
+      "es": "Y entonces, de repente, la conversación exige un condicional."
+    },
+    {
+      "id": "episode-1-7",
+      "startTime": 19.76,
+      "endTime": 24.34,
+      "pt": "Sabe aquela frase que começa com, se nós fizéssemos isso ou algo do tipo?",
+      "es": "¿Conoces esa frase que comienza con, si hiciéramos esto o algo así?"
+    },
+    {
+      "id": "episode-1-8",
+      "startTime": 24.34,
+      "endTime": 27.02,
+      "pt": "Sim. É onde muita gente escorrega.",
+      "es": "Sí. Ahí es donde mucha gente comete un error."
+    },
+    {
+      "id": "episode-1-9",
+      "startTime": 27.02,
+      "endTime": 27.78,
+      "pt": "Pois é.",
+      "es": "Así es."
+    },
+    {
+      "id": "episode-1-10",
+      "startTime": 27.8,
+      "endTime": 31.16,
+      "pt": "A pressão sobe, a mente dá aquele famoso branco,",
+      "es": "La presión aumenta, la mente se queda en blanco,"
+    },
+    {
+      "id": "episode-1-11",
+      "startTime": 31.16,
+      "endTime": 35.6,
+      "pt": "e, no fim, o indivíduo superdiplomático tropeça na gramática.",
+      "es": "y, al final, el individuo superdiplomático tropieza con la gramática."
+    },
+    {
+      "id": "episode-1-12",
+      "startTime": 35.6,
+      "endTime": 37.16,
+      "pt": "E acaba soando inseguro, né?",
+      "es": "Y acaba sonando inseguro, ¿verdad?"
+    },
+    {
+      "id": "episode-1-13",
+      "startTime": 37.16,
+      "endTime": 39.28,
+      "pt": "Inseguro ou até agressivo.",
+      "es": "Inseguro o incluso agresivo."
+    },
+    {
+      "id": "episode-1-14",
+      "startTime": 39.28,
+      "endTime": 42.04,
+      "pt": "E aí, a confiança na sala, puf, evapora.",
+      "es": "Y luego, la confianza en la sala, puf, se evapora."
+    },
+    {
+      "id": "episode-1-15",
+      "startTime": 42.04,
+      "endTime": 46.64,
+      "pt": "E, tipo, o negócio vai por água abaixo, não porque o cara não sabe a parte técnica.",
+      "es": "Y el trato se va al traste, no porque el tipo no conozca la parte técnica."
+    },
+    {
+      "id": "episode-1-16",
+      "startTime": 46.64,
+      "endTime": 50.16,
+      "pt": "Mas porque o cérebro dele simplesmente congelou sob estresse.",
+      "es": "Sino porque su cerebro simplemente se congeló bajo estrés."
+    },
+    {
+      "id": "episode-1-17",
+      "startTime": 50.16,
+      "endTime": 51.16,
+      "pt": "Nossa, sim.",
+      "es": "Vaya, sí."
+    },
+    {
+      "id": "episode-1-18",
+      "startTime": 51.16,
+      "endTime": 55.4,
+      "pt": "E olha, esse é um cenário assustadoramente comum no mundo corporativo de hoje.",
+      "es": "Y mire, este es un escenario terriblemente común en el mundo empresarial actual."
+    },
+    {
+      "id": "episode-1-19",
+      "startTime": 55.4,
+      "endTime": 56.32,
+      "pt": "É, eu imagino.",
+      "es": "Sí, me imagino."
+    },
+    {
+      "id": "episode-1-20",
+      "startTime": 56.34,
+      "endTime": 63.44,
+      "pt": "Exatamente, essa lacuna, essa quebra de confiança que a barreira linguística gera,",
+      "es": "Exactamente, esta brecha, esta ruptura de la confianza que genera la barrera lingüística,"
+    },
+    {
+      "id": "episode-1-21",
+      "startTime": 63.44,
+      "endTime": 67.12,
+      "pt": "que o material que a gente vai analisar hoje tenta resolver.",
+      "es": "es lo que el material que vamos a analizar hoy intenta resolver."
+    },
+    {
+      "id": "episode-1-22",
+      "startTime": 67.12,
+      "endTime": 69.36,
+      "pt": "E, de um jeito bem peculiar, eu diria.",
+      "es": "Y, de una manera muy peculiar, diría yo."
+    },
+    {
+      "id": "episode-1-23",
+      "startTime": 69.36,
+      "endTime": 70.5,
+      "pt": "Totalmente.",
+      "es": "Completamente."
+    },
+    {
+      "id": "episode-1-24",
+      "startTime": 70.5,
+      "endTime": 75.86,
+      "pt": "Bom, hoje a gente vai mergulhar fundo num dossiê cheio de capturas de tela.",
+      "es": "Pues bien, hoy vamos a profundizar en un dossier repleto de capturas de pantalla."
+    },
+    {
+      "id": "episode-1-25",
+      "startTime": 75.86,
+      "endTime": 79.4,
+      "pt": "O material é de uma plataforma datada de 2026,",
+      "es": "El material es de una plataforma con fecha de 2026,"
+    },
+    {
+      "id": "episode-1-26",
+      "startTime": 79.4,
+      "endTime": 82.84,
+      "pt": "chamada Horizonte Espanhol, Idioma e Cultura.",
+      "es": "llamada Horizonte Español, Idioma y Cultura."
+    },
+    {
+      "id": "episode-1-27",
+      "startTime": 82.84,
+      "endTime": 83.34,
+      "pt": "Isso.",
+      "es": "Eso."
+    },
+    {
+      "id": "episode-1-28",
+      "startTime": 83.34,
+      "endTime": 90.22,
+      "pt": "A nossa missão aqui para quem nos acompanha é desconstruir o que eles chamam de escalada de proficência.",
+      "es": "Nuestra misión aquí, para quienes nos acompañan, es deconstruir lo que ellos llaman escalada de competencia."
+    },
+    {
+      "id": "episode-1-29",
+      "startTime": 90.22,
+      "endTime": 93.74,
+      "pt": "São cinco níveis de aprendizado, no total.",
+      "es": "Hay cinco niveles de aprendizaje en total."
+    },
+    {
+      "id": "episode-1-30",
+      "startTime": 93.74,
+      "endTime": 95.52,
+      "pt": "Cinco níveis, exato.",
+      "es": "Cinco niveles, exactamente."
+    },
+    {
+      "id": "episode-1-31",
+      "startTime": 95.52,
+      "endTime": 100.66,
+      "pt": "E, lendo os documentos, fica bem claro que a gente não tá lidando com mais um daqueles aplicativos",
+      "es": "Y leyendo los documentos queda muy claro que no estamos ante otra de esas aplicaciones."
+    },
+    {
+      "id": "episode-1-32",
+      "startTime": 100.66,
+      "endTime": 103.9,
+      "pt": "para aprender a pedir café na viagem de férias, sabe?",
+      "es": "para aprender a pedir café en vacaciones, ¿sabes?"
+    },
+    {
+      "id": "episode-1-33",
+      "startTime": 103.9,
+      "endTime": 105.26,
+      "pt": "Ah, com certeza não.",
+      "es": "Oh, definitivamente no."
+    },
+    {
+      "id": "episode-1-34",
+      "startTime": 105.26,
+      "endTime": 110.58,
+      "pt": "Aquilo ali é praticamente um tipo, um simulador de sobrevivência corporativa,",
+      "es": "Es prácticamente una especie de simulador de supervivencia corporativa."
+    },
+    {
+      "id": "episode-1-35",
+      "startTime": 110.58,
+      "endTime": 113.1,
+      "pt": "só que disfarçado como interface de joguinho.",
+      "es": "pero disfrazado de interfaz de juego."
+    },
+    {
+      "id": "episode-1-36",
+      "startTime": 113.14,
+      "endTime": 117.42,
+      "pt": "É, a fachada chama muita atenção logo de cara.",
+      "es": "Sí, la fachada llama mucho la atención enseguida."
+    },
+    {
+      "id": "episode-1-37",
+      "startTime": 117.42,
+      "endTime": 123.02,
+      "pt": "Mas se a gente olhar com calma, a arquitetura pedagógica por trás revela um funil implacável.",
+      "es": "Pero si miramos con atención, la arquitectura pedagógica que hay detrás revela un embudo implacable."
+    },
+    {
+      "id": "episode-1-38",
+      "startTime": 123.02,
+      "endTime": 127.1,
+      "pt": "Eles meio que mapearam a rota exata que o cérebro adulto precisa fazer.",
+      "es": "En cierto modo, trazaron la ruta exacta que el cerebro adulto debe tomar."
+    },
+    {
+      "id": "episode-1-39",
+      "startTime": 127.1,
+      "endTime": 131.22,
+      "pt": "Saindo do zero absoluto até a fluência de diretoria, né?",
+      "es": "Desde el cero absoluto hasta la fluidez directiva, ¿verdad?"
+    },
+    {
+      "id": "episode-1-40",
+      "startTime": 131.22,
+      "endTime": 132.24,
+      "pt": "Exatamente.",
+      "es": "Exactamente."
+    },
+    {
+      "id": "episode-1-41",
+      "startTime": 132.24,
+      "endTime": 136.06,
+      "pt": "Sair da ignorância total para se sentar à mesa de negociação.",
+      "es": "Pasar de la ignorancia total a sentarse a la mesa de negociaciones."
+    },
+    {
+      "id": "episode-1-42",
+      "startTime": 136.06,
+      "endTime": 141.1,
+      "pt": "Então, olha só o lema da plataforma, que está logo no cabeçalho da primeira tela.",
+      "es": "Entonces, basta con mirar el lema de la plataforma, que se encuentra justo en el encabezado de la primera pantalla."
+    },
+    {
+      "id": "episode-1-43",
+      "startTime": 141.1,
+      "endTime": 147.3,
+      "pt": "Diz assim: cada jogo é um degrau, cada degrau uma conquista,",
+      "es": "Dice así: cada juego es un paso, cada paso un logro,"
+    },
+    {
+      "id": "episode-1-44",
+      "startTime": 147.3,
+      "endTime": 150.18,
+      "pt": "divirta-se enquanto sobe uma fluência.",
+      "es": "diviértete mientras asciendes hacia la fluidez."
+    },
+    {
+      "id": "episode-1-45",
+      "startTime": 150.18,
+      "endTime": 152.5,
+      "pt": "Soa superinofensivo, né?",
+      "es": "Suena súper inofensivo, ¿verdad?"
+    },
+    {
+      "id": "episode-1-46",
+      "startTime": 152.5,
+      "endTime": 157.5,
+      "pt": "Só que é quase infantil, e a primeira etapa dessa jornada, que é o nível 1,",
+      "es": "Pero es casi infantil, y la primera etapa de este viaje, que es el nivel 1,"
+    },
+    {
+      "id": "episode-1-47",
+      "startTime": 157.5,
+      "endTime": 162.26,
+      "pt": "rotulado como objetos e cores, reforça bastante essa ideia.",
+      "es": "\"Etiquetado como objetos y colores, refuerza bastante esa idea.\""
+    },
+    {
+      "id": "episode-1-48",
+      "startTime": 162.26,
+      "endTime": 165.46,
+      "pt": "A tela mostra que esse nível já tá marcado como concluído",
+      "es": "La pantalla muestra que este nivel ya está marcado como completado."
+    },
+    {
+      "id": "episode-1-49",
+      "startTime": 165.46,
+      "endTime": 169.58,
+      "pt": "e a descrição basicamente pergunta se o usuário sabe o nome das coisas.",
+      "es": "y la descripción básicamente pregunta si el usuario sabe el nombre de las cosas."
+    },
+    {
+      "id": "episode-1-50",
+      "startTime": 169.58,
+      "endTime": 171.06,
+      "pt": "É o básico do básico.",
+      "es": "Es lo básico de lo básico."
+    },
+    {
+      "id": "episode-1-51",
+      "startTime": 171.06,
+      "endTime": 175.9,
+      "pt": "Na psicologia da aprendizagem, a gente chama isso de ambiente de baixa carga cognitiva,",
+      "es": "En psicología del aprendizaje, a esto lo llamamos un entorno de baja carga cognitiva,"
+    },
+    {
+      "id": "episode-1-52",
+      "startTime": 175.9,
+      "endTime": 179.18,
+      "pt": "tudo baseado em reconhecimento passivo.",
+      "es": "todo ello basado en el reconocimiento pasivo."
+    },
+    {
+      "id": "episode-1-53",
+      "startTime": 179.18,
+      "endTime": 183.98,
+      "pt": "A pessoa olha para a tela, vê a foto de uma maçã, vê a cor vermelha,",
+      "es": "La persona mira la pantalla, ve una foto de una manzana, ve el color rojo,"
+    },
+    {
+      "id": "episode-1-54",
+      "startTime": 183.98,
+      "endTime": 187.42,
+      "pt": "e aí associa com as palavras \"manzana\" e \"roja\".",
+      "es": "y luego lo asocia con las palabras \"manzana\" y \"roja\"."
+    },
+    {
+      "id": "episode-1-55",
+      "startTime": 187.42,
+      "endTime": 189.98,
+      "pt": "O cérebro não tá tipo criando nada novo.",
+      "es": "El cerebro no está creando nada nuevo."
+    },
+    {
+      "id": "episode-1-56",
+      "startTime": 189.98,
+      "endTime": 194.46,
+      "pt": "Ele tá só arquivando umas etiquetas mentais, digamos assim.",
+      "es": "Sólo está archivando algunas etiquetas mentales, por así decirlo."
+    },
+    {
+      "id": "episode-1-57",
+      "startTime": 194.46,
+      "endTime": 197.02,
+      "pt": "É como entrar numa piscina pela parte rasa.",
+      "es": "Es como entrar a una piscina por el lado poco profundo."
+    },
+    {
+      "id": "episode-1-58",
+      "startTime": 197.02,
+      "endTime": 201.1,
+      "pt": "Cria uma falsa, porém necessária, sensação de segurança para o aluno.",
+      "es": "Crea una sensación de seguridad falsa, pero necesaria, en el estudiante."
+    },
+    {
+      "id": "episode-1-59",
+      "startTime": 201.1,
+      "endTime": 206.42,
+      "pt": "É como aprender os nomes das ferramentas de uma marcenaria antes de tocar na madeira, né?",
+      "es": "Es como aprenderse los nombres de las herramientas en una carpintería antes de tocar la madera, ¿verdad?"
+    },
+    {
+      "id": "episode-1-60",
+      "startTime": 206.42,
+      "endTime": 208.82,
+      "pt": "Mas assim, essa segurança dura muito pouco.",
+      "es": "Pero esta seguridad dura muy poco."
+    },
+    {
+      "id": "episode-1-61",
+      "startTime": 208.82,
+      "endTime": 210.26,
+      "pt": "Muito pouco.",
+      "es": "Muy poco."
+    },
+    {
+      "id": "episode-1-62",
+      "startTime": 210.26,
+      "endTime": 212.1,
+      "pt": "O salto pro nível 2 já muda o jogo.",
+      "es": "Saltar al nivel 2 ya cambia el juego."
+    },
+    {
+      "id": "episode-1-63",
+      "startTime": 212.1,
+      "endTime": 215.94,
+      "pt": "É, o nível 2 aparece lá como um jogo.",
+      "es": "Sí, el nivel 2 aparece allí como un juego."
+    },
+    {
+      "id": "episode-1-64",
+      "startTime": 215.94,
+      "endTime": 220.66,
+      "pt": "O título é descrevendo o mundo e o foco é rotina e verbos.",
+      "es": "El título es \"Describir el mundo\" y el enfoque son las rutinas y los verbos."
+    },
+    {
+      "id": "episode-1-65",
+      "startTime": 220.66,
+      "endTime": 223.58,
+      "pt": "A tela mostra uma situação que todo mundo já passou,",
+      "es": "La pantalla muestra una situación por la que todos han pasado,"
+    },
+    {
+      "id": "episode-1-66",
+      "startTime": 223.58,
+      "endTime": 225.42,
+      "pt": "que é estar numa loja de roupas,",
+      "es": "cómo es estar en una tienda de ropa,"
+    },
+    {
+      "id": "episode-1-67",
+      "startTime": 225.42,
+      "endTime": 228.38,
+      "pt": "e aí você precisa pedir: \"¿Puedo probarme esta camisa?\"",
+      "es": "y entonces tienes que pedir: \"¿Puedo probarme esta camisa?\""
+    },
+    {
+      "id": "episode-1-68",
+      "startTime": 228.38,
+      "endTime": 231.1,
+      "pt": "A plataforma dá quatro alternativas para o usuário.",
+      "es": "La plataforma ofrece al usuario cuatro alternativas."
+    },
+    {
+      "id": "episode-1-69",
+      "startTime": 231.1,
+      "endTime": 237.1,
+      "pt": "E aí, bem aí que o mecanismo de defesa do cérebro começa a ser testado de verdade.",
+      "es": "Y entonces, ahí mismo, el mecanismo de defensa del cerebro comienza a ser verdaderamente puesto a prueba."
+    },
+    {
+      "id": "episode-1-70",
+      "startTime": 237.1,
+      "endTime": 239.42,
+      "pt": "Porque as opções não são óbvias pra gente.",
+      "es": "Porque las opciones no son obvias para nosotros."
+    },
+    {
+      "id": "episode-1-71",
+      "startTime": 239.42,
+      "endTime": 240.42,
+      "pt": "Não mesmo.",
+      "es": "Ni siquiera."
+    },
+    {
+      "id": "episode-1-72",
+      "startTime": 240.42,
+      "endTime": 244.34,
+      "pt": "Pra quem fala português, o Espanhol tem uma armadilha clássica,",
+      "es": "Para los hablantes de portugués, el español tiene una trampa clásica,"
+    },
+    {
+      "id": "episode-1-73",
+      "startTime": 244.34,
+      "endTime": 247.78,
+      "pt": "a semelhança ilusória, o famoso portunhol.",
+      "es": "el parecido ilusorio, el famoso portunhol."
+    },
+    {
+      "id": "episode-1-74",
+      "startTime": 247.78,
+      "endTime": 250.1,
+      "pt": "Nossa, o portunhol é traiçoeiro.",
+      "es": "Vaya, el portunhol es traicionero."
+    },
+    {
+      "id": "episode-1-75",
+      "startTime": 250.1,
+      "endTime": 252.3,
+      "pt": "Porque olha as quatro opções que eles dão.",
+      "es": "Porque mira las cuatro opciones que dan."
+    },
+    {
+      "id": "episode-1-76",
+      "startTime": 252.3,
+      "endTime": 254.26,
+      "pt": "“¿Puedo probarme esta camisa?”,",
+      "es": "“¿Puedo probarme esta camisa?”"
+    },
+    {
+      "id": "episode-1-77",
+      "startTime": 254.26,
+      "endTime": 256.74,
+      "pt": "“¿Puedes ponerme esta camisa?”,",
+      "es": "¿Puedes ponerme esta camisa?"
+    },
+    {
+      "id": "episode-1-78",
+      "startTime": 256.74,
+      "endTime": 258.62,
+      "pt": "“¿Puedo probar esta camisa?”,",
+      "es": "\"¿Puedo probar esta camisa?\""
+    },
+    {
+      "id": "episode-1-79",
+      "startTime": 258.62,
+      "endTime": 260.98,
+      "pt": "“¿Puedo ponerme esta camisa?”.",
+      "es": "\"¿Puedo ponerme esta camisa?\""
+    },
+    {
+      "id": "episode-1-80",
+      "startTime": 260.98,
+      "endTime": 262.66,
+      "pt": "Todos parecem meio certas, né?",
+      "es": "Todas parecen más o menos correctas, ¿verdad?"
+    },
+    {
+      "id": "episode-1-81",
+      "startTime": 262.66,
+      "endTime": 264.98,
+      "pt": "Sim, tipo, se a pessoa não estudou a fundo,",
+      "es": "Sí, si la persona no ha estudiado en profundidad,"
+    },
+    {
+      "id": "episode-1-82",
+      "startTime": 264.98,
+      "endTime": 267.82,
+      "pt": "a vontade instintiva é dizer \"vestirme\".",
+      "es": "La forma instintiva es decir \"vestirme\"."
+    },
+    {
+      "id": "episode-1-83",
+      "startTime": 267.82,
+      "endTime": 271.3,
+      "pt": "Afinal, a gente veste uma camisa no Brasil, certo?",
+      "es": "Al fin y al cabo, en Brasil nos ponemos una camisa, ¿verdad?"
+    },
+    {
+      "id": "episode-1-84",
+      "startTime": 271.3,
+      "endTime": 272.38,
+      "pt": "Por que estaria errado?",
+      "es": "¿Por qué estaría mal?"
+    },
+    {
+      "id": "episode-1-85",
+      "startTime": 272.38,
+      "endTime": 277.42,
+      "pt": "É, essa armadilha dos falsos cognatos e das estruturas reflexivas.",
+      "es": "Sí, esta trampa de falsos cognados y estructuras reflexivas."
+    },
+    {
+      "id": "episode-1-86",
+      "startTime": 277.42,
+      "endTime": 280.54,
+      "pt": "Deixa eu tentar simplificar como isso bate na nossa mente.",
+      "es": "Déjame intentar simplificar cómo esto afecta a nuestra mente."
+    },
+    {
+      "id": "episode-1-87",
+      "startTime": 280.54,
+      "endTime": 283.46,
+      "pt": "Em português, o verbo vestir é super direto.",
+      "es": "En portugués el verbo vestir es súper directo."
+    },
+    {
+      "id": "episode-1-88",
+      "startTime": 283.46,
+      "endTime": 285.3,
+      "pt": "Ah, eu visto a camisa.",
+      "es": "Ah, me pongo la camisa."
+    },
+    {
+      "id": "episode-1-89",
+      "startTime": 285.3,
+      "endTime": 286.82,
+      "pt": "Exato.",
+      "es": "Exactamente."
+    },
+    {
+      "id": "episode-1-90",
+      "startTime": 286.82,
+      "endTime": 290.74,
+      "pt": "Mas em espanhol, se você usa \"vestirme\" nesse contexto da loja,",
+      "es": "Pero en español, si usas \"vestirme\" en ese contexto de la tienda,"
+    },
+    {
+      "id": "episode-1-91",
+      "startTime": 290.74,
+      "endTime": 294.62,
+      "pt": "soa como se você estivesse perguntando ao vendedor se ele lhe daria permissão",
+      "es": "es como si le preguntaras al vendedor si te daría permiso"
+    },
+    {
+      "id": "episode-1-92",
+      "startTime": 294.62,
+      "endTime": 297.42,
+      "pt": "pra realizar o ato de colocar roupas no próprio corpo.",
+      "es": "para realizar el acto de ponerse la ropa en el propio cuerpo."
+    },
+    {
+      "id": "episode-1-93",
+      "startTime": 297.42,
+      "endTime": 298.26,
+      "pt": "Sério?",
+      "es": "¿En serio?"
+    },
+    {
+      "id": "episode-1-94",
+      "startTime": 298.26,
+      "endTime": 302.26,
+      "pt": "Sim, é quase como uma criança pedindo ajuda pra se vestir, sabe?",
+      "es": "Sí, es casi como un niño pidiendo ayuda para vestirse, ¿sabes?"
+    },
+    {
+      "id": "episode-1-95",
+      "startTime": 302.26,
+      "endTime": 304.66,
+      "pt": "A opção correta ali é \"probarme\".",
+      "es": "La opción correcta allí es \"probarme\"."
+    },
+    {
+      "id": "episode-1-96",
+      "startTime": 304.66,
+      "endTime": 308.9,
+      "pt": "Carrega a ideia de experimentar algo em si mesmo pra ver se serve.",
+      "es": "Lleva la idea de probar algo uno mismo para ver si funciona."
+    },
+    {
+      "id": "episode-1-97",
+      "startTime": 308.9,
+      "endTime": 311.86,
+      "pt": "O verbo reflexivo, a ação volta pro sujeito.",
+      "es": "El verbo reflexivo: la acción vuelve al sujeto."
+    },
+    {
+      "id": "episode-1-98",
+      "startTime": 311.86,
+      "endTime": 312.86,
+      "pt": "Entendi.",
+      "es": "Lo entendí."
+    },
+    {
+      "id": "episode-1-99",
+      "startTime": 312.86,
+      "endTime": 317.18,
+      "pt": "Mas olha, eu, como sou meio cética com essas promessas de aplicativo,",
+      "es": "Pero mira, soy un poco escéptica con estas promesas de la aplicación,"
+    },
+    {
+      "id": "episode-1-100",
+      "startTime": 317.18,
+      "endTime": 319.94,
+      "pt": "preciso fazer papel de advogada do diabo aqui.",
+      "es": "Necesito hacer de abogado del diablo aquí."
+    },
+    {
+      "id": "episode-1-101",
+      "startTime": 319.94,
+      "endTime": 320.7,
+      "pt": "Manda.",
+      "es": "Adelante."
+    },
+    {
+      "id": "episode-1-102",
+      "startTime": 320.7,
+      "endTime": 324.58,
+      "pt": "O lema deles falava sobre subir degraus pra carreira, certo?",
+      "es": "Su lema hablaba de ascender en sus carreras, ¿verdad?"
+    },
+    {
+      "id": "episode-1-103",
+      "startTime": 324.58,
+      "endTime": 329.1,
+      "pt": "A gente está no nível 2 discutindo a compra de uma camisa no shopping virtual.",
+      "es": "Estamos en el nivel 2 discutiendo la compra de una camiseta en el centro comercial virtual."
+    },
+    {
+      "id": "episode-1-104",
+      "startTime": 329.1,
+      "endTime": 331.5,
+      "pt": "Como é que o verbo \"probarme\" na loja",
+      "es": "Qué raro es el verbo \"probarme\" en la tienda,"
+    },
+    {
+      "id": "episode-1-105",
+      "startTime": 331.5,
+      "endTime": 335.1,
+      "pt": "se conecta com aquele cenário de perder um grande contrato na Espanha",
+      "es": "conecta con ese escenario de perder un gran contrato en España"
+    },
+    {
+      "id": "episode-1-106",
+      "startTime": 335.1,
+      "endTime": 336.86,
+      "pt": "que a gente falou no começo?",
+      "es": "¿De qué hablamos al principio?"
+    },
+    {
+      "id": "episode-1-107",
+      "startTime": 336.86,
+      "endTime": 338.86,
+      "pt": "É uma ótima pergunta.",
+      "es": "Es una gran pregunta."
+    },
+    {
+      "id": "episode-1-108",
+      "startTime": 338.86,
+      "endTime": 341.22,
+      "pt": "A conexão aí não está no vocabulário em si,",
+      "es": "La conexión no está en el vocabulario en sí,"
+    },
+    {
+      "id": "episode-1-109",
+      "startTime": 341.22,
+      "endTime": 343.9,
+      "pt": "mas na transição psicológica que o app segue.",
+      "es": "sino en la transición psicológica que sigue la aplicación."
+    },
+    {
+      "id": "episode-1-110",
+      "startTime": 343.9,
+      "endTime": 344.74,
+      "pt": "Como assim?",
+      "es": "¿Cómo?"
+    },
+    {
+      "id": "episode-1-111",
+      "startTime": 344.74,
+      "endTime": 345.54,
+      "pt": "Vem-se bem.",
+      "es": "Vamos bien."
+    },
+    {
+      "id": "episode-1-112",
+      "startTime": 345.54,
+      "endTime": 349.78,
+      "pt": "Em nível 1, a pessoa estava no controle, só memorizando passivamente.",
+      "es": "En el nivel 1, la persona tenía el control y simplemente memorizaba pasivamente."
+    },
+    {
+      "id": "episode-1-113",
+      "startTime": 349.78,
+      "endTime": 353.46,
+      "pt": "No nível 2, o aplicativo coloca o fator humano na jogada.",
+      "es": "En el nivel 2, la aplicación pone en juego el factor humano."
+    },
+    {
+      "id": "episode-1-114",
+      "startTime": 353.46,
+      "endTime": 356.06,
+      "pt": "Tem um estranho virtual ali, o vendedor.",
+      "es": "Hay un personaje virtual ahí: el vendedor."
+    },
+    {
+      "id": "episode-1-115",
+      "startTime": 356.06,
+      "endTime": 359.66,
+      "pt": "E você precisa de um resultado tangível, que é a camisa do tamanho certo.",
+      "es": "Y necesitas un resultado tangible, que es la talla de camisa adecuada."
+    },
+    {
+      "id": "episode-1-116",
+      "startTime": 359.66,
+      "endTime": 361.22,
+      "pt": "Ah, entendi.",
+      "es": "Vale, lo entiendo."
+    },
+    {
+      "id": "episode-1-117",
+      "startTime": 361.22,
+      "endTime": 363.42,
+      "pt": "Já não é só sobre a palavra, é sobre a interação.",
+      "es": "Ya no se trata sólo de la palabra, se trata de la interacción."
+    },
+    {
+      "id": "episode-1-118",
+      "startTime": 363.42,
+      "endTime": 364.26,
+      "pt": "Isso.",
+      "es": "Eso."
+    },
+    {
+      "id": "episode-1-119",
+      "startTime": 364.26,
+      "endTime": 367.86,
+      "pt": "E o aplicativo começa a punir o uso do instinto do português.",
+      "es": "Y la aplicación comienza a castigar el uso del instinto portugués."
+    },
+    {
+      "id": "episode-1-120",
+      "startTime": 367.86,
+      "endTime": 369.58,
+      "pt": "Ele também, o que dizendo...",
+      "es": "Él también, ¿qué estás diciendo...?"
+    },
+    {
+      "id": "episode-1-121",
+      "startTime": 369.58,
+      "endTime": 373.02,
+      "pt": "Não confia mais no que sou aparecido com português.",
+      "es": "Ya no confía en lo que digo en portugués."
+    },
+    {
+      "id": "episode-1-122",
+      "startTime": 373.02,
+      "endTime": 374.34,
+      "pt": "Exatamente.",
+      "es": "Exactamente."
+    },
+    {
+      "id": "episode-1-123",
+      "startTime": 374.34,
+      "endTime": 376.58,
+      "pt": "Comece a pensar com a lógica do Espanhol.",
+      "es": "Empieza a pensar con lógica española."
+    },
+    {
+      "id": "episode-1-124",
+      "startTime": 376.58,
+      "endTime": 380.62,
+      "pt": "Essa mudança de chave é a base para resolver os problemas maiores lá na frente.",
+      "es": "Este cambio clave es la base para resolver los problemas más grandes en el futuro."
+    },
+    {
+      "id": "episode-1-125",
+      "startTime": 380.62,
+      "endTime": 384.9,
+      "pt": "Fazendo uma analogia que, se o nível 1 é tipo aprender a andar de bicicleta,",
+      "es": "Haciendo una analogía de que, si el nivel 1 es como aprender a andar en bicicleta,"
+    },
+    {
+      "id": "episode-1-126",
+      "startTime": 384.9,
+      "endTime": 387.26,
+      "pt": "usando aquelas rodinhas no quintal de casa,",
+      "es": "usando esas ruedas de entrenamiento en el patio trasero,"
+    },
+    {
+      "id": "episode-1-127",
+      "startTime": 387.26,
+      "endTime": 391.3,
+      "pt": "o nível 2 é quando eles te jogam pra pedalar na calçada.",
+      "es": "El nivel 2 es cuando te empujan a andar en bicicleta por la acera."
+    },
+    {
+      "id": "episode-1-128",
+      "startTime": 391.3,
+      "endTime": 392.3,
+      "pt": "Boa analogia.",
+      "es": "Buena analogía."
+    },
+    {
+      "id": "episode-1-129",
+      "startTime": 392.3,
+      "endTime": 396.1,
+      "pt": "Tem pedestre, tem uns buracos, mas ainda é seguro.",
+      "es": "Hay peatones, hay algunos baches, pero aún así es seguro."
+    },
+    {
+      "id": "episode-1-130",
+      "startTime": 396.1,
+      "endTime": 402.78,
+      "pt": "O problema, e onde o doce é mostro uma guinada absurda, é nos níveis 3 e 4.",
+      "es": "El problema, y donde todo da un giro absurdo, es en los niveles 3 y 4."
+    },
+    {
+      "id": "episode-1-131",
+      "startTime": 402.78,
+      "endTime": 407.9,
+      "pt": "É aí que eles tiram as rodinhas e te empurram pro meio da avenida no horário de pico.",
+      "es": "Entonces es cuando te quitan las ruedas de apoyo y te empujan al medio de la carretera durante las horas pico."
+    },
+    {
+      "id": "episode-1-132",
+      "startTime": 407.9,
+      "endTime": 410.98,
+      "pt": "A mudança na interface brutal nessa parte, né?",
+      "es": "El cambio en la interfaz es brutal en esta parte, ¿verdad?"
+    },
+    {
+      "id": "episode-1-133",
+      "startTime": 410.98,
+      "endTime": 413.22,
+      "pt": "Revela muito sobre o rigor da plataforma.",
+      "es": "Revela mucho sobre el rigor de la plataforma."
+    },
+    {
+      "id": "episode-1-134",
+      "startTime": 413.22,
+      "endTime": 414.98,
+      "pt": "É chocante, sério.",
+      "es": "Es impactante, de verdad."
+    },
+    {
+      "id": "episode-1-135",
+      "startTime": 414.98,
+      "endTime": 417.98,
+      "pt": "A tela do nível 3 se chama «Contando histórias»,",
+      "es": "La pantalla del nivel 3 pide contar historias,"
+    },
+    {
+      "id": "episode-1-136",
+      "startTime": 417.98,
+      "endTime": 420.86,
+      "pt": "e é focada em narrar experiências do passado.",
+      "es": "y está enfocada en narrar experiencias pasadas."
+    },
+    {
+      "id": "episode-1-137",
+      "startTime": 420.86,
+      "endTime": 423.58,
+      "pt": "A frase do exercício é:",
+      "es": "La frase del ejercicio es:"
+    },
+    {
+      "id": "episode-1-138",
+      "startTime": 423.58,
+      "endTime": 426.02,
+      "pt": "\"Este año, viajé a tres países diferentes.\"",
+      "es": "\"Este año, viajé a tres países diferentes.\""
+    },
+    {
+      "id": "episode-1-139",
+      "startTime": 426.02,
+      "endTime": 430.22,
+      "pt": "O aluno tem que usar o verbo viajar no pretérito perfeito.",
+      "es": "El alumno tiene que usar el verbo viajar en pretérito perfecto."
+    },
+    {
+      "id": "episode-1-140",
+      "startTime": 430.22,
+      "endTime": 432.14,
+      "pt": "Mas sabe o que me deixou de queixo caído?",
+      "es": "¿Pero sabes qué me dejó boquiabierto?"
+    },
+    {
+      "id": "episode-1-141",
+      "startTime": 432.14,
+      "endTime": 433.34,
+      "pt": "O design da página.",
+      "es": "El diseño de la página."
+    },
+    {
+      "id": "episode-1-142",
+      "startTime": 433.34,
+      "endTime": 436.14,
+      "pt": "Sim. Cadê a multiplicação?",
+      "es": "\"Sí. ¿Dónde está la multiplicación?\""
+    },
+    {
+      "id": "episode-1-143",
+      "startTime": 436.14,
+      "endTime": 437.26,
+      "pt": "Sumiu.",
+      "es": "Desapareció."
+    },
+    {
+      "id": "episode-1-144",
+      "startTime": 437.26,
+      "endTime": 440.62,
+      "pt": "O aluno olha pra tela e só tem um espaço em branco.",
+      "es": "El alumno mira la pantalla y solo hay un espacio en blanco."
+    },
+    {
+      "id": "episode-1-145",
+      "startTime": 440.62,
+      "endTime": 443.78,
+      "pt": "Uma caixa de texto dizendo sua resposta",
+      "es": "Un cuadro de texto con tu respuesta"
+    },
+    {
+      "id": "episode-1-146",
+      "startTime": 443.78,
+      "endTime": 446.5,
+      "pt": "e um botão gigante escrito em viar.",
+      "es": "y un botón gigante que dice \"enviar\"."
+    },
+    {
+      "id": "episode-1-147",
+      "startTime": 446.5,
+      "endTime": 448.38,
+      "pt": "É o fim da muleta visual.",
+      "es": "Es el fin de la muleta visual."
+    },
+    {
+      "id": "episode-1-148",
+      "startTime": 448.38,
+      "endTime": 450.86,
+      "pt": "Lembra do reconhecimento passivo do nível 1?",
+      "es": "¿Recuerdas el reconocimiento pasivo del nivel 1?"
+    },
+    {
+      "id": "episode-1-149",
+      "startTime": 450.86,
+      "endTime": 453.02,
+      "pt": "Multiplicação? É só isso.",
+      "es": "¿Multiplicación? Eso es todo."
+    },
+    {
+      "id": "episode-1-150",
+      "startTime": 453.02,
+      "endTime": 455.38,
+      "pt": "Você pode até não saber a resposta de cor,",
+      "es": "Puede que ni siquiera sepas la respuesta de memoria,"
+    },
+    {
+      "id": "episode-1-151",
+      "startTime": 455.38,
+      "endTime": 459.78,
+      "pt": "mas quando ler as quatro opções, a memória é ativada por gatilho visual.",
+      "es": "pero al leer las cuatro opciones, la memoria se activa mediante disparador visual."
+    },
+    {
+      "id": "episode-1-152",
+      "startTime": 459.78,
+      "endTime": 461.5,
+      "pt": "E quando eles tiram as opções?",
+      "es": "¿Y cuando te quitan las opciones?"
+    },
+    {
+      "id": "episode-1-153",
+      "startTime": 461.5,
+      "endTime": 465.58,
+      "pt": "Aí o aplicativo exige o recall ativo, a evocação.",
+      "es": "Entonces la aplicación requiere recuerdo activo, evocación."
+    },
+    {
+      "id": "episode-1-154",
+      "startTime": 465.58,
+      "endTime": 469.3,
+      "pt": "O seu cérebro precisa buscar a informação no escuro total.",
+      "es": "Tu cerebro necesita buscar información en total oscuridad."
+    },
+    {
+      "id": "episode-1-155",
+      "startTime": 469.3,
+      "endTime": 472.1,
+      "pt": "E junta isso com a complexidade da gramática, né?",
+      "es": "Y combina esto con la complejidad de la gramática, ¿verdad?"
+    },
+    {
+      "id": "episode-1-156",
+      "startTime": 472.1,
+      "endTime": 475.94,
+      "pt": "Porque exigir o pretérito perfeito logo de cara",
+      "es": "Porque exige el pretérito perfecto de inmediato"
+    },
+    {
+      "id": "episode-1-157",
+      "startTime": 475.94,
+      "endTime": 477.54,
+      "pt": "pra que não domina gramática,",
+      "es": "para que no domines la gramática,"
+    },
+    {
+      "id": "episode-1-158",
+      "startTime": 477.54,
+      "endTime": 479.74,
+      "pt": "porque esse tempo verbal é tão temido?",
+      "es": "¿Por qué se teme tanto este tiempo verbal?"
+    },
+    {
+      "id": "episode-1-159",
+      "startTime": 479.74,
+      "endTime": 483.26,
+      "pt": "Ah, o pretérito perfeito em espanhol é uma pedreira pra nós brasileiros.",
+      "es": "Ah, el pretérito perfecto en español es difícil para nosotros los brasileños."
+    },
+    {
+      "id": "episode-1-160",
+      "startTime": 483.26,
+      "endTime": 486.98,
+      "pt": "Ele é formado pelo verbo \"haber\" mais o particípio.",
+      "es": "Está formado por el verbo \"haber\" más el participio."
+    },
+    {
+      "id": "episode-1-161",
+      "startTime": 486.98,
+      "endTime": 488.58,
+      "pt": "Tipo, é meio errado.",
+      "es": "Es como si estuviera mal."
+    },
+    {
+      "id": "episode-1-162",
+      "startTime": 488.58,
+      "endTime": 490.78,
+      "pt": "Ele é complexo porque cria uma ponte.",
+      "es": "Es complejo porque crea un puente."
+    },
+    {
+      "id": "episode-1-163",
+      "startTime": 490.78,
+      "endTime": 492.94,
+      "pt": "Uma ponte entre o passado e o presente.",
+      "es": "Un puente entre el pasado y el presente."
+    },
+    {
+      "id": "episode-1-164",
+      "startTime": 492.94,
+      "endTime": 493.78,
+      "pt": "Exato.",
+      "es": "Exactamente."
+    },
+    {
+      "id": "episode-1-165",
+      "startTime": 493.78,
+      "endTime": 497.1,
+      "pt": "Na frase \"Este año\", o ano ainda não acabou, certo?",
+      "es": "En la frase \"Este año\", el año aún no ha terminado, ¿verdad?"
+    },
+    {
+      "id": "episode-1-166",
+      "startTime": 497.1,
+      "endTime": 498.98,
+      "pt": "Gente ainda tá vivendo esse ano.",
+      "es": "Seguimos viviendo este año."
+    },
+    {
+      "id": "episode-1-167",
+      "startTime": 498.98,
+      "endTime": 501.06,
+      "pt": "Então, a viagem aconteceu no passado,",
+      "es": "Entonces el viaje ocurrió en el pasado,"
+    },
+    {
+      "id": "episode-1-168",
+      "startTime": 501.06,
+      "endTime": 504.7,
+      "pt": "mas pertencia um ciclo de tempo que tá em curso no presente.",
+      "es": "pero pertenecía a un ciclo de tiempo que continúa en el presente."
+    },
+    {
+      "id": "episode-1-169",
+      "startTime": 504.7,
+      "endTime": 506.22,
+      "pt": "Ah, sim.",
+      "es": "Oh sí."
+    },
+    {
+      "id": "episode-1-170",
+      "startTime": 506.22,
+      "endTime": 509.7,
+      "pt": "O brasileiro geralmente falaria \"viajei\" no passado.",
+      "es": "Los brasileños generalmente dirían \"viajé\" en pasado."
+    },
+    {
+      "id": "episode-1-171",
+      "startTime": 510.14,
+      "endTime": 512.42,
+      "pt": "Sim, é o nosso instinto.",
+      "es": "Sí, es nuestro instinto."
+    },
+    {
+      "id": "episode-1-172",
+      "startTime": 512.42,
+      "endTime": 517.7,
+      "pt": "Mas o aplicativo te força a entender essas nuances de tempo mais refinadas.",
+      "es": "Pero la aplicación te obliga a comprender estos matices temporales más refinados."
+    },
+    {
+      "id": "episode-1-173",
+      "startTime": 517.7,
+      "endTime": 520.74,
+      "pt": "Um falante nativo percebe esse detalhe na hora.",
+      "es": "Un hablante nativo nota este detalle enseguida."
+    },
+    {
+      "id": "episode-1-174",
+      "startTime": 520.74,
+      "endTime": 523.22,
+      "pt": "Mas vem cá, pensa no lado do usuário.",
+      "es": "Pero mira, piensa en el lado del usuario."
+    },
+    {
+      "id": "episode-1-175",
+      "startTime": 523.22,
+      "endTime": 526.62,
+      "pt": "Se eu chego cansado do trabalho, abre o app no sofá",
+      "es": "Si llego a casa cansado del trabajo, abro la aplicación en el sofá"
+    },
+    {
+      "id": "episode-1-176",
+      "startTime": 526.62,
+      "endTime": 528.86,
+      "pt": "e de repente ele arranca as opções",
+      "es": "y de repente elimina las opciones"
+    },
+    {
+      "id": "episode-1-177",
+      "startTime": 528.86,
+      "endTime": 532.26,
+      "pt": "e manda eu digitar a conjugação complexa do nada.",
+      "es": "y me dice que escriba la conjugación compleja de la nada."
+    },
+    {
+      "id": "episode-1-178",
+      "startTime": 532.26,
+      "endTime": 534.42,
+      "pt": "Olha, eu cancelaria a assinatura na hora.",
+      "es": "Mira, cancelaría la suscripción de inmediato."
+    },
+    {
+      "id": "episode-1-179",
+      "startTime": 534.42,
+      "endTime": 535.98,
+      "pt": "Sim, dá vontade, né?",
+      "es": "Sí, te dan ganas, ¿verdad?"
+    },
+    {
+      "id": "episode-1-180",
+      "startTime": 535.98,
+      "endTime": 539.38,
+      "pt": "Sim, parece um erro terrível de retenção de clientes.",
+      "es": "Sí, parece un terrible error de retención de clientes."
+    },
+    {
+      "id": "episode-1-181",
+      "startTime": 539.58,
+      "endTime": 543.34,
+      "pt": "Por que arriscar frustrar o aluno desse jeito no meio do curso?",
+      "es": "¿Por qué arriesgarse a frustrar así al alumno a mitad de curso?"
+    },
+    {
+      "id": "episode-1-182",
+      "startTime": 543.34,
+      "endTime": 545.94,
+      "pt": "Porque, na verdade, não é um erro de design.",
+      "es": "Porque en realidad no es un error de diseño."
+    },
+    {
+      "id": "episode-1-183",
+      "startTime": 545.94,
+      "endTime": 548.18,
+      "pt": "Essa é a grande sacada deles.",
+      "es": "Esa es la gran jugada de ellos."
+    },
+    {
+      "id": "episode-1-184",
+      "startTime": 548.18,
+      "endTime": 551.58,
+      "pt": "Isso é um princípio muito estudado na psicologia cognitiva",
+      "es": "Este es un principio ampliamente estudiado en psicología cognitiva."
+    },
+    {
+      "id": "episode-1-185",
+      "startTime": 551.58,
+      "endTime": 554.38,
+      "pt": "chamado de dificuldade desejável.",
+      "es": "llamado «dificultad deseable»."
+    },
+    {
+      "id": "episode-1-186",
+      "startTime": 554.38,
+      "endTime": 555.78,
+      "pt": "Dificuldade desejável?",
+      "es": "¿Dificultad deseable?"
+    },
+    {
+      "id": "episode-1-187",
+      "startTime": 555.78,
+      "endTime": 556.58,
+      "pt": "Tá.",
+      "es": "Bueno."
+    },
+    {
+      "id": "episode-1-188",
+      "startTime": 556.58,
+      "endTime": 559.94,
+      "pt": "Como é que estresse num app de celular pode ser algo desejável?",
+      "es": "¿Cómo puede ser deseable el estrés en una aplicación de teléfono móvil?"
+    },
+    {
+      "id": "episode-1-189",
+      "startTime": 559.94,
+      "endTime": 562.86,
+      "pt": "Porque aprendizagem sem fricção é uma ilusão.",
+      "es": "Porque el aprendizaje sin fricciones es una ilusión."
+    },
+    {
+      "id": "episode-1-190",
+      "startTime": 562.86,
+      "endTime": 565.38,
+      "pt": "Se o aplicativo te entrega tudo mastigado.",
+      "es": "Si la app te da todo masticado."
+    },
+    {
+      "id": "episode-1-191",
+      "startTime": 565.38,
+      "endTime": 568.22,
+      "pt": "Você avança, ganha umas medalinhas virtuais,",
+      "es": "Avanzas, ganas algunas medallas virtuales,"
+    },
+    {
+      "id": "episode-1-192",
+      "startTime": 568.22,
+      "endTime": 570.22,
+      "pt": "se acha um gênio e vai dormir feliz.",
+      "es": "Te crees un genio y te vas a dormir feliz."
+    },
+    {
+      "id": "episode-1-193",
+      "startTime": 570.22,
+      "endTime": 572.22,
+      "pt": "Mas no fundo não aprendeu a usar, né?",
+      "es": "Pero en el fondo no aprendiste a utilizarlo, ¿verdad?"
+    },
+    {
+      "id": "episode-1-194",
+      "startTime": 572.22,
+      "endTime": 573.22,
+      "pt": "Não.",
+      "es": "No."
+    },
+    {
+      "id": "episode-1-195",
+      "startTime": 573.22,
+      "endTime": 575.22,
+      "pt": "Aí no dia seguinte, você tá numa reunião com a diretoria",
+      "es": "Luego, al día siguiente, estás en una reunión con la junta."
+    },
+    {
+      "id": "episode-1-196",
+      "startTime": 575.22,
+      "endTime": 578.22,
+      "pt": "e o chefe pede uma atualização de projeto.",
+      "es": "y el jefe pide una actualización del proyecto."
+    },
+    {
+      "id": "episode-1-197",
+      "startTime": 578.22,
+      "endTime": 580.22,
+      "pt": "Não vai aparecer quatro balões flutuantes",
+      "es": "No aparecerán cuatro globos flotantes."
+    },
+    {
+      "id": "episode-1-198",
+      "startTime": 580.22,
+      "endTime": 582.22,
+      "pt": "de múltipla escolha na sua frente.",
+      "es": "opción múltiple frente a ti."
+    },
+    {
+      "id": "episode-1-199",
+      "startTime": 582.22,
+      "endTime": 584.22,
+      "pt": "Bem que podia, mas não rola.",
+      "es": "Podría, pero no ocurre."
+    },
+    {
+      "id": "episode-1-200",
+      "startTime": 584.22,
+      "endTime": 585.22,
+      "pt": "Não rola.",
+      "es": "No funciona."
+    },
+    {
+      "id": "episode-1-201",
+      "startTime": 585.22,
+      "endTime": 587.22,
+      "pt": "Você tem que se virar na vida real, no escuro.",
+      "es": "Tienes que desenvolverte en la vida real, a oscuras."
+    },
+    {
+      "id": "episode-1-202",
+      "startTime": 587.22,
+      "endTime": 590.22,
+      "pt": "A Horizonte Espanhol encerra essa frustração de propósito",
+      "es": "Horizonte acaba deliberadamente con esa frustración"
+    },
+    {
+      "id": "episode-1-203",
+      "startTime": 590.22,
+      "endTime": 594.22,
+      "pt": "para vacinar o cérebro contra o branco na hora da verdade.",
+      "es": "para inmunizar al cerebro contra quedarse en blanco en el momento de la verdad."
+    },
+    {
+      "id": "episode-1-204",
+      "startTime": 594.22,
+      "endTime": 596.22,
+      "pt": "Nossa, isso faz muito sentido.",
+      "es": "Vaya, eso tiene mucho sentido."
+    },
+    {
+      "id": "episode-1-205",
+      "startTime": 596.22,
+      "endTime": 598.22,
+      "pt": "A impressão fica ainda mais bizarra no nível 4,",
+      "es": "La impresión se vuelve aún más extraña en el nivel 4,"
+    },
+    {
+      "id": "episode-1-206",
+      "startTime": 598.22,
+      "endTime": 600.22,
+      "pt": "o nível de narrativas de opiniões.",
+      "es": "el nivel de las narrativas de opinión."
+    },
+    {
+      "id": "episode-1-207",
+      "startTime": 600.22,
+      "endTime": 603.22,
+      "pt": "Porque no nível 3 era só lembrar uma palavra,",
+      "es": "Porque en el nivel 3 sólo era cuestión de recordar una palabra,"
+    },
+    {
+      "id": "episode-1-208",
+      "startTime": 603.22,
+      "endTime": 605.22,
+      "pt": "mas aqui é organizar o caos.",
+      "es": "pero aquí se trata de organizar el caos."
+    },
+    {
+      "id": "episode-1-209",
+      "startTime": 605.22,
+      "endTime": 607.22,
+      "pt": "O exercício de ordenar as palavras, né?",
+      "es": "El ejercicio de ordenar palabras, ¿no?"
+    },
+    {
+      "id": "episode-1-210",
+      "startTime": 607.22,
+      "endTime": 608.22,
+      "pt": "Isso.",
+      "es": "Eso."
+    },
+    {
+      "id": "episode-1-211",
+      "startTime": 608.22,
+      "endTime": 611.22,
+      "pt": "A captura de tela mostra vários blocos flutuantes",
+      "es": "La captura de pantalla muestra varios bloques flotantes."
+    },
+    {
+      "id": "episode-1-212",
+      "startTime": 611.22,
+      "endTime": 612.22,
+      "pt": "para você arrastar.",
+      "es": "para que lo arrastres."
+    },
+    {
+      "id": "episode-1-213",
+      "startTime": 612.22,
+      "endTime": 613.22,
+      "pt": "Tem lá.",
+      "es": "Está ahí."
+    },
+    {
+      "id": "episode-1-214",
+      "startTime": 613.22,
+      "endTime": 618.22,
+      "pt": "O exemplo aparece assim: \"Cuando llegué al aeropuerto,",
+      "es": "El ejemplo aparece así: \"Cuando llegué al aeropuerto,"
+    },
+    {
+      "id": "episode-1-215",
+      "startTime": 618.22,
+      "endTime": 621.22,
+      "pt": "ya había perdido mi vuelo.\"",
+      "es": "ya había perdido mi vuelo\"."
+    },
+    {
+      "id": "episode-1-216",
+      "startTime": 621.22,
+      "endTime": 623.22,
+      "pt": "O nível de raciocínio sintático exigido aí",
+      "es": "El nivel de razonamiento sintáctico requerido allí."
+    },
+    {
+      "id": "episode-1-217",
+      "startTime": 623.22,
+      "endTime": 625.22,
+      "pt": "é altíssimo, de verdade.",
+      "es": "Es realmente alto."
+    },
+    {
+      "id": "episode-1-218",
+      "startTime": 625.22,
+      "endTime": 628.22,
+      "pt": "O aluno precisa desembaralhar esses blocos soltos",
+      "es": "El estudiante necesita descifrar estos bloques sueltos."
+    },
+    {
+      "id": "episode-1-219",
+      "startTime": 628.22,
+      "endTime": 631.22,
+      "pt": "para montar \"Cuando llegué al aeropuerto,",
+      "es": "para montar \"Cuando llegué al aeropuerto,"
+    },
+    {
+      "id": "episode-1-220",
+      "startTime": 631.22,
+      "endTime": 633.22,
+      "pt": "ya había perdido mi vuelo.\"",
+      "es": "ya había perdido mi vuelo\"."
+    },
+    {
+      "id": "episode-1-221",
+      "startTime": 633.22,
+      "endTime": 637.22,
+      "pt": "Ou seja: quando cheguei ao aeroporto, já tinha perdido meu voo.",
+      "es": "En otras palabras: cuando llegué al aeropuerto ya había perdido mi vuelo."
+    },
+    {
+      "id": "episode-1-222",
+      "startTime": 637.22,
+      "endTime": 640.22,
+      "pt": "E tipo para quem pulava as aulas de sintaxe no colégio,",
+      "es": "Y como para aquellos que se saltaron las clases de sintaxis en la escuela secundaria,"
+    },
+    {
+      "id": "episode-1-223",
+      "startTime": 640.22,
+      "endTime": 643.22,
+      "pt": "o que o cérebro está fazendo nos bastidores para resolver isso?",
+      "es": "¿Qué está haciendo el cerebro detrás de escena para resolver esto?"
+    },
+    {
+      "id": "episode-1-224",
+      "startTime": 643.22,
+      "endTime": 646.22,
+      "pt": "Porque não é só colocar a palavra uma do lado da outra.",
+      "es": "Porque no se trata sólo de poner palabras unas al lado de otras."
+    },
+    {
+      "id": "episode-1-225",
+      "startTime": 646.22,
+      "endTime": 647.22,
+      "pt": "Com certeza não.",
+      "es": "Definitivamente no."
+    },
+    {
+      "id": "episode-1-226",
+      "startTime": 647.22,
+      "endTime": 650.22,
+      "pt": "O cérebro precisa em questão de segundos",
+      "es": "El cerebro necesita, en cuestión de segundos,"
+    },
+    {
+      "id": "episode-1-227",
+      "startTime": 650.22,
+      "endTime": 652.22,
+      "pt": "construir uma linha do tempo mental.",
+      "es": "construir una línea de tiempo mental."
+    },
+    {
+      "id": "episode-1-228",
+      "startTime": 652.22,
+      "endTime": 655.22,
+      "pt": "Você tem duas ações no passado ali.",
+      "es": "Tienes dos acciones en el pasado allí."
+    },
+    {
+      "id": "episode-1-229",
+      "startTime": 655.22,
+      "endTime": 658.22,
+      "pt": "Chegar ao aeroporto e perder o voo.",
+      "es": "Llegar al aeropuerto y perder el vuelo."
+    },
+    {
+      "id": "episode-1-230",
+      "startTime": 658.22,
+      "endTime": 661.22,
+      "pt": "E a perda do voo aconteceu antes da chegada, óbvio.",
+      "es": "Y la pérdida del vuelo ocurrió antes de llegar, obviamente."
+    },
+    {
+      "id": "episode-1-231",
+      "startTime": 661.22,
+      "endTime": 662.22,
+      "pt": "Exato.",
+      "es": "Exactamente."
+    },
+    {
+      "id": "episode-1-232",
+      "startTime": 662.22,
+      "endTime": 665.22,
+      "pt": "Então, a estrutura da frase precisa refletir",
+      "es": "Entonces la estructura de la oración necesita reflejar"
+    },
+    {
+      "id": "episode-1-233",
+      "startTime": 665.22,
+      "endTime": 669.22,
+      "pt": "que uma ação já estava concluída antes de a outra sequer começar.",
+      "es": "que una acción ya se completó antes de que comenzara la otra."
+    },
+    {
+      "id": "episode-1-234",
+      "startTime": 669.22,
+      "endTime": 673.22,
+      "pt": "Para você colocar \"ya\" e \"había perdido\" na ordem certa,",
+      "es": "Para que pongas \"ya\" y \"había perdido\" en el orden correcto,"
+    },
+    {
+      "id": "episode-1-235",
+      "startTime": 673.22,
+      "endTime": 676.22,
+      "pt": "você tem que prever o final da frase antes de começar a montar.",
+      "es": "Tienes que predecir el final de la oración antes de comenzar a armarla."
+    },
+    {
+      "id": "episode-1-236",
+      "startTime": 676.22,
+      "endTime": 679.22,
+      "pt": "Se você inverte uma palavra ali, desmorona tudo, né?",
+      "es": "Si inviertes una palabra ahí, todo se desmorona, ¿verdad?"
+    },
+    {
+      "id": "episode-1-237",
+      "startTime": 679.22,
+      "endTime": 683.22,
+      "pt": "Perde o sentido ou fica extremamente não natural para um nativo.",
+      "es": "Pierde su significado o se vuelve extremadamente antinatural para un hablante nativo."
+    },
+    {
+      "id": "episode-1-238",
+      "startTime": 683.22,
+      "endTime": 686.22,
+      "pt": "E de novo, voltando para a realidade corporativa,",
+      "es": "Y nuevamente, volviendo a la realidad corporativa,"
+    },
+    {
+      "id": "episode-1-239",
+      "startTime": 686.22,
+      "endTime": 690.22,
+      "pt": "pensa num gerente justificando porque o balanço fechou no vermelho.",
+      "es": "Pensemos en un directivo que justifica por qué el balance cerró en números rojos."
+    },
+    {
+      "id": "episode-1-240",
+      "startTime": 690.22,
+      "endTime": 693.22,
+      "pt": "Ele tem que colocar causas e efeitos em ordem cronológica.",
+      "es": "Tiene que poner causas y efectos en orden cronológico."
+    },
+    {
+      "id": "episode-1-241",
+      "startTime": 693.22,
+      "endTime": 694.22,
+      "pt": "Perfeitamente.",
+      "es": "Perfectamente."
+    },
+    {
+      "id": "episode-1-242",
+      "startTime": 694.22,
+      "endTime": 696.22,
+      "pt": "Quando o fornecedor entregou o material,",
+      "es": "Cuando el proveedor entregó el material,"
+    },
+    {
+      "id": "episode-1-243",
+      "startTime": 696.22,
+      "endTime": 698.22,
+      "pt": "nós já tínhamos estourado prazo do cliente.",
+      "es": "Ya nos habíamos pasado del plazo del cliente."
+    },
+    {
+      "id": "episode-1-244",
+      "startTime": 698.22,
+      "endTime": 703.22,
+      "pt": "Essa habilidade de justificar de criar essa cronologia impecável",
+      "es": "Esta capacidad de justificar y crear una cronología impecable"
+    },
+    {
+      "id": "episode-1-245",
+      "startTime": 703.22,
+      "endTime": 706.22,
+      "pt": "é o que está sendo treinado com aquele exercíciozinho de perder o voo.",
+      "es": "Esto es lo que se entrena con ese pequeño ejercicio de perder el vuelo."
+    },
+    {
+      "id": "episode-1-246",
+      "startTime": 706.22,
+      "endTime": 707.22,
+      "pt": "Sensacional.",
+      "es": "Sensacional."
+    },
+    {
+      "id": "episode-1-247",
+      "startTime": 707.22,
+      "endTime": 710.22,
+      "pt": "E isso prepara a gente para o nível 5,",
+      "es": "Y esto nos prepara para el nivel 5,"
+    },
+    {
+      "id": "episode-1-248",
+      "startTime": 710.22,
+      "endTime": 712.22,
+      "pt": "que é tipo o pináculo da montanha.",
+      "es": "que es como la cima de la montaña."
+    },
+    {
+      "id": "episode-1-249",
+      "startTime": 712.22,
+      "endTime": 714.22,
+      "pt": "O nome já diz tudo: o desafio final.",
+      "es": "El nombre ya lo dice todo: el desafío final."
+    },
+    {
+      "id": "episode-1-250",
+      "startTime": 714.22,
+      "endTime": 720.22,
+      "pt": "O cabeçalho inclusive manda o usuário completar a frase com os termos que eles usam.",
+      "es": "El encabezado incluso le dice al usuario que complete la oración con los términos que ellos usan."
+    },
+    {
+      "id": "episode-1-251",
+      "startTime": 720.22,
+      "endTime": 723.22,
+      "pt": "Desenvoltura avançada.",
+      "es": "Soltura avanzada."
+    },
+    {
+      "id": "episode-1-252",
+      "startTime": 723.22,
+      "endTime": 725.22,
+      "pt": "A mudança de tom é gritante.",
+      "es": "El cambio de tono es evidente."
+    },
+    {
+      "id": "episode-1-253",
+      "startTime": 725.22,
+      "endTime": 727.22,
+      "pt": "Eles largam aquela linguagem lúdica de \"diviértase\"",
+      "es": "Dejan atrás ese lenguaje juguetón de \"diviértete\""
+    },
+    {
+      "id": "episode-1-254",
+      "startTime": 727.22,
+      "endTime": 730.22,
+      "pt": "e jogam uma desenvoltura avançada",
+      "es": "y pasan a la soltura avanzada"
+    },
+    {
+      "id": "episode-1-255",
+      "startTime": 730.22,
+      "endTime": 733.22,
+      "pt": "que é jargão para avaliação de carreira.",
+      "es": "que es la jerga de la evaluación profesional."
+    },
+    {
+      "id": "episode-1-256",
+      "startTime": 733.22,
+      "endTime": 734.22,
+      "pt": "Total.",
+      "es": "Total."
+    },
+    {
+      "id": "episode-1-257",
+      "startTime": 734.22,
+      "endTime": 740.22,
+      "pt": "E a questão na tela é: \"Si tuviera más dinero, viajaría por todos los países de América Latina.\"",
+      "es": "Y la pregunta en la pantalla es: \"Si tuviera más dinero, viajaría por todos los países de América Latina\"."
+    },
+    {
+      "id": "episode-1-258",
+      "startTime": 740.22,
+      "endTime": 742.22,
+      "pt": "E as opções voltam a aparecer,",
+      "es": "Y las opciones vuelven a aparecer,"
+    },
+    {
+      "id": "episode-1-259",
+      "startTime": 742.22,
+      "endTime": 745.22,
+      "pt": "mas agora testando coisas bem cruéis.",
+      "es": "pero ahora probando cosas muy crueles."
+    },
+    {
+      "id": "episode-1-260",
+      "startTime": 745.22,
+      "endTime": 747.22,
+      "pt": "\"Tuve\", \"tuviera\" e \"tengo\".",
+      "es": "\"Tuve\", \"tuviera\" y \"tengo\"."
+    },
+    {
+      "id": "episode-1-261",
+      "startTime": 747.22,
+      "endTime": 751.22,
+      "pt": "E a resposta no caso é o subjuntivo \"tuviera\".",
+      "es": "Y la respuesta en este caso es el subjuntivo \"tuviera\"."
+    },
+    {
+      "id": "episode-1-262",
+      "startTime": 751.22,
+      "endTime": 752.22,
+      "pt": "Isso, \"tuviera\".",
+      "es": "Eso: \"tuviera\"."
+    },
+    {
+      "id": "episode-1-263",
+      "startTime": 752.22,
+      "endTime": 754.22,
+      "pt": "E eu queria muito focar nisso um pouquinho.",
+      "es": "Y realmente quería centrarme un poco en eso."
+    },
+    {
+      "id": "episode-1-264",
+      "startTime": 754.22,
+      "endTime": 756.22,
+      "pt": "O subjuntivo parece seu divisor de águas.",
+      "es": "El subjuntivo parece ser su punto de inflexión."
+    },
+    {
+      "id": "episode-1-265",
+      "startTime": 756.22,
+      "endTime": 759.22,
+      "pt": "A linha que separa quem fala o idioma de forma meio quebrada",
+      "es": "La línea que separa a quienes hablan el idioma de forma un tanto quebrada"
+    },
+    {
+      "id": "episode-1-266",
+      "startTime": 759.22,
+      "endTime": 762.22,
+      "pt": "de quem o domina de forma profissional",
+      "es": "de aquellos que lo dominan profesionalmente"
+    },
+    {
+      "id": "episode-1-267",
+      "startTime": 762.22,
+      "endTime": 765.22,
+      "pt": "porque o subjuntivo é o grande chefão final.",
+      "es": "porque el subjuntivo es el gran jefe final."
+    },
+    {
+      "id": "episode-1-268",
+      "startTime": 765.22,
+      "endTime": 769.22,
+      "pt": "Bom, em idiomas de origem latina, o modo subjuntivo",
+      "es": "Pues bien, en las lenguas de origen latino, el modo subjuntivo"
+    },
+    {
+      "id": "episode-1-269",
+      "startTime": 769.22,
+      "endTime": 771.22,
+      "pt": "é o território da hipótese, né?",
+      "es": "Es el territorio de las hipótesis, ¿verdad?"
+    },
+    {
+      "id": "episode-1-270",
+      "startTime": 771.22,
+      "endTime": 774.22,
+      "pt": "Da incerteza, do desejo,",
+      "es": "De la incertidumbre, del deseo,"
+    },
+    {
+      "id": "episode-1-271",
+      "startTime": 774.22,
+      "endTime": 778.22,
+      "pt": "e principalmente da educação extrema.",
+      "es": "y principalmente de la educación extrema."
+    },
+    {
+      "id": "episode-1-272",
+      "startTime": 778.22,
+      "endTime": 781.22,
+      "pt": "A opção tengo, por exemplo, significa eu tenho.",
+      "es": "La opción tengo, por ejemplo, significa \"yo tengo\"."
+    },
+    {
+      "id": "episode-1-273",
+      "startTime": 781.22,
+      "endTime": 783.22,
+      "pt": "É um fato, é indicativo.",
+      "es": "Es un hecho, es indicativo."
+    },
+    {
+      "id": "episode-1-274",
+      "startTime": 783.22,
+      "endTime": 787.22,
+      "pt": "Mas a frase do desafio começa com \"si\", que é \"se\".",
+      "es": "La oración del desafío comienza con \"si\", que significa \"se\"."
+    },
+    {
+      "id": "episode-1-275",
+      "startTime": 787.22,
+      "endTime": 788.22,
+      "pt": "Exatamente.",
+      "es": "Exactamente."
+    },
+    {
+      "id": "episode-1-276",
+      "startTime": 788.22,
+      "endTime": 790.22,
+      "pt": "O \"si\" estabelece um mundo imaginário.",
+      "es": "El \"si\" establece un mundo imaginario."
+    },
+    {
+      "id": "episode-1-277",
+      "startTime": 790.22,
+      "endTime": 792.22,
+      "pt": "O aluno não tem o dinheiro.",
+      "es": "El estudiante no tiene el dinero."
+    },
+    {
+      "id": "episode-1-278",
+      "startTime": 792.22,
+      "endTime": 794.22,
+      "pt": "Ele está só projetando um cenário.",
+      "es": "Sólo está proyectando un escenario."
+    },
+    {
+      "id": "episode-1-279",
+      "startTime": 794.22,
+      "endTime": 796.22,
+      "pt": "\"Si tuviera\", \"si pudiera\".",
+      "es": "\"Si tuviera\", \"si pudiera\"."
+    },
+    {
+      "id": "episode-1-280",
+      "startTime": 796.22,
+      "endTime": 799.22,
+      "pt": "E trazendo isso de novo para a sala de reunião.",
+      "es": "Y llevando esto de nuevo a la sala de juntas."
+    },
+    {
+      "id": "episode-1-281",
+      "startTime": 799.22,
+      "endTime": 803.22,
+      "pt": "Se um executivo brasileiro está lá numa rodada de negócios",
+      "es": "Si un ejecutivo brasileño está en una ronda de negocios"
+    },
+    {
+      "id": "episode-1-282",
+      "startTime": 803.22,
+      "endTime": 805.22,
+      "pt": "e ele não sabe usar o subjuntivo direito,",
+      "es": "y no sabe usar correctamente el subjuntivo,"
+    },
+    {
+      "id": "episode-1-283",
+      "startTime": 805.22,
+      "endTime": 807.22,
+      "pt": "qual é o estrago real?",
+      "es": "¿Cuál es el verdadero daño?"
+    },
+    {
+      "id": "episode-1-284",
+      "startTime": 807.22,
+      "endTime": 811.22,
+      "pt": "O estrago é que ele vai soar rude, inflexível, sabe.",
+      "es": "El daño es que sonará grosero o inflexible, ya sabes."
+    },
+    {
+      "id": "episode-1-285",
+      "startTime": 811.22,
+      "endTime": 813.22,
+      "pt": "Meio ditatorial até.",
+      "es": "Un poco dictatorial incluso."
+    },
+    {
+      "id": "episode-1-286",
+      "startTime": 813.22,
+      "endTime": 815.22,
+      "pt": "Em negociações de alto escalão,",
+      "es": "En negociaciones de alto nivel,"
+    },
+    {
+      "id": "episode-1-287",
+      "startTime": 815.22,
+      "endTime": 818.22,
+      "pt": "as pessoas raramente fazem exigências super diretas.",
+      "es": "la gente rara vez hace demandas súper directas."
+    },
+    {
+      "id": "episode-1-288",
+      "startTime": 818.22,
+      "endTime": 822.22,
+      "pt": "Você não diz, me dá 10% de desconto e eu assino.",
+      "es": "No dices, dame un 10% de descuento y firmo."
+    },
+    {
+      "id": "episode-1-289",
+      "startTime": 822.22,
+      "endTime": 823.22,
+      "pt": "É deselegante.",
+      "es": "Es poco elegante."
+    },
+    {
+      "id": "episode-1-290",
+      "startTime": 823.22,
+      "endTime": 824.22,
+      "pt": "Muito.",
+      "es": "Muy."
+    },
+    {
+      "id": "episode-1-291",
+      "startTime": 824.22,
+      "endTime": 826.22,
+      "pt": "A comunicação diplomática pede a condicional.",
+      "es": "La comunicación diplomática exige el condicional."
+    },
+    {
+      "id": "episode-1-292",
+      "startTime": 826.22,
+      "endTime": 831.22,
+      "pt": "O profissional fala, se a sua empresa oferecesse um desconto de 10%,",
+      "es": "El profesional dice, si su empresa ofreciera un 10% de descuento,"
+    },
+    {
+      "id": "episode-1-293",
+      "startTime": 831.22,
+      "endTime": 833.22,
+      "pt": "nós poderíamos avançar.",
+      "es": "podríamos seguir adelante."
+    },
+    {
+      "id": "episode-1-294",
+      "startTime": 833.22,
+      "endTime": 836.22,
+      "pt": "Isso protege todo mundo, né, dá espaço para negociar.",
+      "es": "Esto protege a todos, cierto, da margen para negociar."
+    },
+    {
+      "id": "episode-1-295",
+      "startTime": 836.22,
+      "endTime": 838.22,
+      "pt": "Sim, protege o ego das partes.",
+      "es": "Sí, protege el ego de las partes."
+    },
+    {
+      "id": "episode-1-296",
+      "startTime": 838.22,
+      "endTime": 841.22,
+      "pt": "Permite que alguém recui sem perder a pose.",
+      "es": "Permite que alguien retroceda sin perder la postura."
+    },
+    {
+      "id": "episode-1-297",
+      "startTime": 841.22,
+      "endTime": 845.22,
+      "pt": "Então dominar o subjuntivo não é só saber regra de gramática.",
+      "es": "Entonces, dominar el subjuntivo no es sólo conocer las reglas gramaticales."
+    },
+    {
+      "id": "episode-1-298",
+      "startTime": 845.22,
+      "endTime": 847.22,
+      "pt": "É dominar o tato profissional.",
+      "es": "Se trata de dominar el tacto profesional."
+    },
+    {
+      "id": "episode-1-299",
+      "startTime": 847.22,
+      "endTime": 849.22,
+      "pt": "É persuasão pura.",
+      "es": "Es pura persuasión."
+    },
+    {
+      "id": "episode-1-300",
+      "startTime": 849.22,
+      "endTime": 851.22,
+      "pt": "E isso justifica o nome desafio final.",
+      "es": "Y esto justifica el nombre de «desafío final»."
+    },
+    {
+      "id": "episode-1-301",
+      "startTime": 851.22,
+      "endTime": 855.22,
+      "pt": "Você prova que sabe navegar pela diplomacia sem ofender ninguém.",
+      "es": "Demuestras que sabes manejar la diplomacia sin ofender a nadie."
+    },
+    {
+      "id": "episode-1-302",
+      "startTime": 855.22,
+      "endTime": 857.22,
+      "pt": "E é aí, logo depois dessa etapa,",
+      "es": "Y luego, justo después de esta etapa,"
+    },
+    {
+      "id": "episode-1-303",
+      "startTime": 857.22,
+      "endTime": 860.22,
+      "pt": "que o funil mostra a verdadeira face",
+      "es": "y es ahí donde el embudo muestra su verdadera cara"
+    },
+    {
+      "id": "episode-1-304",
+      "startTime": 860.22,
+      "endTime": 862.22,
+      "pt": "da plataforma horizonte espagnol.",
+      "es": "de la plataforma Horizonte Español."
+    },
+    {
+      "id": "episode-1-305",
+      "startTime": 862.22,
+      "endTime": 864.22,
+      "pt": "O momento da recompensa.",
+      "es": "El momento de la recompensa."
+    },
+    {
+      "id": "episode-1-306",
+      "startTime": 864.22,
+      "endTime": 866.22,
+      "pt": "Sim, porque depois do nível 5,",
+      "es": "Sí, porque después del nivel 5,"
+    },
+    {
+      "id": "episode-1-307",
+      "startTime": 866.22,
+      "endTime": 869.22,
+      "pt": "você não ganha só confete na tela e um PDF genérico",
+      "es": "no solo aparece confeti en la pantalla y un PDF genérico"
+    },
+    {
+      "id": "episode-1-308",
+      "startTime": 869.22,
+      "endTime": 871.22,
+      "pt": "para guardar numa pasta de downloads.",
+      "es": "para guardarlo en una carpeta de descargas."
+    },
+    {
+      "id": "episode-1-309",
+      "startTime": 871.22,
+      "endTime": 874.22,
+      "pt": "A última captura de tela muda tudo.",
+      "es": "La última captura de pantalla lo cambia todo."
+    },
+    {
+      "id": "episode-1-310",
+      "startTime": 874.22,
+      "endTime": 876.22,
+      "pt": "É uma página de conversão pesada.",
+      "es": "Es una página de conversión agresiva."
+    },
+    {
+      "id": "episode-1-311",
+      "startTime": 876.22,
+      "endTime": 878.22,
+      "pt": "A plataforma deixa de ser um curso",
+      "es": "La plataforma ya no es un curso."
+    },
+    {
+      "id": "episode-1-312",
+      "startTime": 878.22,
+      "endTime": 880.22,
+      "pt": "e vira uma ferramenta de...",
+      "es": "y se convierte en una herramienta..."
+    },
+    {
+      "id": "episode-1-313",
+      "startTime": 880.22,
+      "endTime": 881.22,
+      "pt": "Hmm...",
+      "es": "Mmm..."
+    },
+    {
+      "id": "episode-1-314",
+      "startTime": 881.22,
+      "endTime": 883.22,
+      "pt": "A aceleração de carreira.",
+      "es": "Aceleración profesional."
+    },
+    {
+      "id": "episode-1-315",
+      "startTime": 883.22,
+      "endTime": 885.22,
+      "pt": "Letras garrafais amarelas na tela,",
+      "es": "Grandes letras amarillas en la pantalla,"
+    },
+    {
+      "id": "episode-1-316",
+      "startTime": 885.22,
+      "endTime": 888.22,
+      "pt": "dizendo, deu o próximo passo na sua carreira.",
+      "es": "diciendo: \"Da el siguiente paso en tu carrera\"."
+    },
+    {
+      "id": "episode-1-317",
+      "startTime": 888.22,
+      "endTime": 891.22,
+      "pt": "E logo embaixo, preenche o formulário abaixo",
+      "es": "Y a continuación, completa el formulario"
+    },
+    {
+      "id": "episode-1-318",
+      "startTime": 891.22,
+      "endTime": 893.22,
+      "pt": "e recebe um atendimento personalizado",
+      "es": "y recibe un servicio personalizado"
+    },
+    {
+      "id": "episode-1-319",
+      "startTime": 893.22,
+      "endTime": 895.22,
+      "pt": "da nossa equipe acadêmica.",
+      "es": "de nuestro equipo académico."
+    },
+    {
+      "id": "episode-1-320",
+      "startTime": 895.22,
+      "endTime": 897.22,
+      "pt": "Olha o nível da abordagem.",
+      "es": "Mira el nivel del enfoque."
+    },
+    {
+      "id": "episode-1-321",
+      "startTime": 897.22,
+      "endTime": 900.22,
+      "pt": "E o formulário pede o básico: nome e e-mail,",
+      "es": "Y el formulario solicita el nombre y el correo electrónico,"
+    },
+    {
+      "id": "episode-1-322",
+      "startTime": 900.22,
+      "endTime": 902.22,
+      "pt": "mas o telefone, o campo de telefone",
+      "es": "pero el teléfono, el campo telefónico"
+    },
+    {
+      "id": "episode-1-323",
+      "startTime": 902.22,
+      "endTime": 904.22,
+      "pt": "já vem preenchido com a bandeira do Brasil,",
+      "es": "Ya está lleno de la bandera brasileña,"
+    },
+    {
+      "id": "episode-1-324",
+      "startTime": 904.22,
+      "endTime": 905.22,
+      "pt": "o código mais 55,",
+      "es": "el código +55,"
+    },
+    {
+      "id": "episode-1-325",
+      "startTime": 905.22,
+      "endTime": 907.22,
+      "pt": "e o formato de discagem lá de São Paulo,",
+      "es": "y el formato de marcación desde São Paulo,"
+    },
+    {
+      "id": "episode-1-326",
+      "startTime": 907.22,
+      "endTime": 909.22,
+      "pt": "11, 9, 9, 9 e por aí vai.",
+      "es": "11, 9, 9, 9 y así sucesivamente."
+    },
+    {
+      "id": "episode-1-327",
+      "startTime": 909.22,
+      "endTime": 911.22,
+      "pt": "Super direcionado.",
+      "es": "Súper dirigido."
+    },
+    {
+      "id": "episode-1-328",
+      "startTime": 911.22,
+      "endTime": 912.22,
+      "pt": "Muito.",
+      "es": "Muy."
+    },
+    {
+      "id": "episode-1-329",
+      "startTime": 912.22,
+      "endTime": 914.22,
+      "pt": "Em baixo, tem uma caixa de texto enorme com a pergunta",
+      "es": "Debajo, hay un cuadro de texto enorme con la pregunta."
+    },
+    {
+      "id": "episode-1-330",
+      "startTime": 914.22,
+      "endTime": 916.22,
+      "pt": "como podemos ajudar,",
+      "es": "¿Cómo podemos ayudar?"
+    },
+    {
+      "id": "episode-1-331",
+      "startTime": 916.22,
+      "endTime": 919.22,
+      "pt": "aí um botão vermelho de enviar consulta,",
+      "es": "hay un botón rojo para enviar consulta,"
+    },
+    {
+      "id": "episode-1-332",
+      "startTime": 919.22,
+      "endTime": 921.22,
+      "pt": "e a marca registrada de 2026.",
+      "es": "y la marca registrada de 2026."
+    },
+    {
+      "id": "episode-1-333",
+      "startTime": 921.22,
+      "endTime": 924.22,
+      "pt": "Gente, isso é uma obra prima de funil de conversão.",
+      "es": "Chicos, esta es una obra maestra del embudo de conversión."
+    },
+    {
+      "id": "episode-1-334",
+      "startTime": 924.22,
+      "endTime": 925.22,
+      "pt": "Porque pensa comigo,",
+      "es": "Porque piensa conmigo,"
+    },
+    {
+      "id": "episode-1-335",
+      "startTime": 925.22,
+      "endTime": 927.22,
+      "pt": "qual sempre foi a maior falha",
+      "es": "cuál siempre ha sido el mayor defecto"
+    },
+    {
+      "id": "episode-1-336",
+      "startTime": 927.22,
+      "endTime": 929.22,
+      "pt": "daquelas escolas de idiomas,",
+      "es": "esas escuelas de idiomas,"
+    },
+    {
+      "id": "episode-1-337",
+      "startTime": 929.22,
+      "endTime": 930.22,
+      "pt": "para adicionais.",
+      "es": "para adicional."
+    },
+    {
+      "id": "episode-1-338",
+      "startTime": 930.22,
+      "endTime": 932.22,
+      "pt": "O depois, né, o que acontece quando curso acaba?",
+      "es": "Después, ¿no? ¿Qué pasa cuando termina el curso?"
+    },
+    {
+      "id": "episode-1-339",
+      "startTime": 932.22,
+      "endTime": 933.22,
+      "pt": "Exato.",
+      "es": "Exactamente."
+    },
+    {
+      "id": "episode-1-340",
+      "startTime": 933.22,
+      "endTime": 935.22,
+      "pt": "O vácuo pós-fluência.",
+      "es": "El vacío después de alcanzar la fluidez."
+    },
+    {
+      "id": "episode-1-341",
+      "startTime": 935.22,
+      "endTime": 937.22,
+      "pt": "O aluno passava lá 5, 6 anos.",
+      "es": "El estudiante pasaba allí 5 o 6 años."
+    },
+    {
+      "id": "episode-1-342",
+      "startTime": 937.22,
+      "endTime": 939.22,
+      "pt": "Terminava o último livro.",
+      "es": "Terminaba el último libro."
+    },
+    {
+      "id": "episode-1-343",
+      "startTime": 939.22,
+      "endTime": 941.22,
+      "pt": "Pegava aquele canudo e pensava.",
+      "es": "Recibía aquel diploma y pensaba."
+    },
+    {
+      "id": "episode-1-344",
+      "startTime": 941.22,
+      "endTime": 943.22,
+      "pt": "Beleza, e agora o que eu faço com essa fluência?",
+      "es": "Bien, ¿ahora qué hago con esta fluidez?"
+    },
+    {
+      "id": "episode-1-345",
+      "startTime": 943.22,
+      "endTime": 946.22,
+      "pt": "E a única resposta era colocá-la no LinkedIn",
+      "es": "Y la única respuesta era ponerla en LinkedIn"
+    },
+    {
+      "id": "episode-1-346",
+      "startTime": 946.22,
+      "endTime": 948.22,
+      "pt": "e rezar para algum recrutador ler.",
+      "es": "y rezar para que algún reclutador lo leyera."
+    },
+    {
+      "id": "episode-1-347",
+      "startTime": 948.22,
+      "endTime": 949.22,
+      "pt": "Precisamente.",
+      "es": "Precisamente."
+    },
+    {
+      "id": "episode-1-348",
+      "startTime": 949.22,
+      "endTime": 951.22,
+      "pt": "Mas A Horizonte Espanhol,",
+      "es": "Pero Horizonte Español"
+    },
+    {
+      "id": "episode-1-349",
+      "startTime": 951.22,
+      "endTime": 953.22,
+      "pt": "pegou a visão de que, em 2026,",
+      "es": "captó la visión de que, en 2026,"
+    },
+    {
+      "id": "episode-1-350",
+      "startTime": 953.22,
+      "endTime": 955.22,
+      "pt": "a habilidade linguística é percebida como",
+      "es": "La capacidad lingüística se percibe como"
+    },
+    {
+      "id": "episode-1-351",
+      "startTime": 955.22,
+      "endTime": 957.22,
+      "pt": "puro capital de mercado.",
+      "es": "capital de mercado puro."
+    },
+    {
+      "id": "episode-1-352",
+      "startTime": 957.22,
+      "endTime": 959.22,
+      "pt": "Quando eles conectam aquele teste",
+      "es": "Cuando conectan esa prueba"
+    },
+    {
+      "id": "episode-1-353",
+      "startTime": 959.22,
+      "endTime": 960.22,
+      "pt": "do desafio final do nível 5,",
+      "es": "del desafío final del nivel 5,"
+    },
+    {
+      "id": "episode-1-354",
+      "startTime": 960.22,
+      "endTime": 962.22,
+      "pt": "direto numa equipe acadêmica humana,",
+      "es": "directamente en un equipo académico humano,"
+    },
+    {
+      "id": "episode-1-355",
+      "startTime": 962.22,
+      "endTime": 964.22,
+      "pt": "eles acabam com esse vácuo.",
+      "es": "acaban con este vacío."
+    },
+    {
+      "id": "episode-1-356",
+      "startTime": 964.22,
+      "endTime": 966.22,
+      "pt": "É como se eles dissessem, olha,",
+      "es": "Es como si dijeran, mira,"
+    },
+    {
+      "id": "episode-1-357",
+      "startTime": 966.22,
+      "endTime": 968.22,
+      "pt": "você sobreviveu ao teste de estresse.",
+      "es": "Sobreviviste a la prueba de estrés."
+    },
+    {
+      "id": "episode-1-358",
+      "startTime": 968.22,
+      "endTime": 970.22,
+      "pt": "Você provou que sabe montar cronologias",
+      "es": "Has demostrado que sabes crear cronologías."
+    },
+    {
+      "id": "episode-1-359",
+      "startTime": 970.22,
+      "endTime": 973.22,
+      "pt": "e provou que sabe ser diplomático nas hipóteses.",
+      "es": "y has demostrado que sabes ser diplomático en situaciones hipotéticas."
+    },
+    {
+      "id": "episode-1-360",
+      "startTime": 973.22,
+      "endTime": 976.22,
+      "pt": "Agora, diz para a gente onde você quer chegar.",
+      "es": "Ahora dinos a dónde quieres llegar."
+    },
+    {
+      "id": "episode-1-361",
+      "startTime": 976.22,
+      "endTime": 977.22,
+      "pt": "Qual vaga você quer?",
+      "es": "¿Qué puesto quieres?"
+    },
+    {
+      "id": "episode-1-362",
+      "startTime": 977.22,
+      "endTime": 979.22,
+      "pt": "E a gente te ensina a usar as ferramentas",
+      "es": "Y te enseñamos a utilizar las herramientas."
+    },
+    {
+      "id": "episode-1-363",
+      "startTime": 979.22,
+      "endTime": 982.22,
+      "pt": "que você acabou de destravar para conseguir isso.",
+      "es": "que acabas de desbloquear para lograrlo."
+    },
+    {
+      "id": "episode-1-364",
+      "startTime": 982.22,
+      "endTime": 983.22,
+      "pt": "É fascinante ver a arquitetura",
+      "es": "Es fascinante ver la arquitectura."
+    },
+    {
+      "id": "episode-1-365",
+      "startTime": 983.22,
+      "endTime": 985.22,
+      "pt": "desse negócio esposta, sim,",
+      "es": "de este negocio, sí,"
+    },
+    {
+      "id": "episode-1-366",
+      "startTime": 985.22,
+      "endTime": 987.22,
+      "pt": "porque começa superbobinho",
+      "es": "porque empieza de forma muy básica"
+    },
+    {
+      "id": "episode-1-367",
+      "startTime": 987.22,
+      "endTime": 988.22,
+      "pt": "apontando para uma maçã vermelha.",
+      "es": "señalando una manzana roja."
+    },
+    {
+      "id": "episode-1-368",
+      "startTime": 988.22,
+      "endTime": 990.22,
+      "pt": "Ganhando sua confiança?",
+      "es": "¿Ganándote tu confianza?"
+    },
+    {
+      "id": "episode-1-369",
+      "startTime": 990.22,
+      "endTime": 992.22,
+      "pt": "Aí, eles puxam o tapete.",
+      "es": "Luego, te quitan el suelo bajo los pies."
+    },
+    {
+      "id": "episode-1-370",
+      "startTime": 992.22,
+      "endTime": 994.22,
+      "pt": "Tiram as opções,",
+      "es": "Quitan las opciones,"
+    },
+    {
+      "id": "episode-1-371",
+      "startTime": 994.22,
+      "endTime": 996.22,
+      "pt": "simulam o estresse do escritório.",
+      "es": "simulan el estrés de la oficina."
+    },
+    {
+      "id": "episode-1-372",
+      "startTime": 996.22,
+      "endTime": 998.22,
+      "pt": "Forçam o seu cérebro a ordenar",
+      "es": "Obligan a tu cerebro a ordenar"
+    },
+    {
+      "id": "episode-1-373",
+      "startTime": 998.22,
+      "endTime": 1000.22,
+      "pt": "o caos das palavras soltas.",
+      "es": "el caos de las palabras sueltas."
+    },
+    {
+      "id": "episode-1-374",
+      "startTime": 1000.22,
+      "endTime": 1003.22,
+      "pt": "Testam a sua capacidade de negociar com subjuntivo.",
+      "es": "Ponen a prueba tu capacidad para negociar con el subjuntivo."
+    },
+    {
+      "id": "episode-1-375",
+      "startTime": 1003.22,
+      "endTime": 1005.22,
+      "pt": "E aí, quando o aluno está suando frio,",
+      "es": "Y luego, cuando el estudiante está sudando frío,"
+    },
+    {
+      "id": "episode-1-376",
+      "startTime": 1005.22,
+      "endTime": 1007.22,
+      "pt": "mas vem seu desafio,",
+      "es": "pero llega tu desafío,"
+    },
+    {
+      "id": "episode-1-377",
+      "startTime": 1007.22,
+      "endTime": 1009.22,
+      "pt": "entregam a chave de ouro.",
+      "es": "entregan la llave de oro."
+    },
+    {
+      "id": "episode-1-378",
+      "startTime": 1009.22,
+      "endTime": 1011.22,
+      "pt": "O foco é totalmente pragmático.",
+      "es": "El enfoque es completamente pragmático."
+    },
+    {
+      "id": "episode-1-379",
+      "startTime": 1011.22,
+      "endTime": 1013.22,
+      "pt": "Eles testam a sua tolerância à frustração",
+      "es": "Ponen a prueba tu tolerancia a la frustración"
+    },
+    {
+      "id": "episode-1-380",
+      "startTime": 1013.22,
+      "endTime": 1014.22,
+      "pt": "e só depois validam",
+      "es": "y solo entonces validan"
+    },
+    {
+      "id": "episode-1-381",
+      "startTime": 1014.22,
+      "endTime": 1016.22,
+      "pt": "se você serve pro mercado de trabalho.",
+      "es": "si eres apto para el mercado laboral."
+    },
+    {
+      "id": "episode-1-382",
+      "startTime": 1016.22,
+      "endTime": 1017.22,
+      "pt": "O que aliás,",
+      "es": "Que, por cierto,"
+    },
+    {
+      "id": "episode-1-383",
+      "startTime": 1017.22,
+      "endTime": 1019.22,
+      "pt": "deixa a gente compensar",
+      "es": "nos permite compensar"
+    },
+    {
+      "id": "episode-1-384",
+      "startTime": 1019.22,
+      "endTime": 1021.22,
+      "pt": "o movimento meio indigesto no fim das contas.",
+      "es": "lo que, al fin y al cabo, resulta algo indigesto."
+    },
+    {
+      "id": "episode-1-385",
+      "startTime": 1021.22,
+      "endTime": 1022.22,
+      "pt": "Como assim?",
+      "es": "¿Cómo?"
+    },
+    {
+      "id": "episode-1-386",
+      "startTime": 1022.22,
+      "endTime": 1024.22,
+      "pt": "Bom, a gente passou esse tempo",
+      "es": "Bueno, pasamos ese tiempo"
+    },
+    {
+      "id": "episode-1-387",
+      "startTime": 1024.22,
+      "endTime": 1027.22,
+      "pt": "todo elogiando a eficiência clínica deles, né?",
+      "es": "elogiando su eficiencia clínica, ¿verdad?"
+    },
+    {
+      "id": "episode-1-388",
+      "startTime": 1027.22,
+      "endTime": 1029.22,
+      "pt": "Como o app transforma regras gramaticais",
+      "es": "Cómo la aplicación transforma las reglas gramaticales"
+    },
+    {
+      "id": "episode-1-389",
+      "startTime": 1029.22,
+      "endTime": 1031.22,
+      "pt": "em vantagem competitiva.",
+      "es": "en ventaja competitiva."
+    },
+    {
+      "id": "episode-1-390",
+      "startTime": 1031.22,
+      "endTime": 1032.22,
+      "pt": "Mas tem um preço oculto",
+      "es": "Pero tiene un precio oculto."
+    },
+    {
+      "id": "episode-1-391",
+      "startTime": 1032.22,
+      "endTime": 1034.22,
+      "pt": "nessa ultra-pragmatização da educação.",
+      "es": "en esta ultrapragmatización de la educación."
+    },
+    {
+      "id": "episode-1-392",
+      "startTime": 1034.22,
+      "endTime": 1035.22,
+      "pt": "Ah, sim.",
+      "es": "Oh sí."
+    },
+    {
+      "id": "episode-1-393",
+      "startTime": 1035.22,
+      "endTime": 1036.22,
+      "pt": "Toda ferramenta focada,",
+      "es": "Cada herramienta enfocada,"
+    },
+    {
+      "id": "episode-1-394",
+      "startTime": 1036.22,
+      "endTime": 1037.22,
+      "pt": "num nicho,",
+      "es": "en un nicho,"
+    },
+    {
+      "id": "episode-1-395",
+      "startTime": 1037.22,
+      "endTime": 1039.22,
+      "pt": "acaba deixando alguma coisa de fora.",
+      "es": "termina omitiendo algo."
+    },
+    {
+      "id": "episode-1-396",
+      "startTime": 1039.22,
+      "endTime": 1040.22,
+      "pt": "Com certeza.",
+      "es": "Por supuesto."
+    },
+    {
+      "id": "episode-1-397",
+      "startTime": 1040.22,
+      "endTime": 1041.22,
+      "pt": "O nome da marca é",
+      "es": "El nombre de la marca es"
+    },
+    {
+      "id": "episode-1-398",
+      "startTime": 1041.22,
+      "endTime": 1042.22,
+      "pt": "horizonte espanhol",
+      "es": "Horizonte Español"
+    },
+    {
+      "id": "episode-1-399",
+      "startTime": 1042.22,
+      "endTime": 1044.22,
+      "pt": "idioma e cultura.",
+      "es": "lengua y cultura."
+    },
+    {
+      "id": "episode-1-400",
+      "startTime": 1044.22,
+      "endTime": 1045.22,
+      "pt": "Mas o que a gente viu aqui",
+      "es": "Pero lo que vimos aquí"
+    },
+    {
+      "id": "episode-1-401",
+      "startTime": 1045.22,
+      "endTime": 1047.22,
+      "pt": "foi o idioma totalmente afunilado",
+      "es": "era el lenguaje completamente canalizado"
+    },
+    {
+      "id": "episode-1-402",
+      "startTime": 1047.22,
+      "endTime": 1048.22,
+      "pt": "pro mundo dos negócios.",
+      "es": "al mundo empresarial."
+    },
+    {
+      "id": "episode-1-403",
+      "startTime": 1048.22,
+      "endTime": 1050.22,
+      "pt": "Para produtividade,",
+      "es": "Para la productividad,"
+    },
+    {
+      "id": "episode-1-404",
+      "startTime": 1050.22,
+      "endTime": 1051.22,
+      "pt": "para bater meta",
+      "es": "para alcanzar la meta"
+    },
+    {
+      "id": "episode-1-405",
+      "startTime": 1051.22,
+      "endTime": 1052.22,
+      "pt": "sobre pressão de tempo.",
+      "es": "bajo presión de tiempo."
+    },
+    {
+      "id": "episode-1-406",
+      "startTime": 1052.22,
+      "endTime": 1055.22,
+      "pt": "É, não teve muita cultura no processo, né?",
+      "es": "Sí, no hubo mucha cultura en el proceso, ¿verdad?"
+    },
+    {
+      "id": "episode-1-407",
+      "startTime": 1055.22,
+      "endTime": 1056.22,
+      "pt": "Nem uma.",
+      "es": "Ni una pizca."
+    },
+    {
+      "id": "episode-1-408",
+      "startTime": 1056.22,
+      "endTime": 1057.22,
+      "pt": "Se o futuro da educação",
+      "es": "Si el futuro de la educación"
+    },
+    {
+      "id": "episode-1-409",
+      "startTime": 1057.22,
+      "endTime": 1058.22,
+      "pt": "vira inteiramente",
+      "es": "gira completamente"
+    },
+    {
+      "id": "episode-1-410",
+      "startTime": 1058.22,
+      "endTime": 1060.22,
+      "pt": "uma simulação de estresse e de escritório",
+      "es": "una simulación de estrés y de oficina"
+    },
+    {
+      "id": "episode-1-411",
+      "startTime": 1060.22,
+      "endTime": 1062.22,
+      "pt": "onde é que fica a cultura.",
+      "es": "¿Dónde queda la cultura?"
+    },
+    {
+      "id": "episode-1-412",
+      "startTime": 1062.22,
+      "endTime": 1063.22,
+      "pt": "Será que a gente está caminhando",
+      "es": "¿Estamos caminando"
+    },
+    {
+      "id": "episode-1-413",
+      "startTime": 1063.22,
+      "endTime": 1064.22,
+      "pt": "para um cenário onde",
+      "es": "para un escenario donde"
+    },
+    {
+      "id": "episode-1-414",
+      "startTime": 1064.22,
+      "endTime": 1065.22,
+      "pt": "ninguém mais vai aprender",
+      "es": "nadie más aprenderá"
+    },
+    {
+      "id": "episode-1-415",
+      "startTime": 1065.22,
+      "endTime": 1066.22,
+      "pt": "uma língua",
+      "es": "un idioma"
+    },
+    {
+      "id": "episode-1-416",
+      "startTime": 1066.22,
+      "endTime": 1067.22,
+      "pt": "ser lá pelo simples prazer",
+      "es": "estar ahí por el simple placer"
+    },
+    {
+      "id": "episode-1-417",
+      "startTime": 1067.22,
+      "endTime": 1068.22,
+      "pt": "de ler um",
+      "es": "leer a"
+    },
+    {
+      "id": "episode-1-418",
+      "startTime": 1068.22,
+      "endTime": 1069.22,
+      "pt": "Gabriel García Márquez no original?",
+      "es": "Gabriel García Márquez en el original?"
+    },
+    {
+      "id": "episode-1-419",
+      "startTime": 1069.22,
+      "endTime": 1071.22,
+      "pt": "Ou só pra curtir as notas de uma música",
+      "es": "O simplemente para disfrutar las notas de una canción."
+    },
+    {
+      "id": "episode-1-420",
+      "startTime": 1071.22,
+      "endTime": 1072.22,
+      "pt": "sem ter que colocar isso",
+      "es": "sin tener que ponerlo"
+    },
+    {
+      "id": "episode-1-421",
+      "startTime": 1072.22,
+      "endTime": 1074.22,
+      "pt": "numa planilha de métrica de RH.",
+      "es": "en una hoja de cálculo de métricas de recursos humanos."
+    },
+    {
+      "id": "episode-1-422",
+      "startTime": 1074.22,
+      "endTime": 1075.22,
+      "pt": "Exato.",
+      "es": "Exactamente."
+    },
+    {
+      "id": "episode-1-423",
+      "startTime": 1075.22,
+      "endTime": 1076.22,
+      "pt": "Quando aprender vira",
+      "es": "Cuando el aprendizaje se convierte"
+    },
+    {
+      "id": "episode-1-424",
+      "startTime": 1076.22,
+      "endTime": 1077.22,
+      "pt": "únicamente sobrevencer",
+      "es": "solo en sobrevivir"
+    },
+    {
+      "id": "episode-1-425",
+      "startTime": 1077.22,
+      "endTime": 1078.22,
+      "pt": "no mercado de trabalho,",
+      "es": "en el mercado laboral,"
+    },
+    {
+      "id": "episode-1-426",
+      "startTime": 1078.22,
+      "endTime": 1079.22,
+      "pt": "talvez a gente esteja perdendo",
+      "es": "tal vez estemos perdiendo"
+    },
+    {
+      "id": "episode-1-427",
+      "startTime": 1079.22,
+      "endTime": 1081.22,
+      "pt": "justamente o que torna a comunicação",
+      "es": "precisamente lo que hace que la comunicación"
+    },
+    {
+      "id": "episode-1-428",
+      "startTime": 1081.22,
+      "endTime": 1083.22,
+      "pt": "humana algo especial.",
+      "es": "humana algo especial."
+    },
+    {
+      "id": "episode-1-429",
+      "startTime": 1083.22,
+      "endTime": 1084.22,
+      "pt": "É uma reflexão que eu queria",
+      "es": "Es una reflexión que quería"
+    },
+    {
+      "id": "episode-1-430",
+      "startTime": 1084.22,
+      "endTime": 1085.22,
+      "pt": "deixar para o pessoal que",
+      "es": "dejarles a las personas que"
+    },
+    {
+      "id": "episode-1-431",
+      "startTime": 1085.22,
+      "endTime": 1086.22,
+      "pt": "está acompanhando a gente.",
+      "es": "nos está siguiendo."
+    },
+    {
+      "id": "episode-1-432",
+      "startTime": 1086.22,
+      "endTime": 1087.22,
+      "pt": "Fica aí o questionamento",
+      "es": "Ahí radica la pregunta"
+    },
+    {
+      "id": "episode-1-433",
+      "startTime": 1087.22,
+      "endTime": 1088.22,
+      "pt": "achei muito bem pontuado.",
+      "es": "me pareció muy bien planteado."
+    },
+    {
+      "id": "episode-1-434",
+      "startTime": 1088.22,
+      "endTime": 1089.22,
+      "pt": "Pois é.",
+      "es": "Así es."
+    },
+    {
+      "id": "episode-1-435",
+      "startTime": 1089.22,
+      "endTime": 1091.22,
+      "pt": "Vamos ver os próximos passos",
+      "es": "Veamos los siguientes pasos."
+    },
+    {
+      "id": "episode-1-436",
+      "startTime": 1091.22,
+      "endTime": 1093.22,
+      "pt": "da educação.",
+      "es": "de educación."
+    },
+    {
+      "id": "episode-1-437",
+      "startTime": 1093.22,
+      "endTime": 1094.22,
+      "pt": "Muito obrigada pela escuta,",
+      "es": "Muchas gracias por escuchar,"
+    },
+    {
+      "id": "episode-1-438",
+      "startTime": 1094.22,
+      "endTime": 1095.22,
+      "pt": "pessoal.",
+      "es": "personal."
+    },
+    {
+      "id": "episode-1-439",
+      "startTime": 1095.22,
+      "endTime": 1097.22,
+      "pt": "Até a nossa próxima análise.",
+      "es": "Hasta nuestro próximo análisis."
+    }
+  ]
+}

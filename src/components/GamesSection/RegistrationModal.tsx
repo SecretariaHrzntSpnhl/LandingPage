@@ -49,12 +49,12 @@ export default function RegistrationModal({ onClose, onSuccess }: Props) {
   };
 
   return (
-    <div className={styles.modalOverlay}>
+    <div className={styles.modalOverlay} role="dialog" aria-modal="true" aria-labelledby="registration-title">
       <div className={styles.modalContent}>
         <button type="button" className={styles.closeBtn} onClick={onClose} aria-label="Fechar cadastro">×</button>
-        <h3>Cadastro de Nivelamento</h3>
-        <p>Preencha os dados abaixo para liberar seu acesso ao teste prático e iniciar seu jogo.</p>
-
+        <h3 id="registration-title">Cadastro de Nivelamento</h3>
+        <p>Preencha os dados abaixo para liberar seu acesso ao teste prático e iniciar sua avaliação.</p>
+        
         <form onSubmit={handleSubmit} data-netlify="true" netlify-honeypot="bot-field" name="registro-juego" method="POST" action="/">
           <input type="hidden" name="form-name" value="registro-juego" />
           <input type="hidden" name="utmSource" value={getLeadTrackingFields().utmSource} />

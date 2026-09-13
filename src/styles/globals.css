@@ -104,8 +104,56 @@ body {
   color: var(--text-color);
   font-family: var(--font-brand-sans);
   overflow-x: hidden;
+  overflow-y: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
   overscroll-behavior-y: contain;
   transition: background 0.35s ease, color 0.35s ease;
+}
+
+html,
+body,
+* {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+html::-webkit-scrollbar,
+body::-webkit-scrollbar,
+*::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+  display: none;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  letter-spacing: -0.04em;
+  text-wrap: balance;
+  transition: transform 0.3s ease, text-shadow 0.3s ease, filter 0.3s ease;
+}
+
+p, li, span, button, label {
+  text-wrap: pretty;
+}
+
+.heroText h1,
+.header h2,
+.content h2,
+.levelCard h3,
+.copyOverlay h3,
+.featuredMeta h3 {
+  animation: titleFloat 7s ease-in-out infinite alternate;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.2), 0 9px 22px rgba(0, 0, 0, 0.1);
+}
+
+.heroText h1:hover,
+.header h2:hover,
+.content h2:hover,
+.levelCard h3:hover,
+.copyOverlay h3:hover,
+.featuredMeta h3:hover {
+  transform: translateY(-1px) scale(1.01);
+  filter: brightness(1.05);
 }
 
 .app-container {
@@ -117,6 +165,8 @@ button {
   cursor: pointer;
   border: none;
   font-family: inherit;
+  min-height: 44px;
+  touch-action: manipulation;
   -webkit-tap-highlight-color: transparent;
 }
 
@@ -132,6 +182,7 @@ select:focus-visible {
 input,
 textarea {
   font-family: inherit;
+  touch-action: manipulation;
 }
 
 @media (max-width: 320px) {

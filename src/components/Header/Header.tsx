@@ -36,9 +36,9 @@ export default function Header({ theme, onToggleTheme }: HeaderProps) {
       </div>
 
       <div className={styles.brandingSlot}>
-        <div className={styles.signature} aria-label="Horizonte Espanhol - Idioma e Cultura">
+        <div className={styles.signature} aria-label="Horizonte Espanhol - Idioma y Cultura">
           <span className={styles.signatureTitle}>Horizonte Espanhol</span>
-          <span className={styles.signatureSubtitle}>Idioma & Cultura</span>
+          <span className={styles.signatureSubtitle}>Idioma y Cultura</span>
         </div>
       </div>
 

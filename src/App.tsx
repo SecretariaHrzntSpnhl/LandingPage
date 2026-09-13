@@ -1,6 +1,7 @@
 ﻿import { useEffect, useState } from 'react';
 import Header from './components/Header/Header';
 import CelestialCarousel from './components/CelestialCarousel/CelestialCarousel';
+import PodcastShowcase from './components/PodcastShowcase/PodcastShowcase';
 import GamesSection from './components/GamesSection/GamesSection';
 import LeadForm from './components/LeadForm/LeadForm';
 import Footer from './components/Footer/Footer';
@@ -30,6 +31,7 @@ function App() {
     <div className="app-container">
       <Header theme={theme} onToggleTheme={() => setTheme((current) => (current === 'dark' ? 'light' : 'dark'))} />
       <CelestialCarousel />
+      <PodcastShowcase />
       <GamesSection />
       <LeadForm />
       <Footer />

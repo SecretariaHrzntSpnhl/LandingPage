@@ -32,10 +32,10 @@ export default function BrandLogo({
       {showCircle ? <div className={`${styles.circle} ${circleClass}`} aria-hidden="true" /> : null}
       <div className={`${styles.logoContent} ${showMonogram ? '' : styles.noMonogram}`}>
         {isHeroTextBrand ? (
-          <div className={styles.heroTextBrand} aria-label="Horizonte Espanhol Idioma & Cultura">
+          <div className={styles.heroTextBrand} aria-label="Horizonte Espanhol Idioma y Cultura">
             <div className={styles.heroBrandText}>
               <span className={styles.heroBrandTitle}>Horizonte Espanhol</span>
-              <span className={styles.heroBrandSubtitle}>Idioma & Cultura</span>
+              <span className={styles.heroBrandSubtitle}>Idioma y Cultura</span>
             </div>
           </div>
         ) : (

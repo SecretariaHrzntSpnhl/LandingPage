@@ -12,10 +12,12 @@ interface Props {
 const QUESTIONS = [
   {
     id: 1,
-    question: 'Qual é a tradução direta para a cor "vermelho" em espanhol?',
-    options: ['Azul', 'Rojo', 'Verde', 'Amarillo'],
-    correct: 1,
-    explanation: '"Rojo" é a tradução direta de "vermelho". "Azul" é azul, "verde" é verde e "amarillo" é amarelo.',
+    question: 'O que são?',
+    image: 'https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?auto=format&fit=crop&w=900&h=650&q=85',
+    imageAlt: 'Un grupo de manzanas rojas',
+    options: ['Unas manzanas rojas', 'Unas naranjas verdes', 'Unas camisas azules', 'Unos libros amarillos'],
+    correct: 0,
+    explanation: '"Unas manzanas rojas" significa maçãs vermelhas. "Unas naranjas verdes" são laranjas verdes, "unas camisas azules" são camisas azuis e "unos libros amarillos" são livros amarelos.',
   },
   {
     id: 2,
@@ -110,6 +112,13 @@ export default function Game1({ onComplete, isCompleted }: Props) {
       <div className={styles.progressTrack} aria-label={`Pergunta ${currentQ + 1} de 5`}>
         <div className={styles.progressValue} style={{ width: `${((currentQ + 1) / 5) * 100}%` }} />
       </div>
+      {QUESTIONS[currentQ].image && (
+        <img
+          className={styles.questionImage}
+          src={QUESTIONS[currentQ].image}
+          alt={QUESTIONS[currentQ].imageAlt}
+        />
+      )}
       <p className={styles.questionText}>{QUESTIONS[currentQ].question}</p>
 
       <div className={styles.optionsGrid}>
