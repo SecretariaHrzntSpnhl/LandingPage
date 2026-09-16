@@ -187,13 +187,13 @@ function App() {
         await navigator.share({
           title: 'Horizonte.espanhol na TV',
           text: tvPlatform === 'iphone'
-            ? 'Abra o modo TV no iPhone e escolha AirPlay ou uma TV compatível.'
+            ? 'Abra o modo TV no iPhone e escolha uma opção de transmissão ou uma TV compatível.'
             : 'Abra o modo TV do Horizonte.espanhol na sua TV para jogar com o controle.',
           url: getTvModeUrl(focus),
         });
         setConnectionMessage(tvPlatform === 'iphone'
-          ? 'No menu de compartilhamento, escolha AirPlay ou espelhamento de tela. O iPhone não permite iniciar AirPlay diretamente pelo navegador.'
-          : 'Abra o link na TV ou escolha Cast no menu do Android/Chrome. O modo TV já começa nos jogos.');
+          ? 'No menu de compartilhamento, escolha uma opção de transmissão ou espelhamento de tela. O iPhone não permite iniciar a transmissão diretamente pelo navegador.'
+          : 'Abra o link na TV ou escolha uma opção de transmissão no menu do celular. O modo TV já começa nos jogos.');
       } catch (error) {
         if (error instanceof Error && error.name !== 'AbortError') {
           setConnectionMessage('A conexão foi cancelada pelo dispositivo.');
