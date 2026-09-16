@@ -1658,6 +1658,11 @@ html[data-display-mode='tv'] .device-support {
   background: transparent;
 }
 
+/* Keep the inline TV invitation out of the way of the full-screen podcast player. */
+.app-container:has([class*='featuredOverlay']) .device-support--inline {
+  display: none;
+}
+
 .device-support__floating--inline {
   position: relative;
   inset: auto;
