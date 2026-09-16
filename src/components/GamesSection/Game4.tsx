@@ -149,9 +149,9 @@ export default function Game4({ onComplete, isCompleted }: Props) {
       </button>
 
       {completionModalVisible && (
-        <div className={styles.finishModalOverlay}>
+        <div className={styles.finishModalOverlay} role="dialog" aria-modal="true" aria-labelledby="game4-summary-title">
           <div className={styles.finishModalContent}>
-            <h3 className={styles.finishModalTitle}>¡Excelente!</h3>
+            <h3 id="game4-summary-title" className={styles.finishModalTitle}>¡Excelente!</h3>
             <p className={styles.finishModalText}>
               Você terminou o módulo com {correctCount} acertos e {incorrectCount} erros.
             </p>

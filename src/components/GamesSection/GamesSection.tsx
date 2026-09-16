@@ -27,6 +27,7 @@ const GAMES: GameMeta[] = [
 ];
 
 export default function GamesSection() {
+  const sectionRef = useRef<HTMLElement>(null);
   const [unlockedLevel, setUnlockedLevel] = useState(() => {
     const initialProgress = loadProgress();
     return !initialProgress.registered
@@ -37,6 +38,94 @@ export default function GamesSection() {
   const [progress, setProgress] = useState<ProgressData>(() => loadProgress());
   const [showResults, setShowResults] = useState(false);
   const hasMounted = useRef(false);
+
+  useEffect(() => {
+    const getFocusableElements = () => Array.from(sectionRef.current?.querySelectorAll<HTMLElement>(
+      'button:not([disabled]), input:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])',
+    ) ?? []).filter((element) => element.getClientRects().length > 0);
+
+    const moveFocusSpatially = (direction: 'left' | 'right' | 'up' | 'down') => {
+      const activeElement = document.activeElement instanceof HTMLElement ? document.activeElement : null;
+      if (!activeElement || !sectionRef.current?.contains(activeElement)) {
+        return false;
+      }
+
+      const currentRect = activeElement.getBoundingClientRect();
+      const currentCenter = {
+        x: currentRect.left + currentRect.width / 2,
+        y: currentRect.top + currentRect.height / 2,
+      };
+      const candidates = getFocusableElements()
+        .filter((element) => element !== activeElement)
+        .map((element) => {
+          const rect = element.getBoundingClientRect();
+          const center = { x: rect.left + rect.width / 2, y: rect.top + rect.height / 2 };
+          const deltaX = center.x - currentCenter.x;
+          const deltaY = center.y - currentCenter.y;
+          const inDirection = direction === 'left'
+            ? deltaX < -4
+            : direction === 'right'
+              ? deltaX > 4
+              : direction === 'up'
+                ? deltaY < -4
+                : deltaY > 4;
+
+          if (!inDirection) {
+            return null;
+          }
+
+          const primaryDistance = direction === 'left' || direction === 'right'
+            ? Math.abs(deltaX)
+            : Math.abs(deltaY);
+          const secondaryDistance = direction === 'left' || direction === 'right'
+            ? Math.abs(deltaY)
+            : Math.abs(deltaX);
+
+          return { element, score: primaryDistance + secondaryDistance * 2 };
+        })
+        .filter((candidate): candidate is { element: HTMLElement; score: number } => candidate !== null)
+        .sort((first, second) => first.score - second.score);
+
+      const nextElement = candidates[0]?.element;
+      if (!nextElement) {
+        return false;
+      }
+
+      nextElement.focus();
+      nextElement.scrollIntoView({ block: 'nearest', inline: 'nearest' });
+      return true;
+    };
+
+    const handleRemoteKeyDown = (event: KeyboardEvent) => {
+      const target = event.target instanceof HTMLElement ? event.target : null;
+      const isArrowKey = event.key === 'ArrowLeft' || event.key === 'ArrowRight'
+        || event.key === 'ArrowUp' || event.key === 'ArrowDown';
+      if (!sectionRef.current || !isArrowKey) {
+        return;
+      }
+
+      if (target?.matches('input, textarea, [contenteditable="true"]')) {
+        return;
+      }
+
+      if (!sectionRef.current.contains(target)) {
+        const firstFocusable = getFocusableElements()[0];
+        if (firstFocusable) {
+          firstFocusable.focus();
+          firstFocusable.scrollIntoView({ block: 'nearest', inline: 'nearest' });
+          event.preventDefault();
+        }
+        return;
+      }
+
+      if (moveFocusSpatially(event.key.slice(5).toLowerCase() as 'left' | 'right' | 'up' | 'down')) {
+        event.preventDefault();
+      }
+    };
+
+    document.addEventListener('keydown', handleRemoteKeyDown);
+    return () => document.removeEventListener('keydown', handleRemoteKeyDown);
+  }, []);
 
   const handleStartClick = () => {
     setShowModal(true);
@@ -151,7 +240,7 @@ export default function GamesSection() {
       : 'Cada tentativa fortalece seu aprendizado. Continue praticando e evolua no seu ritmo.';
 
   return (
-    <section className={`${styles.section} ${styles.heroAfterHero} reveal`}>
+    <section ref={sectionRef} className={`${styles.section} ${styles.heroAfterHero} reveal`} id="jogos">
       <div className={styles.horizonBackdrop} aria-hidden="true" />
       <div className={styles.container}>
         <div className={styles.header} data-reveal data-effect="soft-glow" data-delay="0">

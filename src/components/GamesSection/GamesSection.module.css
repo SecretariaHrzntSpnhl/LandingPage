@@ -237,6 +237,13 @@
   text-wrap: balance;
 }
 
+.section button:focus-visible,
+.section input:focus-visible,
+.section textarea:focus-visible {
+  outline: 3px solid var(--yellow-horizon);
+  outline-offset: 3px;
+}
+
 .gamesContainer {
   display: flex;
   flex-direction: column;

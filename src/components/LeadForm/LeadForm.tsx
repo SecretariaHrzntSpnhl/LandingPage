@@ -190,7 +190,7 @@ export default function LeadForm() {
   };
 
   return (
-    <section className={styles.section}>
+    <section className={styles.section} id="contacto">
       <div className={styles.container}>
         <div className={styles.content}>
           <h2>Dê o próximo passo na sua carreira</h2>

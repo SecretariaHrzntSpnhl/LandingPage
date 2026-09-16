@@ -1,4 +1,4 @@
-import { useState, type FormEvent } from 'react';
+import { useEffect, useRef, useState, type FormEvent } from 'react';
 import { createPortal } from 'react-dom';
 import styles from './GamesSection.module.css';
 import { getLeadTrackingFields } from '../../utils/leadTracking';
@@ -9,8 +9,56 @@ interface Props {
 }
 
 export default function RegistrationModal({ onClose, onSuccess }: Props) {
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
   const [status, setStatus] = useState<'idle' | 'submitting' | 'error'>('idle');
   const [showTerms, setShowTerms] = useState(false);
+
+  useEffect(() => {
+    closeButtonRef.current?.focus();
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape' || event.key === 'Backspace') {
+        event.preventDefault();
+        if (showTerms) {
+          setShowTerms(false);
+        } else {
+          onClose();
+        }
+        return;
+      }
+
+      if (event.key !== 'Tab') {
+        return;
+      }
+
+      const dialog = document.querySelector<HTMLElement>(
+        showTerms ? '[aria-labelledby="terms-title"]' : '[aria-labelledby="registration-title"]',
+      );
+      if (!dialog) {
+        return;
+      }
+
+      const focusableElements = Array.from(dialog.querySelectorAll<HTMLElement>(
+        'button:not([disabled]), input:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])',
+      )).filter((element) => element.getClientRects().length > 0);
+      if (focusableElements.length === 0) {
+        return;
+      }
+
+      const firstElement = focusableElements[0];
+      const lastElement = focusableElements[focusableElements.length - 1];
+      if (event.shiftKey && document.activeElement === firstElement) {
+        event.preventDefault();
+        lastElement.focus();
+      } else if (!event.shiftKey && document.activeElement === lastElement) {
+        event.preventDefault();
+        firstElement.focus();
+      }
+    };
+
+    document.addEventListener('keydown', handleKeyDown);
+    return () => document.removeEventListener('keydown', handleKeyDown);
+  }, [onClose, showTerms]);
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
@@ -53,7 +101,7 @@ export default function RegistrationModal({ onClose, onSuccess }: Props) {
     (
     <div className={styles.modalOverlay} role="dialog" aria-modal="true" aria-labelledby="registration-title">
       <div className={styles.modalContent}>
-        <button type="button" className={styles.closeBtn} onClick={onClose} aria-label="Fechar cadastro">×</button>
+        <button ref={closeButtonRef} type="button" className={styles.closeBtn} onClick={onClose} aria-label="Fechar cadastro">×</button>
         <h3 id="registration-title">Cadastro de Nivelamento</h3>
         <p>Preencha os dados abaixo para liberar seu acesso ao teste prático e iniciar sua avaliação.</p>
         

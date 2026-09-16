@@ -1,4 +1,4 @@
-﻿.section {
+.section {
   position: relative;
   margin-top: -0.18rem;
   padding: 0.7rem var(--section-padding-inline) 0.2rem;
@@ -167,6 +167,30 @@
   }
 }
 
+@keyframes featuredPanelReveal {
+  from {
+    opacity: 0;
+    transform: translateY(1.25rem) scale(0.965);
+    filter: blur(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+  }
+}
+
+@keyframes featuredContentReveal {
+  from {
+    opacity: 0;
+    transform: translateY(0.65rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 .container {
   position: relative;
   z-index: 1;
@@ -176,8 +200,7 @@
 }
 
 .containerFeatureMode {
-  visibility: hidden;
-  pointer-events: none;
+  display: none;
 }
 
 .featuredOverlay {
@@ -191,7 +214,7 @@
   height: 100dvh;
   min-height: 100svh;
   padding: max(1.1rem, env(safe-area-inset-top)) max(1.1rem, env(safe-area-inset-right)) max(1.1rem, env(safe-area-inset-bottom)) max(1.1rem, env(safe-area-inset-left));
-  overflow-y: auto;
+  overflow: hidden;
   overscroll-behavior: contain;
   scrollbar-width: none;
   -ms-overflow-style: none;
@@ -305,22 +328,30 @@
 .closeFeatureButton {
   position: absolute;
   top: 1rem;
-  right: 1rem;
-  left: auto;
+  left: 1rem;
+  right: auto;
   z-index: 12;
-  border: 1px solid rgba(255, 255, 255, 0.22);
+  border: 1px solid rgba(255, 216, 135, 0.42);
   border-radius: 999px;
-  background: rgba(15, 18, 25, 0.9);
-  color: rgba(255, 255, 255, 0.82);
+  background: linear-gradient(145deg, rgba(48, 40, 25, 0.96), rgba(12, 18, 28, 0.96));
+  color: #ffe7a6;
   padding: 0.38rem 0.8rem;
   font-size: 0.44rem;
   font-weight: 700;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   cursor: pointer;
-  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.26);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.26), inset 0 1px 0 rgba(255, 239, 177, 0.18), inset 0 -2px 0 rgba(0, 0, 0, 0.24);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
+  transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+}
+
+.closeFeatureButton:hover,
+.closeFeatureButton:focus-visible {
+  border-color: rgba(255, 224, 153, 0.88);
+  background: linear-gradient(145deg, rgba(92, 70, 31, 0.98), rgba(17, 25, 37, 0.98));
+  transform: translateY(-1px);
 }
 
 .featuredPanel {
@@ -335,11 +366,12 @@
   box-sizing: border-box;
   border: 1px solid rgba(255, 214, 123, 0.5);
   border-radius: 28px;
-  overflow: visible;
+  overflow: auto;
   background: rgba(5, 8, 14, 0.96);
   box-shadow: 0 48px 110px rgba(0, 0, 0, 0.76), 0 0 0 1px rgba(255, 216, 135, 0.18), inset 0 1px 0 rgba(255,255,255,0.04);
   transform: scale(1.01);
   isolation: isolate;
+  animation: featuredPanelReveal 0.56s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
 .featuredPanel::after {
@@ -351,6 +383,24 @@
   pointer-events: none;
 }
 
+.featuredPanel > .featuredCover,
+.featuredPanel > .readingPanelResizeHandle,
+.featuredPanel > .featuredMeta {
+  animation: featuredContentReveal 0.48s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.featuredPanel > .featuredCover {
+  animation-delay: 0.08s;
+}
+
+.featuredPanel > .readingPanelResizeHandle {
+  animation-delay: 0.14s;
+}
+
+.featuredPanel > .featuredMeta {
+  animation-delay: 0.2s;
+}
+
 .featuredPanelResizing {
   user-select: none;
 }
@@ -358,6 +408,10 @@
 .featuredPanelResizing .featuredCover,
 .featuredPanelResizing .featuredMeta {
   transition: none;
+}
+
+.featuredPanelExpanded .readingPanelResizeHandle span {
+  transform: rotate(180deg);
 }
 
 .readingPanelResizeHandle {
@@ -375,16 +429,18 @@
   color: rgba(255, 220, 139, 0.72);
   cursor: col-resize;
   touch-action: none;
+  transition: color 0.2s ease, filter 0.2s ease;
 }
 
 .readingPanelResizeHandle::before {
   content: '';
   position: absolute;
   inset: 18% 0;
-  border: 1px solid rgba(255, 214, 123, 0.2);
+  border: 1px solid rgba(255, 214, 123, 0.3);
   border-radius: 999px;
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(242, 179, 78, 0.2), rgba(255, 255, 255, 0.04));
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.05), rgba(242, 179, 78, 0.24), rgba(255, 255, 255, 0.05));
+  box-shadow: inset 0 1px 0 rgba(255, 239, 177, 0.16), inset 0 -1px 2px rgba(0, 0, 0, 0.28);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
 }
 
 .readingPanelResizeHandle span {
@@ -395,19 +451,250 @@
   background: #f2b34e;
   box-shadow: 0 0 14px rgba(242, 179, 78, 0.55);
   opacity: 0.7;
-  transition: height 0.2s ease, opacity 0.2s ease;
+  transition: opacity 0.2s ease, box-shadow 0.2s ease;
+}
+
+.readingPanelResizeHandle::after {
+  content: '';
+  position: absolute;
+  width: 0.62rem;
+  height: 0.62rem;
+  border-top: 2px solid #ffe2a2;
+  border-left: 2px solid #ffe2a2;
+  transform: rotate(45deg) translate(0.12rem, 0.12rem);
+  filter: drop-shadow(0 0 5px rgba(242, 179, 78, 0.6));
+  transition: transform 0.3s ease;
+}
+
+.featuredPanelExpanded .readingPanelResizeHandle::after {
+  transform: rotate(225deg) translate(0.12rem, 0.12rem);
+}
+
+@media (min-width: 761px) {
+  .featuredMeta {
+    transition: background 0.42s ease, inset 0.42s ease, border-radius 0.42s ease;
+  }
+
+  .featuredPanelExpanded .featuredMeta {
+    position: absolute;
+    z-index: 4;
+    inset: auto 30% 1.4rem 1.4rem;
+    max-height: calc(100% - 2.8rem);
+    overflow-y: auto;
+    border: 1px solid rgba(255, 207, 112, 0.22);
+    border-radius: 18px;
+    background: linear-gradient(180deg, rgba(8, 12, 18, 0.82), rgba(8, 11, 18, 0.98));
+    box-shadow: 0 18px 42px rgba(0, 0, 0, 0.38), inset 0 1px 0 rgba(255,255,255,0.05);
+  }
+
+  .featuredPanel:not(.featuredPanelExpanded) .readingPanelResizeHandle::after {
+    top: 50%;
+    right: auto;
+    left: -0.48rem;
+    width: 0.62rem;
+    height: 0.62rem;
+    border-top: 0;
+    border-left: 2px solid #ffe2a2;
+    border-bottom: 2px solid #ffe2a2;
+    transform: translateY(-50%) rotate(45deg);
+  }
+}
+
+@media (max-width: 760px) {
+  .featureCard .playerRow .speedControl {
+    position: relative !important;
+    z-index: 31 !important;
+  }
+
+  .featureCard .playerRow .speedTrigger {
+    gap: 0.18rem !important;
+    min-width: 2.7rem !important;
+    width: 2.7rem !important;
+    padding-inline: 0.22rem !important;
+    border-color: rgba(242, 179, 78, 0.62) !important;
+    background: linear-gradient(180deg, rgba(37, 42, 46, 0.98), rgba(9, 18, 28, 0.98)) !important;
+  }
+
+  .featureCard .playerRow .speedTrigger .speedTriggerIcon {
+    display: inline-flex !important;
+    width: 1rem !important;
+    height: 1rem !important;
+  }
+
+  .featureCard .playerRow .speedMenu {
+    position: absolute !important;
+    top: auto !important;
+    right: auto !important;
+    bottom: calc(100% + 0.45rem) !important;
+    left: 50% !important;
+    flex-direction: row !important;
+    min-width: auto !important;
+    transform: translateX(-50%) !important;
+    z-index: 1400 !important;
+  }
+}
+
+/* Final mobile safety zone: keep the orientation action clear of the close button. */
+@media (max-width: 760px) and (orientation: portrait) {
+  .featuredPanelExpanded .studyOrientationButton:not(.studyCollapseButton) {
+    right: 4.9rem !important;
+    left: auto !important;
+    transform: none !important;
+  }
+
+  .featuredPanelExpanded .studyOrientationButton:not(.studyCollapseButton):hover,
+  .featuredPanelExpanded .studyOrientationButton:not(.studyCollapseButton):focus-visible {
+    transform: translateY(-1px) !important;
+  }
+}
+
+@media (max-width: 760px) {
+  .featuredPanel:not(.featuredPanelExpanded) .playerRow .speedControl {
+    position: relative;
+    z-index: 31;
+  }
+
+  .featuredPanel:not(.featuredPanelExpanded) .playerRow .speedTrigger {
+    gap: 0.18rem !important;
+    min-width: 2.7rem !important;
+    width: 2.7rem !important;
+    padding-inline: 0.22rem !important;
+    border-color: rgba(242, 179, 78, 0.62);
+    background: linear-gradient(180deg, rgba(37, 42, 46, 0.98), rgba(9, 18, 28, 0.98));
+  }
+
+  .featuredPanel:not(.featuredPanelExpanded) .playerRow .speedTrigger .speedTriggerIcon {
+    display: inline-flex !important;
+    width: 1.18rem;
+    height: 1.18rem;
+  }
+
+  .featuredPanel:not(.featuredPanelExpanded) .playerRow .speedMenu {
+    position: absolute !important;
+    top: auto !important;
+    right: auto !important;
+    bottom: calc(100% + 0.45rem) !important;
+    left: 50% !important;
+    flex-direction: row;
+    min-width: auto;
+    transform: translateX(-50%) !important;
+    z-index: 1400 !important;
+  }
+
+  .featuredPanel:not(.featuredPanelExpanded) .featuredControlRow .speedControlCompact {
+    position: relative;
+    z-index: 31;
+  }
+
+  .featuredPanel:not(.featuredPanelExpanded) .featuredControlRow .speedTriggerCompact {
+    gap: 0.18rem !important;
+    min-width: 2.7rem !important;
+    width: 2.7rem !important;
+    padding-inline: 0.22rem !important;
+    border-color: rgba(242, 179, 78, 0.62);
+    background: linear-gradient(180deg, rgba(37, 42, 46, 0.98), rgba(9, 18, 28, 0.98));
+  }
+
+  .featuredPanel:not(.featuredPanelExpanded) .featuredControlRow .speedTriggerCompact .speedTriggerIcon {
+    display: inline-flex !important;
+    width: 1.18rem;
+    height: 1.18rem;
+  }
+
+  .featuredPanel:not(.featuredPanelExpanded) .featuredControlRow .speedMenuCompact {
+    position: absolute !important;
+    top: auto !important;
+    right: auto !important;
+    bottom: calc(100% + 0.45rem) !important;
+    left: 50% !important;
+    flex-direction: row;
+    min-width: auto;
+    transform: translateX(-50%) !important;
+    z-index: 1400 !important;
+  }
+
+  .featuredPanelExpanded .speedControlCompact {
+    position: relative;
+    z-index: 31;
+  }
+
+  .featuredPanelExpanded .speedTriggerCompact {
+    min-width: 2.85rem !important;
+    width: 2.85rem !important;
+    padding-inline: 0.25rem !important;
+    gap: 0.16rem;
+  }
+
+  .featuredPanelExpanded .speedTriggerCompact .speedTriggerIcon {
+    display: inline-flex !important;
+    width: 1.28rem;
+    height: 1.28rem;
+  }
+
+  .featuredPanelExpanded .speedMenuCompact {
+    position: absolute !important;
+    top: auto !important;
+    right: auto !important;
+    bottom: calc(100% + 0.5rem) !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    z-index: 1400 !important;
+  }
+}
+
+@media (max-width: 760px) and (orientation: portrait) {
+  .featuredPanelPortrait .studyOrientationButton:not(.studyCollapseButton) {
+    top: 0.72rem !important;
+    right: 4.9rem !important;
+    left: auto !important;
+    transform: none !important;
+  }
+
+  .featuredPanelPortrait .studyOrientationButton:not(.studyCollapseButton):hover,
+  .featuredPanelPortrait .studyOrientationButton:not(.studyCollapseButton):focus-visible {
+    transform: translateY(-1px) !important;
+  }
+}
+
+@media (max-width: 760px) and (orientation: portrait) {
+  .featuredPanelExpanded .studyOrientationButton:not(.studyCollapseButton) {
+    top: 0.72rem !important;
+    right: 4.9rem !important;
+    left: auto !important;
+    transform: none !important;
+  }
+
+  .featuredPanelExpanded .studyOrientationButton:not(.studyCollapseButton):hover,
+  .featuredPanelExpanded .studyOrientationButton:not(.studyCollapseButton):focus-visible {
+    transform: translateY(-1px) !important;
+  }
 }
 
 .readingPanelResizeHandle:hover::before,
 .readingPanelResizeHandle:focus-visible::before {
   border-color: rgba(255, 220, 139, 0.85);
-  box-shadow: 0 0 18px rgba(242, 179, 78, 0.3);
+  box-shadow: 0 0 18px rgba(242, 179, 78, 0.3), inset 0 1px 0 rgba(255, 239, 177, 0.24), inset 0 -1px 2px rgba(0, 0, 0, 0.28);
 }
 
 .readingPanelResizeHandle:hover span,
 .readingPanelResizeHandle:focus-visible span {
-  height: 4.5rem;
   opacity: 1;
+  box-shadow: 0 0 18px rgba(242, 179, 78, 0.72);
+}
+
+.featuredPanel {
+  view-transition-name: featured-panel;
+}
+
+::view-transition-group(featured-panel) {
+  animation-duration: 0.48s;
+  animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+::view-transition-old(featured-panel),
+::view-transition-new(featured-panel) {
+  animation-duration: 0.48s;
+  animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 @media (max-width: 920px) {
@@ -428,10 +715,55 @@
   }
 }
 
+.featuredPanelExpanded .studyPanel {
+  max-height: clamp(22rem, 42vh, 28rem);
+  gap: 0.5rem;
+  padding: 0.72rem;
+}
+
+.featuredPanelExpanded .studyCurrentCue {
+  min-height: 0;
+  padding: 0.5rem 0.6rem;
+  font-size: 0.7rem;
+  line-height: 1.25;
+}
+
+.featuredPanelExpanded .studyCue {
+  padding: 0.34rem 0.4rem;
+}
+
+.featuredPanelExpanded .studyCueText {
+  gap: 0.25rem;
+  font-size: 0.62rem;
+  line-height: 1.2;
+}
+
+.featuredPanelExpanded .studyCue small {
+  font-size: 0.58rem;
+}
+
+.featuredPanelExpanded .featuredControls {
+  gap: 0.28rem;
+  margin-top: 0;
+}
+
+.featuredPanelExpanded .featuredProgressTrack {
+  height: 26px;
+}
+
+.featuredPanelExpanded .featuredControlRow {
+  gap: 0.35rem;
+}
+
+.featuredPanelExpanded .featuredPlayButton {
+  min-height: 2.3rem;
+  padding-block: 0.45rem;
+}
+
 @media (max-width: 760px) {
   .featuredOverlay {
     padding: 0.8rem;
-    overflow-y: auto;
+    overflow: hidden;
   }
 
   .featuredPanel {
@@ -444,6 +776,15 @@
 
   .featuredMeta {
     padding: 1.05rem 0.9rem 1.2rem;
+    transition: margin-top 0.42s ease, border-radius 0.42s ease, background 0.42s ease;
+  }
+
+  .featuredPanelExpanded .featuredMeta {
+    position: relative;
+    z-index: 3;
+    margin-top: clamp(-180px, -22vh, -100px);
+    border-radius: 18px 18px 14px 14px;
+    background: linear-gradient(180deg, rgba(8, 12, 18, 0.82), rgba(8, 11, 18, 0.98));
   }
 
   .readingPanelResizeHandle {
@@ -466,12 +807,12 @@
   .readingPanelResizeHandle span {
     width: 4.5rem;
     height: 0.24rem;
+    transition: background 0.2s ease;
   }
 
   .readingPanelResizeHandle:hover span,
   .readingPanelResizeHandle:focus-visible span {
-    width: 6rem;
-    height: 0.34rem;
+    opacity: 1;
   }
 
 }
@@ -578,6 +919,118 @@
   .readingPanelResizeHandle {
     min-height: 3.6rem;
     margin: -0.35rem 0;
+  }
+}
+
+/* Study view: one consistent reading surface above the image on every viewport. */
+.featuredPanelExpanded {
+  display: block;
+  height: min(72dvh, 620px);
+  min-height: min(72dvh, 620px);
+  overflow: hidden;
+}
+
+.featuredPanelExpanded .featuredCover {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+}
+
+.featuredPanelExpanded .featuredMeta {
+  position: absolute;
+  z-index: 4;
+  right: 0.8rem;
+  bottom: 0.2rem;
+  left: 0.8rem;
+  display: flex;
+  height: 82%;
+  max-height: 82%;
+  margin: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  justify-content: flex-start;
+  padding: clamp(1.1rem, 2.4vw, 2rem);
+  border: 1px solid rgba(255, 207, 112, 0.28);
+  border-radius: 20px;
+  background: linear-gradient(180deg, rgba(6, 13, 23, 0.88), rgba(5, 10, 18, 0.98) 82%);
+  box-shadow: 0 20px 48px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  transition: height 0.42s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.featuredPanelExpanded .readingPanelResizeHandle {
+  position: absolute;
+  z-index: 7;
+  right: 0.8rem;
+  bottom: calc(79% + 1rem);
+  left: 0.8rem;
+  width: auto;
+  min-height: 2.5rem;
+  margin: 0;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+
+.featuredPanelExpanded .readingPanelResizeHandle::before {
+  inset: 0 18%;
+  height: 2.5rem;
+  transform: none;
+  border-color: rgba(255, 220, 139, 0.5);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(242, 179, 78, 0.25), rgba(255, 255, 255, 0.08));
+}
+
+.featuredPanelExpanded .readingPanelResizeHandle span {
+  width: 4.5rem;
+  height: 0.22rem;
+  opacity: 0.95;
+}
+
+@media (max-width: 760px) {
+  .featuredPanelExpanded {
+    height: min(88dvh, 720px);
+    min-height: min(88dvh, 720px);
+  }
+
+  .featuredPanelExpanded .featuredMeta {
+    right: 0.7rem;
+    bottom: 0.2rem;
+    left: 0.7rem;
+    height: 82%;
+    max-height: 82%;
+    border-radius: 17px;
+    gap: 0.42rem;
+    padding: 0.85rem 0.8rem 1.1rem;
+  }
+
+  .featuredPanelExpanded .featuredMeta h3 {
+    font-size: clamp(1.65rem, 8vw, 2.25rem);
+    line-height: 0.92;
+  }
+
+  .featuredPanelExpanded .featuredMeta p {
+    font-size: 0.78rem;
+    line-height: 1.28;
+  }
+
+  .featuredPanelExpanded .featuredPlayButton {
+    min-height: 2.5rem;
+    padding-block: 0.55rem;
+  }
+
+  .featuredPanelExpanded .studyPanel {
+    max-height: 8.5rem;
+    padding: 0.5rem;
+  }
+
+  .featuredPanelExpanded .studyToggle {
+    padding: 0.55rem 0.7rem;
+  }
+
+  .featuredPanelExpanded .readingPanelResizeHandle {
+    right: 0.7rem;
+    bottom: calc(79% + 1rem);
+    left: 0.7rem;
   }
 }
 
@@ -713,6 +1166,299 @@
   touch-action: pan-y;
 }
 
+.coverSeekFeedback {
+  position: absolute;
+  top: 50%;
+  z-index: 8;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  min-width: 4.3rem;
+  padding: 0.55rem 0.72rem;
+  border: 1px solid rgba(255, 218, 126, 0.62);
+  border-radius: 999px;
+  background: rgba(8, 13, 20, 0.86);
+  color: #ffe5a0;
+  box-shadow: inset 0 1px 0 rgba(255, 245, 198, 0.2), 0 10px 24px rgba(0, 0, 0, 0.3);
+  pointer-events: none;
+  animation: coverSeekFeedbackIn 0.65s ease both;
+}
+
+.coverSeekFeedback span {
+  font-size: 1.3rem;
+  line-height: 0.7;
+}
+
+.coverSeekFeedback strong {
+  font-size: 0.62rem;
+  letter-spacing: 0.05em;
+}
+
+.coverSeekFeedbackBack {
+  left: 12%;
+  transform: translateY(-50%);
+}
+
+.coverSeekFeedbackForward {
+  right: 12%;
+  transform: translateY(-50%);
+}
+
+@keyframes coverSeekFeedbackIn {
+  0% {
+    opacity: 0;
+    scale: 0.82;
+  }
+  18%,
+  72% {
+    opacity: 1;
+    scale: 1;
+  }
+  100% {
+    opacity: 0;
+    scale: 0.94;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .coverSeekFeedback {
+    animation: none;
+  }
+
+  /* Keep every interactive podcast control usable with a finger or remote. */
+  .section button,
+  .section input,
+  .readingPanelResizeHandle,
+  .featuredProgressTrack {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .closeFeatureButton,
+  .nextEpisodeArrow,
+  .studyOrientationButton,
+  .studyCollapseButton,
+  .imagePlayButton,
+  .nextEpisodeButton {
+    min-height: 44px;
+  }
+
+  .readingPanelResizeHandle {
+    min-width: 44px;
+    min-height: 44px;
+  }
+
+  .skipButton,
+  .featuredMiniPlay,
+  .speedTrigger,
+  .speedTriggerCompact,
+  .captionButton,
+  .volumeButton {
+    min-width: 44px;
+    min-height: 44px;
+  }
+
+  .volumePopover {
+    right: 0;
+    top: auto;
+    bottom: calc(100% + 0.5rem);
+    transform: none;
+    max-height: min(10rem, calc(100dvh - 1.5rem));
+  }
+
+  .volumePopover input {
+    min-width: 44px;
+    min-height: 44px;
+  }
+
+  .featuredPanelExpanded .studyTranscriptList,
+  .featuredPanelExpanded .featuredMeta {
+    scrollbar-width: thin;
+  }
+
+  .featuredPanelExpanded .studyTranscriptList::-webkit-scrollbar,
+  .featuredPanelExpanded .featuredMeta::-webkit-scrollbar {
+    width: 0.3rem;
+    height: 0.3rem;
+  }
+
+  @media (max-width: 360px) {
+    .playerRow > .skipButton,
+    .playerRow > .mainFrameButton,
+    .playerRow > .speedControl button,
+    .playerRow > .speedControlCompact button,
+    .playerRow > .captionControl button,
+    .playerRow > .captionControlCompact button,
+    .playerRow > .volumeControl .volumeButton {
+      min-height: 44px;
+      height: 44px;
+    }
+
+    .playerRow {
+      gap: 0.08rem;
+    }
+  }
+
+  /* Prioritize reading in the portrait study view: the transcript is the
+   * primary learning surface, while cover art and metadata stay compact. */
+  @media (max-width: 760px) and (orientation: portrait) {
+    .featuredPanelExpanded:not(.featuredPanelPortrait) {
+      grid-template-columns: minmax(0, 1fr) !important;
+      grid-template-rows: 4.25rem 2.75rem minmax(0, 1fr) !important;
+      gap: 0.2rem !important;
+      height: calc(100dvh - 1.4rem) !important;
+      max-height: calc(100dvh - 1.4rem) !important;
+      overflow: hidden !important;
+    }
+
+    .featuredPanelExpanded:not(.featuredPanelPortrait) .featuredCover {
+      grid-column: 1 !important;
+      grid-row: 1 !important;
+      width: 100% !important;
+      height: 100% !important;
+      min-height: 0 !important;
+      aspect-ratio: auto !important;
+      border-radius: 0.75rem;
+    }
+
+    .featuredPanelExpanded:not(.featuredPanelPortrait) .readingPanelResizeHandle {
+      grid-column: 1 !important;
+      grid-row: 2 !important;
+      width: 100% !important;
+      min-height: 44px !important;
+    }
+
+    .featuredPanelExpanded:not(.featuredPanelPortrait) .featuredMeta {
+      grid-column: 1 !important;
+      grid-row: 3 !important;
+      display: flex !important;
+      min-height: 0 !important;
+      height: 100% !important;
+      padding: 0.42rem !important;
+      gap: 0.28rem !important;
+      overflow: hidden !important;
+    }
+
+    .featuredPanelExpanded:not(.featuredPanelPortrait) .featuredStatusRow,
+    .featuredPanelExpanded:not(.featuredPanelPortrait) .featuredMeta > h3,
+    .featuredPanelExpanded:not(.featuredPanelPortrait) .featuredMeta > p {
+      display: none;
+    }
+
+    .featuredPanelExpanded:not(.featuredPanelPortrait) .studyArea {
+      display: flex !important;
+      flex: 1 1 auto !important;
+      min-height: 0 !important;
+      margin-top: 0 !important;
+      gap: 0.22rem !important;
+    }
+
+    .featuredPanelExpanded:not(.featuredPanelPortrait) .studyToggle {
+      flex: 0 0 auto;
+      min-height: 44px;
+      padding: 0.38rem 0.55rem;
+    }
+
+    .featuredPanelExpanded:not(.featuredPanelPortrait) .studyPanel {
+      display: flex !important;
+      flex: 1 1 auto !important;
+      min-height: 0 !important;
+      max-height: none !important;
+      padding: 0.42rem !important;
+      gap: 0.3rem !important;
+      overflow: hidden !important;
+    }
+
+    .featuredPanelExpanded:not(.featuredPanelPortrait) .studyPanelHeader {
+      display: none;
+    }
+
+    .featuredPanelExpanded:not(.featuredPanelPortrait) .studyCurrentCue {
+      flex: 0 0 auto;
+      min-height: 3.2rem;
+      max-height: 5rem;
+      padding: 0.45rem 0.55rem;
+      font-size: 0.78rem;
+      line-height: 1.28;
+      overflow: auto;
+    }
+
+    .featuredPanelExpanded:not(.featuredPanelPortrait) .studyTranscriptList {
+      flex: 1 1 auto !important;
+      min-height: 0 !important;
+      overflow-y: auto !important;
+      padding-right: 0.15rem;
+    }
+
+    .featuredPanelExpanded:not(.featuredPanelPortrait) .studyCue {
+      min-height: 2.7rem;
+      padding: 0.4rem;
+    }
+
+    .featuredPanelExpanded:not(.featuredPanelPortrait) .studyCueText {
+      font-size: 0.78rem;
+      line-height: 1.3;
+    }
+
+    .featuredPanelExpanded:not(.featuredPanelPortrait) .featuredControls {
+      flex: 0 0 auto;
+      margin-top: 0.1rem !important;
+      padding-top: 0.25rem !important;
+    }
+  }
+}
+
+@media (max-width: 760px) and (orientation: portrait) {
+  .featuredPanelExpanded.featuredPanelPortrait .studyOrientationButton {
+    left: calc(50% + 1.5rem);
+    transform: translateX(-50%);
+  }
+
+  .featuredPanelExpanded.featuredPanelPortrait .studyOrientationButton:hover,
+  .featuredPanelExpanded.featuredPanelPortrait .studyOrientationButton:focus-visible {
+    transform: translateX(-50%) translateY(-1px);
+  }
+}
+
+/* Keep the orientation action on the right side of the reading panel. */
+.featuredPanelExpanded .studyOrientationButton:not(.studyCollapseButton) {
+  top: 0.62rem !important;
+  right: 0.9rem !important;
+  left: auto !important;
+  transform: none !important;
+}
+
+.featuredPanelExpanded .studyOrientationButton:not(.studyCollapseButton):hover,
+.featuredPanelExpanded .studyOrientationButton:not(.studyCollapseButton):focus-visible {
+  transform: translateY(-1px) !important;
+}
+
+@media (min-width: 761px) {
+  .featuredPanelExpanded.featuredPanelPortrait {
+    height: min(calc(100dvh - 2.4rem), 760px);
+    max-height: min(calc(100dvh - 2.4rem), 760px);
+  }
+
+  .featuredPanelExpanded.featuredPanelPortrait .featuredMeta {
+    padding: 1rem;
+    gap: 0.7rem;
+  }
+
+  .featuredPanelExpanded.featuredPanelPortrait .featuredStatusRow {
+    gap: 0.45rem;
+  }
+
+  .featuredPanelExpanded.featuredPanelPortrait .featuredMeta h3 {
+    margin-bottom: 0.15rem;
+    line-height: 0.96;
+  }
+
+  .featuredPanelExpanded.featuredPanelPortrait .featuredMeta > p {
+    max-width: 34ch;
+    margin-bottom: 0.35rem;
+    line-height: 1.42;
+  }
+}
+
 .featuredCover::before {
   content: '';
   position: absolute;
@@ -725,63 +1471,6 @@
   position: absolute;
   inset: 0;
   background: linear-gradient(180deg, rgba(0,0,0,0.04), rgba(0,0,0,0.58));
-}
-
-.featuredScrubWrap {
-  position: absolute;
-  left: 0.9rem;
-  right: 0.9rem;
-  bottom: 0.9rem;
-  z-index: 5;
-  background: rgba(10, 15, 22, 0.28);
-  border: 1px solid rgba(255, 255, 255, 0.09);
-  border-radius: 999px;
-  padding: 0.34rem 0.52rem;
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
-  touch-action: pan-y;
-  user-select: none;
-}
-
-.featuredScrubBar {
-  position: relative;
-  display: block;
-  width: 100%;
-  height: 10px;
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.14);
-  overflow: visible;
-  cursor: pointer;
-  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.06), 0 8px 18px rgba(0, 0, 0, 0.18);
-  transition: transform 0.18s ease, box-shadow 0.18s ease;
-  touch-action: none;
-}
-
-.featuredScrubBar:hover,
-.featuredScrubBar:focus-visible {
-  transform: translateY(-1px);
-  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08), 0 12px 26px rgba(0, 0, 0, 0.24), 0 0 18px rgba(247, 213, 122, 0.18);
-}
-
-.featuredScrubFill {
-  position: absolute;
-  inset: 0 auto 0 0;
-  width: 0;
-  border-radius: inherit;
-  background: linear-gradient(90deg, rgba(255, 238, 170, 0.95) 0%, rgba(249, 185, 74, 0.98) 42%, rgba(236, 146, 57, 1) 100%);
-  box-shadow: 0 0 16px rgba(247, 213, 122, 0.28);
-}
-
-.featuredScrubThumb {
-  position: absolute;
-  top: 50%;
-  width: 16px;
-  height: 16px;
-  border-radius: 50%;
-  border: 2px solid rgba(17, 23, 31, 0.92);
-  background: linear-gradient(135deg, #fff7d7, #f6cf6e 45%, #e8902f 100%);
-  box-shadow: 0 0 0 4px rgba(247, 213, 122, 0.22), 0 8px 18px rgba(0, 0, 0, 0.25);
-  transform: translate(-50%, -50%);
 }
 
 .featuredMeta {
@@ -807,6 +1496,16 @@
   justify-content: space-between;
   gap: 0.6rem;
   margin-bottom: 0.1rem;
+}
+
+.featuredStatusRow .lineTag {
+  align-self: center;
+  flex: 0 1 auto;
+  white-space: nowrap;
+}
+
+.featuredStatusRow .featuredRuntime {
+  margin-left: auto;
 }
 
 .featuredLivePill,
@@ -1117,6 +1816,31 @@
   animation: captionMenuReveal 0.16s ease-out;
 }
 
+.featuredControlRow .captionMenu {
+  top: calc(100% + 0.72rem);
+  right: auto;
+  left: 50%;
+  width: min(10.8rem, calc(100vw - 2rem));
+  min-width: 0;
+  transform: translateX(-50%);
+  animation-name: captionMenuRevealCentered;
+}
+
+.playerRow .captionMenu {
+  top: auto;
+  right: auto;
+  bottom: calc(100% + 0.72rem);
+  left: 50%;
+  width: min(10.8rem, calc(100vw - 2rem));
+  min-width: 0;
+  transform: translateX(-50%);
+  animation-name: captionMenuRevealCenteredUp;
+}
+
+.featuredControlRow .captionMenu {
+  bottom: auto;
+}
+
 .captionMenuCover {
   top: calc(100% + 0.65rem);
   right: 0;
@@ -1162,6 +1886,36 @@
   to {
     opacity: 1;
     transform: translateY(0) scale(1);
+  }
+}
+
+@media (max-height: 900px) {
+  .featuredControlRow .captionMenu {
+    top: auto;
+    bottom: calc(100% + 0.72rem);
+    animation-name: captionMenuRevealCenteredUp;
+  }
+}
+
+@keyframes captionMenuRevealCentered {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(-0.25rem) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0) scale(1);
+  }
+}
+
+@keyframes captionMenuRevealCenteredUp {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(0.25rem) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0) scale(1);
   }
 }
 
@@ -1233,6 +1987,42 @@
   margin-top: 0.25rem;
 }
 
+.studyTextCollapsed .studyPanel {
+  display: none;
+}
+
+.studyTextExpanded .studyPanel {
+  gap: 0.85rem;
+  padding: 1rem;
+}
+
+.studyTextExpanded .studyCurrentCue {
+  padding: 0.85rem 0.95rem;
+  font-size: clamp(1rem, 1.35vw, 1.2rem);
+  line-height: 1.55;
+}
+
+.studyTextExpanded .studyCurrentCue small {
+  font-size: clamp(0.82rem, 1vw, 0.98rem);
+  line-height: 1.45;
+}
+
+.studyTextExpanded .studyCue {
+  min-height: 3.5rem;
+  padding: 0.68rem 0.64rem;
+}
+
+.studyTextExpanded .studyCueText {
+  gap: 0.38rem;
+  font-size: clamp(0.88rem, 1.05vw, 1.04rem);
+  line-height: 1.55;
+}
+
+.studyTextExpanded .studyCue small {
+  font-size: clamp(0.78rem, 0.92vw, 0.94rem);
+  line-height: 1.45;
+}
+
 .studyToggle {
   display: flex;
   align-items: center;
@@ -1247,6 +2037,11 @@
   text-align: left;
   cursor: pointer;
   transition: border-color 0.2s ease, background 0.2s ease, transform 0.2s ease;
+}
+
+.studyToggle:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
 }
 
 .studyToggle:hover,
@@ -1272,22 +2067,11 @@
   font-size: 0.58rem;
 }
 
-.studyToggleIcon {
-  display: inline-grid;
-  place-items: center;
-  width: 1.45rem;
-  height: 1.45rem;
-  border: 1px solid rgba(255, 229, 167, 0.42);
-  border-radius: 50%;
-  color: #ffe7a5;
-  font-size: 1rem;
-}
-
 .studyPanel {
   display: flex;
   flex-direction: column;
   gap: 0.7rem;
-  max-height: min(42vh, 360px);
+  max-height: min(58vh, 520px);
   padding: 0.85rem;
   overflow: hidden auto;
   border: 1px solid rgba(118, 174, 224, 0.22);
@@ -1316,26 +2100,6 @@
 .studyPanelHeader strong {
   color: #f9f3df;
   font-size: 0.76rem;
-}
-
-.translationToggle,
-.repeatCueButton {
-  border: 1px solid rgba(255, 221, 140, 0.35);
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.06);
-  color: #ffeab0;
-  padding: 0.4rem 0.58rem;
-  font-size: 0.5rem;
-  font-weight: 800;
-  cursor: pointer;
-}
-
-.translationToggle:hover,
-.translationToggle:focus-visible,
-.repeatCueButton:hover,
-.repeatCueButton:focus-visible {
-  border-color: rgba(255, 221, 140, 0.85);
-  background: rgba(255, 194, 82, 0.16);
 }
 
 .studyCurrentCue {
@@ -1427,10 +2191,6 @@
   font-weight: 900;
 }
 
-.repeatCueButton {
-  justify-self: start;
-}
-
 .skipButton {
   display: inline-flex;
   align-items: center;
@@ -1478,32 +2238,6 @@
   cursor: pointer;
   touch-action: none;
   user-select: none;
-}
-
-.featuredSpeedGroup {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.3rem;
-  flex-wrap: wrap;
-}
-
-.featuredSpeedButton {
-  min-width: 2.4rem;
-  min-height: 2rem;
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  color: rgba(255,255,255,0.88);
-  font-size: 0.52rem;
-  font-weight: 800;
-  cursor: pointer;
-}
-
-.featuredActiveSpeed {
-  background: linear-gradient(180deg, rgba(255,255,255,0.15), rgba(255,255,255,0.05));
-  border-color: rgba(255, 199, 96, 0.9);
-  color: #fff;
 }
 
 .featuredVolumeControl {
@@ -1645,7 +2379,6 @@
 
 .featuredControlRow,
 .featuredVolumeControl,
-.featuredSpeedGroup,
 .featuredControls,
 .featuredMeta {
   overflow: visible;
@@ -1697,8 +2430,7 @@
   margin-bottom: 0.18rem;
 }
 
-.topLabel,
-.topIndex {
+.topLabel {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -1714,15 +2446,6 @@
   min-height: 1.05rem;
   padding: 0.14rem 0.34rem;
   font-size: clamp(0.44rem, 1.8vw, 0.64rem);
-}
-
-.topIndex {
-  background: rgba(242, 179, 78, 0.14);
-  color: #e29a17;
-  min-height: 1.05rem;
-  padding: 0.14rem 0.26rem;
-  border: 2px solid rgba(242, 179, 78, 0.45);
-  font-size: clamp(0.46rem, 1.7vw, 0.62rem);
 }
 
 .reelStage {
@@ -1930,6 +2653,103 @@
   pointer-events: auto;
 }
 
+.imagePlayButton {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: 5;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: clamp(4.2rem, 10vw, 6rem);
+  height: clamp(4.2rem, 10vw, 6rem);
+  padding: 0;
+  border: 2px solid rgba(255, 239, 177, 0.96);
+  border-radius: 50%;
+  background: linear-gradient(145deg, #ffe49a 0%, #f4bb4e 48%, #d98627 100%);
+  color: #192637;
+  box-shadow:
+    0 0 0 7px rgba(245, 187, 74, 0.18),
+    0 0 28px rgba(255, 196, 76, 0.58),
+    0 16px 30px rgba(0, 0, 0, 0.38),
+    inset 0 2px 0 rgba(255, 255, 255, 0.72);
+  transform: translate(-50%, -50%);
+  transition: transform 0.2s ease, filter 0.2s ease, box-shadow 0.2s ease;
+  animation: imagePlayPulse 2.2s ease-in-out infinite;
+}
+
+.imagePlayButton::after {
+  content: '';
+  position: absolute;
+  inset: -0.45rem;
+  border: 1px solid rgba(255, 220, 128, 0.58);
+  border-radius: inherit;
+  pointer-events: none;
+}
+
+.imagePlayButton svg {
+  width: 2rem;
+  height: 2rem;
+  fill: currentColor;
+  transform: translateX(0.08rem);
+}
+
+.imagePlayButton span {
+  position: absolute;
+  top: calc(100% + 0.75rem);
+  left: 50%;
+  min-width: max-content;
+  padding: 0.32rem 0.62rem;
+  border: 1px solid rgba(255, 226, 151, 0.5);
+  border-radius: 999px;
+  background: rgba(9, 15, 24, 0.78);
+  color: #ffe2a0;
+  font-size: 0.48rem;
+  font-weight: 900;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  transform: translateX(-50%);
+  white-space: nowrap;
+}
+
+.imagePlayButton:hover,
+.imagePlayButton:focus-visible {
+  filter: brightness(1.08);
+  box-shadow:
+    0 0 0 9px rgba(245, 187, 74, 0.22),
+    0 0 36px rgba(255, 196, 76, 0.78),
+    0 20px 34px rgba(0, 0, 0, 0.42),
+    inset 0 2px 0 rgba(255, 255, 255, 0.8);
+  transform: translate(-50%, -50%) scale(1.08);
+  animation: none;
+}
+
+.imagePlayButton:active {
+  transform: translate(-50%, -50%) scale(0.98);
+}
+
+.imagePlayButton:disabled {
+  cursor: wait;
+  opacity: 0.72;
+}
+
+@keyframes imagePlayPulse {
+  0%, 100% {
+    box-shadow:
+      0 0 0 7px rgba(245, 187, 74, 0.18),
+      0 0 28px rgba(255, 196, 76, 0.58),
+      0 16px 30px rgba(0, 0, 0, 0.38),
+      inset 0 2px 0 rgba(255, 255, 255, 0.72);
+  }
+  50% {
+    box-shadow:
+      0 0 0 11px rgba(245, 187, 74, 0.08),
+      0 0 40px rgba(255, 196, 76, 0.76),
+      0 18px 34px rgba(0, 0, 0, 0.42),
+      inset 0 2px 0 rgba(255, 255, 255, 0.78);
+  }
+}
+
 .mainFrameActions {
   position: absolute;
   inset: auto 0.48rem 0.72rem 0.48rem;
@@ -1938,10 +2758,10 @@
   align-items: center;
   justify-content: center;
   gap: 0.26rem;
-  opacity: 0;
-  transform: translateY(8px);
+  opacity: 1;
+  transform: translateY(0);
   transition: opacity 0.22s ease, transform 0.22s ease;
-  pointer-events: none;
+  pointer-events: auto;
 }
 
 .reelFrame:hover .mainFrameActions,
@@ -1952,7 +2772,6 @@
 }
 
 .mainFrameButton,
-.secondaryFrameButton,
 .chapterAction {
   border: 1px solid rgba(255, 255, 255, 0.26);
   background: rgba(12, 18, 25, 0.5);
@@ -1972,8 +2791,7 @@
   filter: grayscale(0.1);
 }
 
-.mainFrameButton,
-.secondaryFrameButton {
+.mainFrameButton {
   position: relative;
   display: inline-flex;
   align-items: center;
@@ -1990,19 +2808,25 @@
 }
 
 .mainFrameButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.38rem;
+  min-width: 5.4rem;
   background: linear-gradient(135deg, rgba(245, 193, 96, 0.9), rgba(224, 138, 39, 0.9));
   color: #101d2d;
   border-color: rgba(255, 219, 142, 0.9);
 }
 
-.secondaryFrameButton {
-  background: rgba(19, 26, 35, 0.7);
+.mainFrameButton svg {
+  width: 0.82rem;
+  height: 0.82rem;
+  fill: currentColor;
+  flex: 0 0 auto;
 }
 
 .mainFrameButton:hover,
-.secondaryFrameButton:hover,
-.mainFrameButton:focus-visible,
-.secondaryFrameButton:focus-visible {
+.mainFrameButton:focus-visible {
   transform: translateY(-1px) scale(1.02);
   border-color: rgba(255, 219, 142, 0.95);
   box-shadow: 0 16px 26px rgba(0, 0, 0, 0.3);
@@ -2173,14 +2997,6 @@
   transform: translateY(0) scale(0.99);
 }
 
-.speedGroup {
-  display: flex;
-  justify-content: center;
-  gap: 0.18rem;
-  flex-wrap: wrap;
-  min-width: 0;
-}
-
 .speedControl {
   position: relative;
   display: inline-flex;
@@ -2240,7 +3056,11 @@
 .speedTriggerIcon svg {
   width: 100%;
   height: 100%;
-  fill: currentColor;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.8;
 }
 
 .speedTriggerLabel {
@@ -2251,6 +3071,34 @@
   font-size: 0.52rem;
   font-weight: 800;
   letter-spacing: 0.04em;
+}
+
+.featuredPanelExpanded .speedTriggerCompact {
+  gap: 0.28rem;
+}
+
+.featuredPanelExpanded .speedTriggerCompact .speedTriggerIcon {
+  width: 1.35rem;
+  height: 1.35rem;
+}
+
+.featuredPanelExpanded .speedTriggerCompact .speedTriggerLabel {
+  font-size: 0.7rem;
+  letter-spacing: 0.03em;
+}
+
+.featuredPanelExpanded .speedTriggerCompact {
+  min-height: 2.7rem;
+  padding-inline: 0.55rem;
+  justify-content: center;
+}
+
+.speedTriggerLabel {
+  display: none;
+}
+
+.speedTrigger {
+  justify-content: center;
 }
 
 .speedMenu {
@@ -2289,6 +3137,21 @@
   transform: translateY(-50%);
 }
 
+.featuredPanelExpanded .speedMenuCompact {
+  left: 50%;
+  right: auto;
+  top: auto;
+  bottom: calc(100% + 0.5rem);
+  gap: 0.3rem;
+  flex-direction: row;
+  min-width: auto;
+  padding: 0.4rem;
+  border-color: rgba(242, 179, 78, 0.48);
+  background: linear-gradient(180deg, rgba(20, 29, 40, 0.98), rgba(8, 13, 20, 0.98));
+  box-shadow: 0 16px 30px rgba(0, 0, 0, 0.42), 0 0 18px rgba(242, 179, 78, 0.12);
+  transform: translateX(-50%);
+}
+
 .speedMenuItem,
 .speedMenuItemCompact {
   border: 1px solid rgba(255, 255, 255, 0.09);
@@ -2308,9 +3171,10 @@
 }
 
 .speedMenuItemCompact {
-  min-height: 1.6rem;
-  padding: 0.26rem 0.42rem;
-  font-size: 0.5rem;
+  min-width: 2.8rem;
+  min-height: 2rem;
+  padding: 0.32rem 0.48rem;
+  font-size: 0.58rem;
 }
 
 .speedMenuItem:hover,
@@ -2631,14 +3495,6 @@
     border-radius: 12px;
   }
 
-  .copyBlock {
-    margin-bottom: 0.12rem;
-  }
-
-  .copyBlock p {
-    max-width: 38ch;
-  }
-
   .playerRow {
     justify-content: center;
   }
@@ -2739,15 +3595,6 @@
   .playerRow .volumeControl {
     width: auto;
     margin-left: 0;
-  }
-
-  .speedGroup {
-    justify-content: space-between;
-  }
-
-  .speedButton {
-    min-width: 0;
-    flex: 1 1 0;
   }
 
   .volumeControl {
@@ -2861,9 +3708,13 @@
 
   .playerRow .captionMenu {
     top: auto;
-    bottom: calc(100% + 0.55rem);
-    right: 0;
-    min-width: 10.4rem;
+    right: auto;
+    bottom: calc(100% + 0.72rem);
+    left: 50%;
+    width: min(10.8rem, calc(100vw - 2rem));
+    min-width: 0;
+    transform: translateX(-50%);
+    animation-name: captionMenuRevealCenteredUp;
   }
 
   .playerRow .captionMenuItem {
@@ -2950,5 +3801,3422 @@
     flex-wrap: wrap;
     justify-content: center;
     gap: 0.28rem;
+  }
+}
+
+/* Compact is the original layout. Expansion overlays only the episode content. */
+.featuredPanelExpanded {
+  overflow: hidden;
+}
+
+.featuredPanelExpanded .featuredMeta {
+  position: absolute;
+  z-index: 4;
+  right: 0.8rem;
+  bottom: 0.2rem;
+  left: 0.8rem;
+  height: 75%;
+  max-height: 75%;
+  margin: 0;
+  overflow-y: auto;
+  border: 1px solid rgba(255, 207, 112, 0.22);
+  border-radius: 18px;
+  background: linear-gradient(180deg, rgba(8, 12, 18, 0.86), rgba(8, 11, 18, 0.98));
+  box-shadow: 0 18px 42px rgba(0, 0, 0, 0.38);
+  justify-content: flex-start;
+  transition: height 0.42s ease, background 0.3s ease;
+}
+
+.featuredPanelExpanded .featuredMetaStudyClosed {
+  height: fit-content;
+  max-height: none;
+  bottom: auto;
+  top: 0.8rem;
+  overflow: visible;
+}
+
+.featuredPanelExpanded .featuredMetaStudyClosed .featuredControls {
+  margin-top: 0.35rem;
+}
+
+/* Horizontal audio-only mode keeps the study toggle available, but removes
+ * the transcript surface so the learner can listen without a visual wall of text. */
+.featuredPanelExpanded:not(.featuredPanelPortrait) .featuredMetaStudyClosed .studyPanel {
+  display: none;
+}
+
+.featuredPanelExpanded:not(.featuredPanelPortrait) .featuredMetaStudyClosed .studyToggle {
+  cursor: default;
+}
+
+.featuredPanelExpanded:not(.featuredPanelPortrait) .studyToggle {
+  position: relative;
+}
+
+.featuredPanelExpanded:not(.featuredPanelPortrait) .studyOrientationButton:not(.studyCollapseButton) {
+  top: 0.62rem;
+  right: 8rem;
+  left: auto;
+  transform: none;
+}
+
+.featuredPanelExpanded:not(.featuredPanelPortrait) .studyOrientationButton:not(.studyCollapseButton):hover,
+.featuredPanelExpanded:not(.featuredPanelPortrait) .studyOrientationButton:not(.studyCollapseButton):focus-visible {
+  transform: translateY(-1px);
+}
+
+.featuredPanelExpanded:not(.featuredPanelPortrait) .featuredMetaStudyClosed .studyToggle:hover,
+.featuredPanelExpanded:not(.featuredPanelPortrait) .featuredMetaStudyClosed .studyToggle:focus-visible {
+  transform: none;
+}
+
+/* Keep the reading divider visibly separate from the content in every orientation. */
+.featuredPanelExpanded .readingPanelResizeHandle::before {
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.04), rgba(242, 179, 78, 0.28), rgba(255, 255, 255, 0.04));
+  box-shadow: inset 0 1px 0 rgba(255, 239, 177, 0.2), inset 0 -1px 2px rgba(0, 0, 0, 0.34);
+}
+
+.featuredPanelExpanded .readingPanelResizeHandle span {
+  width: 4.5rem;
+  height: 0.2rem;
+  background: linear-gradient(90deg, #f8dc8d, #d99535);
+  box-shadow: 0 0 14px rgba(247, 213, 125, 0.42), inset 0 1px 0 rgba(255, 246, 202, 0.48);
+}
+
+@media (max-width: 760px) {
+  .featuredPanelExpanded .readingPanelResizeHandle {
+    min-height: 2.8rem;
+  }
+
+  .featuredPanelExpanded .readingPanelResizeHandle span {
+    width: 3.8rem;
+  }
+}
+
+@media (orientation: landscape) and (max-height: 600px) {
+  .featuredPanelExpanded .readingPanelResizeHandle span {
+    width: 3.2rem;
+  }
+}
+
+@media (max-width: 420px) {
+  .nextEpisodeArrow {
+    top: 25%;
+    right: 0.25rem;
+    width: 2.8rem;
+    height: 4.2rem;
+    font-size: 2.4rem;
+  }
+
+  .previousEpisodeArrow {
+    right: auto;
+    left: 0.25rem;
+  }
+}
+
+@media (max-width: 340px) {
+  .studyCollapseButton {
+    width: 5rem;
+    max-width: 5rem;
+    padding-inline: 0.25rem;
+    font-size: 0.34rem;
+  }
+}
+
+@media (max-width: 760px) and (orientation: portrait) {
+  .closeFeatureButton {
+    top: 0.72rem;
+    right: auto;
+    left: 0.72rem;
+  }
+
+  .featuredPanelPortrait .studyOrientationButton:not(.studyCollapseButton) {
+    top: 0.72rem;
+    right: auto;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .featuredPanelPortrait .studyOrientationButton:not(.studyCollapseButton):hover,
+  .featuredPanelPortrait .studyOrientationButton:not(.studyCollapseButton):focus-visible {
+    transform: translateX(-50%) translateY(-1px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .featuredOverlay,
+  .featuredPanel,
+  .featuredPanel > .featuredCover,
+  .featuredPanel > .readingPanelResizeHandle,
+  .featuredPanel > .featuredMeta {
+    animation: none;
+  }
+}
+
+@media (max-width: 760px) {
+  .featuredPanel:not(.featuredPanelExpanded) .featuredMeta {
+    padding-top: 3.15rem;
+  }
+
+  .featuredPanel:not(.featuredPanelExpanded) .featuredStatusRow {
+    margin-left: 3.4rem;
+  }
+}
+
+@media (max-width: 500px) and (orientation: portrait) {
+  .featuredPanel:not(.featuredPanelExpanded) .featuredStatusRow {
+    margin-right: 4.5rem;
+  }
+}
+
+@media (max-width: 760px) {
+  .featuredPanel:not(.featuredPanelExpanded) .featuredMeta {
+    justify-content: flex-start;
+    padding-top: 3.15rem;
+  }
+
+  .featuredPanel:not(.featuredPanelExpanded) .featuredStatusRow {
+    margin-bottom: 0.45rem;
+  }
+}
+
+/* Portrait study uses a real stacked layout: cover, divider, then reading. */
+.featuredPanelExpanded.featuredPanelPortrait {
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: minmax(0, 0.78fr) 3.35rem minmax(0, 1.22fr);
+  gap: 0.5rem;
+  overflow: hidden;
+}
+
+.featuredPanelExpanded.featuredPanelPortrait .featuredCover {
+  grid-column: 1;
+  grid-row: 1;
+  min-height: 0;
+}
+
+.featuredPanelExpanded.featuredPanelPortrait .readingPanelResizeHandle {
+  position: relative;
+  grid-column: 1;
+  grid-row: 2;
+  inset: auto;
+  width: 100%;
+  min-height: 3.35rem;
+  margin: 0.05rem 0;
+  cursor: row-resize;
+}
+
+.featuredPanelExpanded.featuredPanelPortrait .readingPanelResizeHandle::before {
+  inset: 0.52rem 12%;
+  width: auto;
+  height: auto;
+  border-color: rgba(255, 214, 123, 0.46);
+  background: linear-gradient(90deg, rgba(10, 15, 24, 0.76), rgba(242, 179, 78, 0.2), rgba(10, 15, 24, 0.76));
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.22), inset 0 1px 0 rgba(255, 239, 177, 0.22), inset 0 -1px 2px rgba(0, 0, 0, 0.38);
+}
+
+.featuredPanelExpanded.featuredPanelPortrait .readingPanelResizeHandle span {
+  width: 4.2rem;
+  height: 0.2rem;
+}
+
+.featuredPanelExpanded.featuredPanelPortrait .readingPanelResizeHandle::after {
+  top: 50%;
+  right: auto;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(225deg);
+  filter: drop-shadow(0 0 7px rgba(242, 179, 78, 0.8));
+}
+
+.featuredPanelExpanded.featuredPanelPortrait .featuredMeta {
+  position: relative;
+  grid-column: 1;
+  grid-row: 3;
+  inset: auto;
+  width: auto;
+  height: auto;
+  max-height: none;
+  min-height: 0;
+  margin: 0;
+  overflow-y: auto;
+}
+
+@media (max-width: 760px) {
+  .featuredPanelExpanded.featuredPanelPortrait {
+    grid-template-rows: minmax(0, 0.62fr) 3.15rem minmax(0, 1.38fr);
+    gap: 0.38rem;
+  }
+
+  .featuredPanelExpanded.featuredPanelPortrait .readingPanelResizeHandle {
+    min-height: 3.15rem;
+  }
+
+  .featuredPanelExpanded.featuredPanelPortrait .readingPanelResizeHandle span {
+    width: 3.5rem;
+  }
+}
+
+.featuredPanelExpanded .featuredMeta:not(.featuredMetaStudyClosed) .studyArea {
+  flex: 1 1 auto;
+  min-height: 0;
+}
+
+.featuredPanelExpanded .featuredMeta:not(.featuredMetaStudyClosed) .studyPanel {
+  flex: 1 1 auto;
+  min-height: 0;
+  max-height: none;
+}
+
+.featuredPanelExpanded .featuredMeta:not(.featuredMetaStudyClosed) .featuredControls {
+  margin-top: auto;
+}
+
+.featuredPanelExpanded .readingPanelResizeHandle {
+  position: absolute;
+  z-index: 6;
+  right: 0.8rem;
+  bottom: calc(78% + 0.65rem);
+  left: 0.8rem;
+  width: auto;
+  min-height: 2.5rem;
+  margin: 0;
+  cursor: pointer;
+}
+
+.featuredPanelExpanded .readingPanelResizeHandle::before {
+  inset: 0.2rem 16%;
+  height: 2.5rem;
+  transform: none;
+}
+
+.featuredPanelExpanded .readingPanelResizeHandle span {
+  width: 4.5rem;
+  height: 0.2rem;
+}
+
+.studyOrientationButton {
+  position: absolute;
+  z-index: 7;
+  top: 1rem;
+  right: 1rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  min-height: 2rem;
+  padding: 0.42rem 0.62rem;
+  border: 1px solid rgba(255, 216, 135, 0.32);
+  border-radius: 999px;
+  background: rgba(8, 12, 18, 0.76);
+  color: #ffe2a2;
+  font-size: 0.48rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+
+.studyCollapseButton {
+  position: static;
+  flex: 0 0 auto;
+  margin-left: 0.35rem;
+  min-height: 1.8rem;
+  padding: 0.3rem 0.5rem;
+  font-size: 0.42rem;
+}
+
+.studyToggle > span {
+  min-width: 0;
+  flex: 1 1 auto;
+}
+
+@media (orientation: landscape) and (max-height: 600px) {
+  .featuredPanel:not(.featuredPanelPortrait) .studyToggle {
+    justify-content: flex-start;
+  }
+
+  .featuredPanel:not(.featuredPanelPortrait) .studyCollapseButton {
+    position: absolute;
+    top: 50%;
+    right: 0.55rem;
+    max-width: 5.8rem;
+    width: 5.8rem;
+    padding-inline: 0.35rem;
+    font-size: 0.36rem;
+    letter-spacing: 0.04em;
+    transform: translateY(-50%);
+  }
+
+  .featuredPanel:not(.featuredPanelPortrait) .studyToggle > span {
+    padding-right: 6.2rem;
+  }
+}
+
+.studyOrientationButton svg {
+  width: 0.9rem;
+  height: 0.9rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.8;
+}
+
+.studyOrientationButton:hover,
+.studyOrientationButton:focus-visible,
+.featuredPanelPortrait .studyOrientationButton {
+  border-color: rgba(255, 216, 135, 0.85);
+  background: rgba(242, 179, 78, 0.2);
+  color: #fff2c9;
+}
+
+@media (min-width: 761px) {
+  .featuredPanelExpanded:not(.featuredPanelPortrait) .featuredMeta {
+      right: clamp(0.8rem, 4vw, 1.5rem);
+    left: 0.8rem;
+      height: 87%;
+      max-height: 87%;
+    }
+
+    .featuredPanelExpanded:not(.featuredPanelPortrait) .readingPanelResizeHandle {
+      right: clamp(0.8rem, 4vw, 1.5rem);
+      left: 0.8rem;
+      bottom: calc(85% + 0.4rem);
+      width: auto;
+    }
+
+  .featuredPanelExpanded.featuredPanelPortrait .featuredMeta {
+    right: 0.8rem;
+    left: 0.8rem;
+    height: 75%;
+    max-height: 75%;
+  }
+
+  .featuredPanelExpanded.featuredPanelPortrait .readingPanelResizeHandle {
+    right: 0.8rem;
+    left: 0.8rem;
+    bottom: calc(78% + 0.35rem);
+    width: auto;
+    min-height: 2.5rem;
+    margin: 0;
+    cursor: pointer;
+  }
+}
+
+@media (max-width: 760px) {
+  .closeFeatureButton {
+    top: 0.72rem;
+    left: 0.72rem;
+    padding: 0.38rem 0.68rem;
+  }
+
+  .studyOrientationButton {
+    display: inline-flex;
+    top: 0.72rem;
+    right: 0.72rem;
+    min-height: 1.9rem;
+    padding: 0.34rem 0.52rem;
+    font-size: 0.42rem;
+  }
+
+  .featuredPanelExpanded .featuredMeta {
+    right: 0.7rem;
+    bottom: 0.2rem;
+    left: 0.7rem;
+    height: 75%;
+    max-height: 75%;
+    border-radius: 16px;
+  }
+
+  .featuredPanelExpanded .readingPanelResizeHandle {
+    right: 0.7rem;
+    bottom: calc(75% + 1rem);
+    left: 0.7rem;
+  }
+}
+
+/* Keep the study controls in view while giving the transcript more room. */
+.featuredPanelExpanded .featuredMeta {
+  gap: 0.34rem;
+  padding: 0.72rem clamp(0.72rem, 1.8vw, 1.2rem) 0.8rem;
+}
+
+.featuredPanelExpanded .featuredStatusRow {
+  justify-content: flex-start;
+  gap: 0.35rem;
+  margin-bottom: 0;
+}
+
+.featuredPanelExpanded .featuredLivePill,
+.featuredPanelExpanded .featuredRuntime {
+  min-height: 1.08rem;
+  padding: 0.1rem 0.34rem;
+  font-size: 0.32rem;
+  letter-spacing: 0.1em;
+}
+
+.featuredPanelExpanded .lineTag {
+  align-self: center;
+  padding: 0.08rem 0.32rem;
+  font-size: 0.31rem;
+  letter-spacing: 0.1em;
+}
+
+.featuredPanelExpanded .featuredMeta h3 {
+  font-size: clamp(1.55rem, 2.6vw, 2.45rem);
+  line-height: 0.86;
+}
+
+.featuredPanelExpanded .featuredMeta > p {
+  font-size: clamp(0.7rem, 1.15vw, 0.86rem);
+  line-height: 1.22;
+}
+
+.featuredPanelExpanded .studyArea {
+  gap: 0.3rem;
+  margin-top: 0;
+}
+
+.featuredPanelExpanded .studyToggle {
+  padding: 0.5rem 0.68rem;
+}
+
+.featuredPanelExpanded .studyToggle strong {
+  font-size: 0.66rem;
+}
+
+.featuredPanelExpanded .studyToggle small {
+  margin-top: 0.1rem;
+  font-size: 0.52rem;
+}
+
+.featuredPanelExpanded .studyPanel {
+  max-height: min(30vh, 18rem);
+  min-height: clamp(9rem, 20vh, 12rem);
+  gap: 0.3rem;
+  padding: 0.45rem;
+  transition: max-height 0.42s ease, min-height 0.42s ease;
+}
+
+.featuredPanelExpanded .studyCurrentCue {
+  font-size: 0.78rem;
+  line-height: 1.32;
+}
+
+.featuredPanelExpanded .studyCurrentCue small {
+  font-size: 0.68rem;
+}
+
+.featuredPanelExpanded .studyCueText {
+  font-size: 0.7rem;
+  line-height: 1.3;
+}
+
+.featuredPanelExpanded .studyCue small {
+  font-size: 0.64rem;
+}
+
+.featuredPanelExpanded .studyCueTime {
+  font-size: 0.56rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(featured-panel),
+  ::view-transition-old(featured-panel),
+  ::view-transition-new(featured-panel) {
+    animation-duration: 0.01ms;
+  }
+}
+
+.featuredPanelExpanded .featuredPlayButton {
+  position: absolute;
+  top: 2.25rem;
+  right: 8%;
+  left: auto;
+  min-height: 2.15rem;
+  padding: 0.42rem 1rem;
+  font-size: 0.62rem;
+  border: 1px solid rgba(255, 216, 135, 0.28);
+  background: rgba(3, 7, 12, 0.96);
+  color: #ffe7a5;
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.34), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  white-space: nowrap;
+}
+
+.featuredPanelExpanded .featuredPlayButton:hover,
+.featuredPanelExpanded .featuredPlayButton:focus-visible {
+  border-color: rgba(255, 216, 135, 0.72);
+  background: rgba(10, 16, 24, 0.98);
+  transform: translateY(-1px);
+}
+
+.featuredPanelExpanded .featuredMeta h3 {
+  padding-right: clamp(3.5rem, 12vw, 7rem);
+}
+
+.featuredPanelExpanded .featuredMeta > p {
+  padding-right: clamp(0rem, 12vw, 6rem);
+}
+
+.featuredPanelExpanded .featuredControls {
+  gap: 0.14rem;
+}
+
+.featuredPanelExpanded .progressTimeRow {
+  font-size: 0.54rem;
+  margin-bottom: 0.08rem;
+  padding-inline: 0.04rem;
+}
+
+.featuredPanelExpanded .featuredProgressTrack {
+  height: 17px;
+}
+
+.featuredPanelExpanded .featuredProgressTrack::before,
+.featuredPanelExpanded .featuredProgressBar {
+  height: 6px;
+}
+
+.featuredPanelExpanded .featuredControlRow {
+  gap: 0.26rem;
+}
+
+.featuredPanelExpanded .featuredControlRow .skipButton,
+.featuredPanelExpanded .featuredControlRow .featuredMiniPlay,
+.featuredPanelExpanded .featuredControlRow .speedTriggerCompact,
+.featuredPanelExpanded .featuredControlRow .captionControlCompact,
+.featuredPanelExpanded .featuredControlRow .captionButton {
+  min-width: 2.35rem;
+  width: 2.35rem;
+  min-height: 2.35rem;
+  height: 2.35rem;
+}
+
+.featuredPanelExpanded .featuredControlRow .captionButton {
+  padding-inline: 0.18rem;
+}
+
+.featuredPanelExpanded .featuredControlRow .skipButton,
+.featuredPanelExpanded .featuredControlRow .featuredMiniPlay,
+.featuredPanelExpanded .featuredControlRow .speedTriggerCompact,
+.featuredPanelExpanded .featuredControlRow .captionButton,
+.featuredPanelExpanded .volumeButton {
+  border: 1px solid rgba(255, 216, 135, 0.48);
+  background: linear-gradient(180deg, rgba(242, 179, 78, 0.2), rgba(8, 13, 20, 0.94));
+  color: #ffe8a8;
+  box-shadow:
+    0 7px 15px rgba(0, 0, 0, 0.28),
+    inset 0 1px 0 rgba(255, 244, 190, 0.3),
+    inset 0 -3px 5px rgba(0, 0, 0, 0.42);
+  transition: transform 0.18s ease, border-color 0.18s ease, background 0.18s ease, box-shadow 0.18s ease;
+}
+
+.featuredPanelExpanded .featuredControlRow .skipButton:hover:not(:disabled),
+.featuredPanelExpanded .featuredControlRow .skipButton:focus-visible,
+.featuredPanelExpanded .featuredControlRow .featuredMiniPlay:hover:not(:disabled),
+.featuredPanelExpanded .featuredControlRow .featuredMiniPlay:focus-visible,
+.featuredPanelExpanded .featuredControlRow .speedTriggerCompact:hover,
+.featuredPanelExpanded .featuredControlRow .speedTriggerCompact:focus-visible,
+.featuredPanelExpanded .featuredControlRow .captionButton:hover:not(:disabled),
+.featuredPanelExpanded .featuredControlRow .captionButton:focus-visible,
+.featuredPanelExpanded .volumeButton:hover,
+.featuredPanelExpanded .volumeButton:focus-visible {
+  border-color: rgba(255, 226, 148, 0.9);
+  background: linear-gradient(180deg, rgba(248, 202, 102, 0.34), rgba(11, 17, 25, 0.96));
+  box-shadow:
+    0 9px 18px rgba(0, 0, 0, 0.32),
+    0 0 12px rgba(247, 202, 108, 0.14),
+    inset 0 1px 0 rgba(255, 249, 211, 0.46),
+    inset 0 -3px 5px rgba(0, 0, 0, 0.44);
+  transform: translateY(-1px);
+}
+
+.featuredPanelExpanded .volumeButton {
+  width: 2.65rem;
+  height: 2.35rem;
+}
+
+@media (min-width: 761px) {
+  .featuredPanelExpanded .featuredControlRow {
+    display: grid;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    align-items: center;
+    gap: 0.42rem;
+    width: 100%;
+  }
+
+  .featuredPanelExpanded .featuredControlRow > .skipButton,
+  .featuredPanelExpanded .featuredControlRow > .featuredMiniPlay,
+  .featuredPanelExpanded .featuredControlRow > .speedControlCompact,
+  .featuredPanelExpanded .featuredControlRow > .captionControlCompact,
+  .featuredPanelExpanded .featuredControlRow > .featuredVolumeControl {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .featuredPanelExpanded .featuredControlRow > .speedControlCompact button,
+  .featuredPanelExpanded .featuredControlRow > .captionControlCompact button,
+  .featuredPanelExpanded .featuredControlRow > .featuredVolumeControl .volumeButton,
+  .featuredPanelExpanded .featuredControlRow > .skipButton,
+  .featuredPanelExpanded .featuredControlRow > .featuredMiniPlay {
+    width: 100%;
+    min-width: 0;
+    min-height: 2.7rem;
+    height: 2.7rem;
+  }
+
+  .featuredPanelExpanded .featuredControlRow > .featuredVolumeControl .volumeButton {
+    display: inline-flex;
+  }
+}
+
+@media (max-width: 760px) {
+  .featuredPanelExpanded .featuredMeta {
+    gap: 0.28rem;
+    padding: 0.62rem 0.68rem 0.7rem;
+    height: calc(100% - 0.4rem);
+    max-height: calc(100% - 0.4rem);
+  }
+
+  .featuredPanelExpanded .featuredMeta h3 {
+    font-size: clamp(1.45rem, 7vw, 2rem);
+  }
+
+  .featuredPanelExpanded .featuredPlayButton {
+    top: 2.25rem;
+    right: 8%;
+    left: auto;
+  }
+
+  .featuredPanelExpanded .studyPanel {
+    max-height: min(27vh, 12rem);
+    min-height: clamp(8.5rem, 22vh, 11.5rem);
+  }
+
+  .featuredPanelExpanded .readingPanelResizeHandle {
+    min-height: 1.45rem;
+    bottom: calc(75% + 0.35rem);
+  }
+
+  .featuredPanelExpanded .readingPanelResizeHandle::before {
+    height: 0.72rem;
+    inset: 0 26%;
+  }
+
+  .featuredPanelExpanded .readingPanelResizeHandle span {
+    width: 3.2rem;
+    height: 0.12rem;
+  }
+
+  .featuredPanelExpanded .studyCurrentCue {
+    font-size: 0.74rem;
+  }
+
+  .featuredPanelExpanded .studyCueText {
+    font-size: 0.67rem;
+  }
+
+  .featuredPanelExpanded .featuredControlRow .skipButton,
+  .featuredPanelExpanded .featuredControlRow .featuredMiniPlay,
+  .featuredPanelExpanded .featuredControlRow .speedTriggerCompact,
+  .featuredPanelExpanded .featuredControlRow .captionControlCompact,
+  .featuredPanelExpanded .featuredControlRow .captionButton {
+    min-width: 2.2rem;
+    width: 2.2rem;
+    min-height: 2.2rem;
+    height: 2.2rem;
+  }
+
+  .featuredPanelExpanded .volumeButton {
+    width: 2.45rem;
+    height: 2.2rem;
+  }
+
+  .readingPanelResizeHandle::after {
+    top: 50%;
+    right: auto;
+    bottom: auto;
+    left: 50%;
+    width: 0.58rem;
+    height: 0.58rem;
+    border-top: 0;
+    border-right: 2px solid #ffe2a2;
+    border-bottom: 2px solid #ffe2a2;
+    border-left: 0;
+    transform: translate(-50%, -125%) rotate(-135deg);
+  }
+
+  .featuredPanelExpanded .readingPanelResizeHandle::after {
+    top: 50%;
+    right: auto;
+    bottom: auto;
+    left: 50%;
+    transform: translate(-50%, 0.55rem) rotate(45deg);
+  }
+}
+
+@media (max-width: 420px) {
+  .featuredPanel:not(.featuredPanelExpanded) .featuredCover {
+    min-height: clamp(180px, 55vw, 225px);
+  }
+
+  .featuredPanel:not(.featuredPanelExpanded) .featuredMeta {
+    gap: 0.4rem;
+    padding: 0.72rem 0.7rem 0.8rem;
+  }
+
+  .featuredPanel:not(.featuredPanelExpanded) .featuredMeta h3 {
+    font-size: clamp(1.45rem, 8vw, 2.1rem);
+  }
+
+  .featuredPanel:not(.featuredPanelExpanded) .featuredMeta > p {
+    font-size: 0.74rem;
+    line-height: 1.28;
+  }
+
+  .featuredPanel:not(.featuredPanelExpanded) .studyToggle {
+    padding: 0.52rem 0.68rem;
+  }
+
+  .featuredPanel:not(.featuredPanelExpanded) .featuredPlayButton {
+    min-height: 2.35rem;
+    padding-block: 0.5rem;
+  }
+
+  .featuredPanel:not(.featuredPanelExpanded) .featuredControls {
+    gap: 0.3rem;
+  }
+
+  .featuredPanel:not(.featuredPanelExpanded) .featuredProgressTrack {
+    height: 26px;
+  }
+
+  .featuredPanel:not(.featuredPanelExpanded) .featuredControlRow {
+    gap: 0.14rem;
+  }
+
+  .featuredPanel:not(.featuredPanelExpanded) .featuredControlRow .skipButton,
+  .featuredPanel:not(.featuredPanelExpanded) .featuredControlRow .featuredMiniPlay,
+  .featuredPanel:not(.featuredPanelExpanded) .featuredControlRow .speedTriggerCompact,
+  .featuredPanel:not(.featuredPanelExpanded) .featuredControlRow .captionControlCompact,
+  .featuredPanel:not(.featuredPanelExpanded) .featuredControlRow .captionButton {
+    min-width: 2.35rem;
+    width: 2.35rem;
+    min-height: 2.35rem;
+    height: 2.35rem;
+  }
+
+  .featuredPanel:not(.featuredPanelExpanded) .volumeButton {
+    width: 2.55rem;
+    height: 2.2rem;
+  }
+}
+
+@media (max-width: 360px) {
+  .featuredPanel:not(.featuredPanelExpanded) .featuredCover {
+    min-height: 154px;
+  }
+
+  .featuredPanel:not(.featuredPanelExpanded) .featuredMeta {
+    gap: 0.32rem;
+    padding: 0.62rem 0.58rem 0.7rem;
+  }
+
+  .featuredPanel:not(.featuredPanelExpanded) .featuredMeta h3 {
+    font-size: 1.45rem;
+  }
+
+  .featuredPanel:not(.featuredPanelExpanded) .featuredMeta > p {
+    font-size: 0.68rem;
+  }
+
+  .featuredPanel:not(.featuredPanelExpanded) .featuredControlRow .skipButton,
+  .featuredPanel:not(.featuredPanelExpanded) .featuredControlRow .featuredMiniPlay,
+  .featuredPanel:not(.featuredPanelExpanded) .featuredControlRow .speedTriggerCompact,
+  .featuredPanel:not(.featuredPanelExpanded) .featuredControlRow .captionControlCompact,
+  .featuredPanel:not(.featuredPanelExpanded) .featuredControlRow .captionButton {
+    min-width: 2.15rem;
+    width: 2.15rem;
+    min-height: 2.15rem;
+    height: 2.15rem;
+  }
+
+  .featuredPanel:not(.featuredPanelExpanded) .volumeButton {
+    width: 2.35rem;
+  }
+}
+
+@media (orientation: landscape) and (max-height: 600px) {
+  .featuredOverlay {
+    padding: 0.7rem;
+  }
+
+  .closeFeatureButton {
+    top: 0.55rem;
+    left: 0.7rem;
+    min-height: 2rem;
+    padding: 0.32rem 0.68rem;
+    font-size: 0.42rem;
+  }
+
+  .studyOrientationButton {
+    top: 0.78rem;
+    right: 0.78rem;
+  }
+
+  .featuredPanel {
+    min-height: calc(100dvh - 1.4rem);
+    max-height: calc(100dvh - 1.4rem);
+    width: min(96vw, 1120px);
+    padding: 0.55rem;
+    border-radius: 22px;
+  }
+
+  .featuredPanelExpanded .featuredMeta {
+    bottom: 0.35rem;
+    height: calc(100% - 0.7rem);
+    max-height: calc(100% - 0.7rem);
+    padding: 0.38rem 0.72rem 0.25rem;
+    gap: 0.18rem;
+  }
+
+  .featuredPanelExpanded.featuredPanelPortrait .featuredMeta {
+    height: 86%;
+    max-height: 86%;
+  }
+
+  .featuredPanelExpanded .featuredStatusRow {
+    gap: 0.25rem;
+  }
+
+  .featuredPanelExpanded .featuredLivePill,
+  .featuredPanelExpanded .featuredRuntime {
+    min-height: 1.15rem;
+    padding: 0.1rem 0.35rem;
+    font-size: 0.34rem;
+  }
+
+  .featuredPanelExpanded .featuredMeta h3 {
+    font-size: clamp(1.15rem, 3.6vw, 1.8rem);
+    line-height: 0.92;
+  }
+
+  .featuredPanelExpanded .featuredMeta > p {
+    max-width: 54ch;
+    font-size: clamp(0.54rem, 1.15vw, 0.68rem);
+    line-height: 1.2;
+  }
+
+  .featuredPanelExpanded .readingPanelResizeHandle span {
+    display: none;
+  }
+
+  .featuredPanelExpanded .studyToggle {
+    padding: 0.32rem 0.55rem;
+  }
+
+  .featuredPanelExpanded .studyToggle strong {
+    font-size: 0.54rem;
+  }
+
+  .featuredPanelExpanded .studyToggle small {
+    margin-top: 0.04rem;
+    font-size: 0.42rem;
+  }
+
+  .featuredPanelExpanded .studyPanel {
+    min-height: min(8.2rem, 28vh);
+    max-height: min(28vh, 11rem);
+    padding: 0.32rem;
+    gap: 0.2rem;
+  }
+
+  .featuredPanelExpanded .studyArea {
+    flex: 1 1 auto;
+    min-height: 0;
+  }
+
+  .featuredPanelExpanded .studyArea .studyPanel {
+    flex: 1 1 auto;
+    min-height: min(8.2rem, 28vh);
+    max-height: none;
+  }
+
+  .featuredPanelExpanded .studyCurrentCue {
+    font-size: 0.72rem;
+    line-height: 1.28;
+  }
+
+  .featuredPanelExpanded .studyCueText {
+    font-size: 0.68rem;
+    line-height: 1.28;
+  }
+
+  .featuredPanelExpanded .studyCue small {
+    font-size: 0.58rem;
+    line-height: 1.2;
+  }
+
+  .featuredPanelExpanded .studyCueTime {
+    font-size: 0.56rem;
+  }
+
+  .featuredPanelExpanded .featuredPlayButton {
+    top: 2.05rem;
+    right: auto;
+    left: 50%;
+    transform: translateX(-50%);
+    min-height: 1.55rem;
+    padding: 0.22rem 0.62rem;
+    font-size: 0.48rem;
+  }
+
+  .featuredPanelExpanded .featuredPlayButton:hover,
+  .featuredPanelExpanded .featuredPlayButton:focus-visible {
+    transform: translate(-50%, -1px);
+  }
+
+  .featuredPanelExpanded .featuredControls {
+    gap: 0.14rem;
+    margin-top: auto;
+  }
+
+  .featuredPanelExpanded .featuredProgressTrack {
+    height: 32px;
+    margin-top: -12px;
+    transform: translateY(-0.12rem);
+    margin-bottom: -11px;
+    touch-action: none;
+  }
+
+  .featuredPanelExpanded .featuredProgressTrack::before {
+    height: 6px;
+    border-color: rgba(255, 218, 126, 0.22);
+    background: linear-gradient(180deg, rgba(247, 213, 125, 0.22), rgba(44, 36, 24, 0.72));
+    box-shadow: inset 0 1px 1px rgba(255, 236, 174, 0.2), inset 0 -1px 2px rgba(0, 0, 0, 0.5);
+  }
+
+  .featuredPanelExpanded .featuredProgressTrack:focus-visible {
+    outline: 2px solid rgba(255, 220, 139, 0.82);
+    outline-offset: 2px;
+  }
+
+  .featuredPanelExpanded .featuredProgressBar {
+    height: 6px;
+    background: linear-gradient(90deg, #f8dc8d 0%, #d99535 100%);
+    box-shadow: inset 0 1px 0 rgba(255, 246, 202, 0.48), 0 0 10px rgba(247, 213, 125, 0.3);
+  }
+
+  .featuredPanelExpanded .featuredControlRow {
+    gap: 0.1rem;
+  }
+
+  .featuredPanelExpanded .featuredControlRow .skipButton,
+  .featuredPanelExpanded .featuredControlRow .featuredMiniPlay,
+  .featuredPanelExpanded .featuredControlRow .speedTriggerCompact,
+  .featuredPanelExpanded .featuredControlRow .captionControlCompact,
+  .featuredPanelExpanded .featuredControlRow .captionButton {
+    min-width: 1.75rem;
+    width: 1.75rem;
+    min-height: 1.75rem;
+    height: 1.75rem;
+    border-radius: 999px;
+    font-size: 0.48rem;
+    border-color: rgba(255, 216, 135, 0.38);
+    background: linear-gradient(180deg, rgba(242, 179, 78, 0.16), rgba(8, 13, 20, 0.9));
+    box-shadow: 0 5px 12px rgba(0, 0, 0, 0.26), inset 0 1px 0 rgba(255, 239, 177, 0.2), inset 0 -2px 3px rgba(0, 0, 0, 0.38);
+  }
+
+  .featuredPanelExpanded .featuredControlRow .speedTriggerCompact {
+    min-width: 1.75rem;
+    width: 1.75rem;
+    min-height: 1.75rem;
+    height: 1.75rem;
+    justify-content: center;
+    padding: 0;
+  }
+
+  .featuredPanelExpanded .featuredControlRow .speedTriggerCompact .speedTriggerIcon {
+    display: none;
+  }
+
+  .featuredPanelExpanded .featuredControlRow .speedTriggerCompact .speedTriggerValue {
+    font-size: 0.58rem;
+    font-weight: 900;
+  }
+
+  .featuredPanelExpanded .featuredVolumeControl {
+    width: 2.15rem;
+    min-height: 1.85rem;
+  }
+
+  .featuredPanelExpanded .volumeButton {
+    width: 1.75rem;
+    height: 1.75rem;
+    min-height: 1.75rem;
+    border-radius: 999px;
+    border-color: rgba(255, 216, 135, 0.38);
+    background: linear-gradient(180deg, rgba(242, 179, 78, 0.16), rgba(8, 13, 20, 0.9));
+    box-shadow: 0 5px 12px rgba(0, 0, 0, 0.26), inset 0 1px 0 rgba(255, 239, 177, 0.2), inset 0 -2px 3px rgba(0, 0, 0, 0.38);
+  }
+
+  .featuredPanelExpanded .volumeButton svg {
+    width: 0.85rem;
+    height: 0.85rem;
+  }
+
+  .featuredPanelExpanded .readingPanelResizeHandle {
+    bottom: calc(78% + 0.8rem);
+  }
+
+  .featuredPanelExpanded .readingPanelResizeHandle::before {
+    height: 0.58rem;
+  }
+
+  .featuredPanelExpanded .readingPanelResizeHandle span {
+    width: 2.8rem;
+  }
+
+  .featuredPanelExpanded .readingPanelResizeHandle::after {
+    top: -0.35rem;
+    left: 50%;
+    transform: translate(-50%, -100%) rotate(45deg);
+  }
+
+  .nextEpisodeArrow {
+    width: 2.6rem;
+    height: 3.5rem;
+    font-size: 2.2rem;
+  }
+}
+
+@media (orientation: landscape) and (max-height: 600px) {
+  .studyOrientationButton {
+    top: 0.62rem;
+    right: auto;
+    left: 50%;
+    transform: translateX(-50%);
+    min-height: 1.9rem;
+    padding-inline: 0.72rem;
+  }
+
+  .studyOrientationButton:hover,
+  .studyOrientationButton:focus-visible,
+  .featuredPanelPortrait .studyOrientationButton {
+    transform: translateX(-50%) translateY(-1px);
+  }
+
+  .featuredPanelExpanded:not(.featuredPanelPortrait) .readingPanelResizeHandle {
+    right: auto;
+    left: 21%;
+    bottom: calc(78% + 0.75rem);
+    width: 58%;
+    min-height: 2.7rem;
+    border-radius: 999px;
+  }
+
+  .featuredPanelExpanded:not(.featuredPanelPortrait) .readingPanelResizeHandle::before {
+    inset: 0.28rem 8%;
+    height: 2.1rem;
+  }
+
+  .featuredPanelExpanded:not(.featuredPanelPortrait) .readingPanelResizeHandle span {
+    width: 4.2rem;
+  }
+}
+
+/* Keep the closed study state compact instead of leaving an empty expanded panel. */
+.featuredPanelExpanded.featuredPanelPortrait .readingPanelResizeHandle {
+  position: relative;
+  right: auto;
+  bottom: auto;
+  left: auto;
+  grid-column: 1;
+  grid-row: 2;
+  inset: auto;
+  min-height: 3.35rem;
+  margin: 0.05rem 0;
+  cursor: row-resize;
+}
+
+.featuredPanelExpanded.featuredPanelPortrait .readingPanelResizeHandle::before {
+  inset: 0.52rem 12%;
+  width: auto;
+  height: auto;
+}
+
+.featuredPanelExpanded.featuredPanelPortrait .featuredMeta {
+  position: relative;
+  right: auto;
+  bottom: auto;
+  left: auto;
+  grid-column: 1;
+  grid-row: 3;
+  inset: auto;
+  height: auto;
+  max-height: none;
+  margin: 0;
+}
+
+.featuredPanelExpanded.featuredPanelPortrait .studyOrientationButton {
+  top: 0.62rem;
+  right: auto;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.featuredPanelExpanded.featuredPanelPortrait .studyOrientationButton:hover,
+.featuredPanelExpanded.featuredPanelPortrait .studyOrientationButton:focus-visible {
+  transform: translateX(-50%) translateY(-1px);
+}
+
+.featuredPanelExpanded.featuredPanelPortrait .readingPanelResizeHandle::before {
+  top: 50%;
+  right: 12%;
+  bottom: auto;
+  left: 12%;
+  height: 0.42rem;
+  transform: translateY(-50%);
+  border-radius: 999px;
+  background: linear-gradient(90deg, rgba(10, 15, 24, 0.76), rgba(242, 179, 78, 0.3), rgba(10, 15, 24, 0.76));
+  box-shadow: inset 0 1px 0 rgba(255, 239, 177, 0.2), inset 0 -1px 2px rgba(0, 0, 0, 0.34);
+}
+
+.featuredPanelExpanded.featuredPanelPortrait .readingPanelResizeHandle span {
+  width: 3.6rem;
+  height: 0.11rem;
+}
+
+.featuredPanelExpanded.featuredPanelPortrait .readingPanelResizeHandle::after {
+  top: calc(50% - 0.52rem);
+  transform: translate(-50%, -100%) rotate(225deg);
+}
+
+.featuredPanelExpanded .studyOrientationButton {
+  top: 0.62rem;
+  right: auto;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.featuredPanelExpanded .studyOrientationButton:hover,
+.featuredPanelExpanded .studyOrientationButton:focus-visible {
+  transform: translateX(-50%) translateY(-1px);
+}
+
+.featuredPanelExpanded:not(.featuredPanelPortrait) .readingPanelResizeHandle {
+  right: 20%;
+  left: 0.8rem;
+  bottom: calc(78% + 0.75rem);
+  min-height: 2.7rem;
+  border-radius: 999px;
+}
+
+.featuredPanelExpanded:not(.featuredPanelPortrait) .readingPanelResizeHandle::before {
+  top: 50%;
+  right: 16%;
+  bottom: auto;
+  left: 16%;
+  height: 0.42rem;
+  transform: translateY(-50%);
+  border-radius: 999px;
+  background: linear-gradient(90deg, rgba(10, 15, 24, 0.76), rgba(242, 179, 78, 0.3), rgba(10, 15, 24, 0.76));
+  box-shadow: inset 0 1px 0 rgba(255, 239, 177, 0.2), inset 0 -1px 2px rgba(0, 0, 0, 0.34);
+}
+
+.featuredPanelExpanded:not(.featuredPanelPortrait) .readingPanelResizeHandle span {
+  width: 3.6rem;
+  height: 0.11rem;
+}
+
+.featuredPanelExpanded:not(.featuredPanelPortrait) .readingPanelResizeHandle::after {
+  top: calc(50% - 0.52rem);
+  transform: translate(-50%, -100%) rotate(225deg);
+}
+
+/* Use the open cover space for the orientation control and lift the reading block. */
+.featuredPanelExpanded .studyOrientationButton {
+  top: 0.62rem;
+  right: 4.1rem;
+  left: auto;
+  transform: none;
+}
+
+.featuredPanelExpanded .studyOrientationButton:hover,
+.featuredPanelExpanded .studyOrientationButton:focus-visible {
+  transform: translateY(-1px);
+}
+
+.featuredPanelExpanded:not(.featuredPanelPortrait) .readingPanelResizeHandle {
+  bottom: calc(78% + 3.6rem);
+}
+
+.featuredPanelExpanded:not(.featuredPanelPortrait) .featuredMeta {
+  bottom: 0.7rem;
+  height: calc(100% - 4.2rem);
+  max-height: calc(100% - 4.2rem);
+  zoom: 0.9;
+}
+
+.featuredPanelExpanded:not(.featuredPanelPortrait) .studyArea {
+  flex: 0 1 auto;
+  min-height: 0;
+}
+
+.featuredPanelExpanded:not(.featuredPanelPortrait) .studyPanel {
+  flex: 0 1 auto;
+  min-height: 0;
+  max-height: min(22vh, 10.5rem);
+  overflow-y: auto;
+}
+
+.featuredPanelExpanded:not(.featuredPanelPortrait) .featuredControls {
+  flex: 0 0 auto;
+  margin-top: 0.2rem;
+}
+
+@media (max-width: 760px) {
+  .featuredPanelExpanded.featuredPanelPortrait .readingPanelResizeHandle {
+    min-height: 3.15rem;
+  }
+}
+
+/* Keep the episode badges tight and give the lower controls a single visual rhythm. */
+.featuredPanelExpanded .featuredStatusRow .featuredLivePill,
+.featuredPanelExpanded .featuredStatusRow .lineTag,
+.featuredPanelExpanded .featuredStatusRow .featuredRuntime {
+  flex: 0 0 auto;
+  white-space: nowrap;
+  line-height: 1;
+}
+
+.featuredPanelExpanded .featuredStatusRow .featuredLivePill {
+  min-width: 0;
+  max-width: none;
+}
+
+.featuredPanelExpanded .featuredStatusRow .featuredRuntime {
+  margin-left: auto;
+}
+
+/* Reserve the top-right header zone for the orientation control. */
+.featuredPanelPortrait .featuredStatusRow {
+  padding-right: clamp(5.4rem, 9vw, 6.8rem);
+}
+
+.featuredPanelPortrait {
+  grid-template-rows: minmax(0, 1fr);
+  align-items: stretch;
+}
+
+.featuredPanelPortrait .featuredCover,
+.featuredPanelPortrait .featuredMeta {
+  min-height: 0;
+  max-height: 100%;
+  align-self: stretch;
+}
+
+.featuredPanelPortrait .featuredMeta {
+  height: 100%;
+}
+
+.featuredPanelPortrait .featuredMeta:not(.featuredMetaStudyClosed) {
+  min-height: 0;
+  overflow: hidden;
+}
+
+.featuredPanelPortrait .studyArea {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.featuredPanelPortrait .studyPanel {
+  flex: 1 1 auto;
+  min-height: 0;
+  max-height: none;
+  overflow: hidden;
+}
+
+.featuredPanelPortrait .studyTranscriptList {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+}
+
+.featuredPanelExpanded .featuredControlRow {
+  gap: clamp(0.18rem, 0.7vw, 0.35rem);
+  padding: 0.16rem 0.22rem;
+  border: 1px solid rgba(255, 216, 135, 0.16);
+  border-radius: 999px;
+  background: linear-gradient(180deg, rgba(242, 179, 78, 0.06), rgba(5, 9, 15, 0.34));
+  box-shadow: inset 0 1px 0 rgba(255, 239, 177, 0.08), inset 0 -2px 4px rgba(0, 0, 0, 0.25);
+}
+
+.featuredPanelExpanded .featuredControlRow .skipButton,
+.featuredPanelExpanded .featuredControlRow .featuredMiniPlay,
+.featuredPanelExpanded .featuredControlRow .speedTriggerCompact,
+.featuredPanelExpanded .featuredControlRow .captionButton,
+.featuredPanelExpanded .featuredControlRow .volumeButton {
+  min-width: 2.15rem;
+  width: 2.15rem;
+  min-height: 2.15rem;
+  height: 2.15rem;
+}
+
+.featuredPanelExpanded .featuredMetaStudyClosed {
+  height: fit-content;
+  max-height: none;
+  bottom: auto;
+  top: 0.8rem;
+  overflow: visible;
+}
+
+.featuredPanelExpanded .featuredMetaStudyClosed .featuredControls {
+  margin-top: 0.35rem;
+}
+
+
+/*
+ * Responsive player contract
+ * Keep the reading surface and the transport controls in separate regions.
+ * These rules intentionally live last so they win over the legacy compact
+ * variants above without changing the existing gestures or state model.
+ */
+.playerRow .playButton {
+  display: none;
+}
+
+.mainFrameComingSoon {
+  cursor: not-allowed;
+  filter: grayscale(0.55);
+  background: rgba(12, 18, 25, 0.72);
+  border-color: rgba(255, 255, 255, 0.2);
+  color: rgba(255, 255, 255, 0.68);
+}
+
+.filmFrameComingSoon {
+  opacity: 0.48;
+  filter: grayscale(0.8) saturate(0.35) brightness(0.7);
+}
+
+.filmFrame:disabled {
+  cursor: not-allowed;
+}
+
+.filmFrameComingSoon .chapterAction,
+.filmFrame:disabled .chapterAction {
+  opacity: 1;
+  transform: none;
+  border-color: rgba(255, 255, 255, 0.18);
+  background: rgba(8, 13, 20, 0.82);
+  color: rgba(255, 255, 255, 0.68);
+}
+
+/* A compact, keyboard/touch friendly divider instead of a second content layer. */
+.featuredPanelExpanded {
+  display: grid;
+  grid-template-rows: minmax(0, 1fr);
+  min-height: min(78dvh, 680px);
+  height: min(78dvh, 680px);
+  overflow: hidden;
+}
+
+.featuredPanelExpanded:not(.featuredPanelPortrait) .featuredCover,
+.featuredPanelExpanded:not(.featuredPanelPortrait) .featuredMeta,
+.featuredPanelExpanded:not(.featuredPanelPortrait) .readingPanelResizeHandle {
+  grid-row: 1;
+}
+
+.featuredPanelExpanded:not(.featuredPanelPortrait) .featuredCover {
+  position: relative;
+  grid-column: 1;
+  width: auto;
+  height: auto;
+  min-height: 0;
+}
+
+.featuredPanelExpanded:not(.featuredPanelPortrait) .readingPanelResizeHandle {
+  position: relative;
+  grid-column: 2;
+  inset: auto;
+  width: 100%;
+  min-height: 100%;
+  margin: 0;
+  cursor: col-resize;
+  touch-action: none;
+}
+
+.featuredPanelExpanded:not(.featuredPanelPortrait) .featuredMeta {
+  position: relative;
+  grid-column: 3;
+  inset: auto;
+  width: auto;
+  height: auto;
+  max-height: none;
+  min-height: 0;
+  margin: 0;
+  overflow: hidden;
+  justify-content: flex-start;
+}
+
+.featuredPanelExpanded:not(.featuredPanelPortrait) .readingPanelResizeHandle::before {
+  inset: 12% 0;
+  width: 100%;
+  height: auto;
+}
+
+.featuredPanelExpanded:not(.featuredPanelPortrait) .readingPanelResizeHandle span {
+  width: 0.16rem;
+  height: 4rem;
+}
+
+.featuredPanelExpanded:not(.featuredPanelPortrait) .featuredPlayButton {
+  position: relative;
+  inset: auto;
+  align-self: flex-start;
+  width: fit-content;
+  transform: none;
+}
+
+.featuredPanelExpanded:not(.featuredPanelPortrait) .featuredPlayButton:hover,
+.featuredPanelExpanded:not(.featuredPanelPortrait) .featuredPlayButton:focus-visible {
+  transform: translateY(-1px);
+}
+
+/* The transcript is the only scrolling region; title, player and actions stay put. */
+.featuredPanelExpanded .featuredMeta:not(.featuredMetaStudyClosed) {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.featuredPanelExpanded .featuredMeta:not(.featuredMetaStudyClosed) .studyArea {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.featuredPanelExpanded .featuredMeta:not(.featuredMetaStudyClosed) .studyPanel {
+  display: flex;
+  flex: 1 1 auto;
+  min-height: 0;
+  max-height: none;
+  overflow: hidden;
+}
+
+.featuredPanelExpanded .studyPanelHeader,
+.featuredPanelExpanded .studyCurrentCue,
+.featuredPanelExpanded .repeatCueButton,
+.featuredPanelExpanded .featuredControls {
+  flex: 0 0 auto;
+}
+
+.featuredPanelExpanded .studyTranscriptList {
+  flex: 1 1 auto;
+  min-height: 3.5rem;
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(242, 179, 78, 0.7) rgba(255, 255, 255, 0.06);
+  padding-right: 0.18rem;
+}
+
+.featuredPanelExpanded .studyTranscriptList::-webkit-scrollbar {
+  width: 0.3rem;
+  display: block;
+}
+
+.featuredPanelExpanded .studyTranscriptList::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 999px;
+}
+
+.featuredPanelExpanded .studyTranscriptList::-webkit-scrollbar-thumb {
+  background: rgba(242, 179, 78, 0.7);
+  border-radius: 999px;
+}
+
+.featuredPanelExpanded .featuredControls {
+  margin-top: 0.35rem;
+  padding-top: 0.35rem;
+  border-top: 1px solid rgba(255, 214, 123, 0.14);
+}
+
+.featuredPanelExpanded .featuredControlRow > * {
+  opacity: 0.78;
+}
+
+.featuredPanelExpanded .featuredControlRow > *:hover,
+.featuredPanelExpanded .featuredControlRow > *:focus-within,
+.featuredPanelExpanded .featuredControlRow > *:focus-visible {
+  opacity: 1;
+}
+
+.featuredControlRow .skipButton,
+.featuredControlRow .featuredMiniPlay,
+.featuredControlRow .speedTriggerCompact,
+.featuredControlRow .captionButton,
+.featuredControlRow .volumeButton {
+  border-color: rgba(246, 194, 91, 0.5);
+  background: linear-gradient(145deg, rgba(245, 183, 67, 0.14), rgba(9, 16, 26, 0.88));
+  color: #ffe4a1;
+  box-shadow: inset 0 1px 0 rgba(255, 239, 177, 0.12), 0 6px 16px rgba(0, 0, 0, 0.18);
+}
+
+.featuredControlRow .featuredMiniPlay {
+  background: linear-gradient(145deg, #ffe39a 0%, #f1b94f 52%, #d98529 100%);
+  color: #172538;
+  border-color: rgba(255, 231, 157, 0.95);
+  box-shadow: 0 0 0 2px rgba(245, 187, 74, 0.12), 0 8px 18px rgba(218, 134, 41, 0.24);
+}
+
+.featuredControlRow .skipButton:hover:not(:disabled),
+.featuredControlRow .skipButton:focus-visible,
+.featuredControlRow .featuredMiniPlay:hover:not(:disabled),
+.featuredControlRow .featuredMiniPlay:focus-visible,
+.featuredControlRow .speedTriggerCompact:hover,
+.featuredControlRow .speedTriggerCompact:focus-visible,
+.featuredControlRow .captionButton:hover:not(:disabled),
+.featuredControlRow .captionButton:focus-visible,
+.featuredControlRow .volumeButton:hover,
+.featuredControlRow .volumeButton:focus-visible {
+  border-color: rgba(255, 224, 133, 0.98);
+  background: linear-gradient(145deg, rgba(255, 204, 92, 0.3), rgba(17, 28, 41, 0.94));
+  color: #fff0bd;
+  box-shadow: 0 0 0 2px rgba(245, 187, 74, 0.12), 0 10px 22px rgba(0, 0, 0, 0.26);
+}
+
+.featuredControlRow .featuredMiniPlay:hover:not(:disabled),
+.featuredControlRow .featuredMiniPlay:focus-visible {
+  background: linear-gradient(145deg, #ffeba9 0%, #f7c65e 52%, #e29331 100%);
+  color: #122136;
+}
+
+.featuredControlRow .skipButton:disabled,
+.featuredControlRow .featuredMiniPlay:disabled,
+.featuredControlRow .speedTriggerCompact:disabled,
+.featuredControlRow .captionButton:disabled,
+.featuredControlRow .volumeButton:disabled {
+  border-color: rgba(246, 194, 91, 0.2);
+  color: rgba(255, 228, 161, 0.45);
+}
+
+.featuredPanelExpanded .featuredMiniPlay {
+  opacity: 0.64;
+  transform: scale(0.92);
+}
+
+.featuredPanelExpanded .featuredMiniPlay:hover,
+.featuredPanelExpanded .featuredMiniPlay:focus-visible {
+  transform: translateY(-1px) scale(0.96);
+}
+
+/* Portrait is a true stack. Landscape keeps cover, divider and reading side by side. */
+@media (max-width: 760px) {
+  .featuredPanel .featuredCover {
+    min-height: clamp(180px, 30vh, 230px);
+  }
+
+  .featuredPanel .featuredMeta {
+    min-height: 0;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+
+  .featuredPanelExpanded {
+    height: min(90dvh, 760px);
+    min-height: min(90dvh, 520px);
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: minmax(130px, 0.45fr) 2.25rem minmax(0, 1fr);
+    gap: 0.35rem;
+  }
+
+  .featuredPanelExpanded .featuredCover {
+    min-height: 0;
+    aspect-ratio: 16 / 9;
+  }
+
+  .closeFeatureButton {
+    left: auto;
+    right: 0.7rem;
+    width: auto;
+  }
+
+  .featuredPanelExpanded:not(.featuredPanelPortrait) .featuredCover,
+  .featuredPanelExpanded.featuredPanelPortrait .featuredCover {
+    position: relative;
+    inset: auto;
+    grid-column: 1;
+    grid-row: 1;
+    width: auto;
+    height: auto;
+    min-height: 0;
+  }
+
+  .featuredPanelExpanded:not(.featuredPanelPortrait) .readingPanelResizeHandle,
+  .featuredPanelExpanded.featuredPanelPortrait .readingPanelResizeHandle {
+    grid-column: 1;
+    grid-row: 2;
+    min-height: 2.25rem;
+    cursor: row-resize;
+  }
+
+  .featuredPanelExpanded:not(.featuredPanelPortrait) .featuredMeta,
+  .featuredPanelExpanded.featuredPanelPortrait .featuredMeta {
+    grid-column: 1;
+    grid-row: 3;
+    min-height: 0;
+    height: auto;
+    max-height: none;
+  }
+
+  .featuredPanelExpanded:not(.featuredPanelPortrait) .readingPanelResizeHandle::before,
+  .featuredPanelExpanded.featuredPanelPortrait .readingPanelResizeHandle::before {
+    top: 50%;
+    right: 14%;
+    bottom: auto;
+    left: 14%;
+    height: 0.42rem;
+    width: auto;
+    transform: translateY(-50%);
+  }
+
+  .featuredPanelExpanded:not(.featuredPanelPortrait) .readingPanelResizeHandle span,
+  .featuredPanelExpanded.featuredPanelPortrait .readingPanelResizeHandle span {
+    width: 3.6rem;
+    height: 0.12rem;
+  }
+
+  .featuredPanelExpanded:not(.featuredPanelPortrait) .featuredPlayButton {
+    align-self: stretch;
+    width: 100%;
+  }
+
+  .featuredPanelExpanded .studyOrientationButton {
+    display: inline-flex;
+    top: 0.45rem;
+    right: 0.65rem;
+  }
+
+  .featuredPanelExpanded.featuredPanelPortrait .studyOrientationButton {
+    right: auto;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .featuredPanelExpanded.featuredPanelPortrait .studyOrientationButton:hover,
+  .featuredPanelExpanded.featuredPanelPortrait .studyOrientationButton:focus-visible {
+    transform: translateX(-50%) translateY(-1px);
+  }
+
+  .featuredPanelExpanded .featuredControlRow {
+    gap: 0.16rem;
+  }
+
+  .featuredPanelExpanded .featuredControls {
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+}
+
+@media (max-width: 760px) and (orientation: landscape) {
+  .featuredPanelPortrait .readingPanelResizeHandle {
+    width: calc(100% - 4.5rem);
+    justify-self: start;
+  }
+
+  .featuredPanelExpanded:not(.featuredPanelPortrait) {
+    grid-template-columns: minmax(0, calc(100% - var(--reading-panel-width, 80%) - 2.4rem)) 2rem minmax(240px, var(--reading-panel-width, 80%));
+    grid-template-rows: minmax(0, 1fr);
+    gap: 0.2rem;
+  }
+
+  .featuredPanelExpanded:not(.featuredPanelPortrait) .featuredCover {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .featuredPanelExpanded:not(.featuredPanelPortrait) .readingPanelResizeHandle {
+    grid-column: 2;
+    grid-row: 1;
+    min-height: 100%;
+    min-width: 2rem;
+    cursor: col-resize;
+    touch-action: none;
+  }
+
+  .featuredPanelExpanded:not(.featuredPanelPortrait) .featuredMeta {
+    grid-column: 3;
+    grid-row: 1;
+  }
+
+  .featuredPanelExpanded:not(.featuredPanelPortrait) .readingPanelResizeHandle::before {
+    top: 8%;
+    right: 0.14rem;
+    bottom: 8%;
+    left: 0.14rem;
+    width: auto;
+    height: auto;
+    transform: none;
+  }
+
+  .featuredPanelExpanded:not(.featuredPanelPortrait) .readingPanelResizeHandle span {
+    width: 0.12rem;
+    height: 3.2rem;
+  }
+
+  .featuredPanelExpanded:not(.featuredPanelPortrait) .featuredPlayButton {
+    align-self: flex-start;
+    width: fit-content;
+  }
+}
+
+@media (orientation: landscape) {
+  .featuredOverlay {
+    align-items: flex-start;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+  }
+
+  .featuredPanelExpanded {
+    width: min(98vw, 1280px);
+    height: calc(100dvh - 1rem);
+    min-height: calc(100dvh - 1rem);
+  }
+}
+
+@media (min-width: 761px) {
+  .featuredPanelExpanded {
+    grid-template-columns: minmax(0, calc(100% - var(--reading-panel-width, 39%) - 2.4rem)) 2rem minmax(320px, var(--reading-panel-width, 39%));
+    gap: 0.2rem;
+  }
+}
+
+@media (min-width: 761px) and (orientation: portrait) {
+  .featuredPanelExpanded.featuredPanelPortrait {
+    grid-template-rows: 170px 1.5rem minmax(0, 1fr);
+    gap: 0.12rem;
+  }
+
+  .featuredPanelExpanded.featuredPanelPortrait .featuredCover {
+    position: relative !important;
+    inset: auto;
+    width: auto;
+    height: auto;
+    min-height: 0;
+    aspect-ratio: auto;
+  }
+
+  .featuredPanelExpanded.featuredPanelPortrait .readingPanelResizeHandle {
+    min-height: 1.5rem;
+    margin: 0;
+  }
+}
+
+@media (min-width: 761px) {
+  .featuredPanelExpanded.featuredPanelPortrait .featuredCover {
+    position: relative !important;
+    inset: auto;
+    grid-column: 1;
+    grid-row: 1;
+    width: auto;
+    height: auto;
+    min-height: 0;
+  }
+
+  .featuredPanelExpanded.featuredPanelPortrait .readingPanelResizeHandle {
+    grid-column: 1;
+    grid-row: 2;
+  }
+
+  .featuredPanelExpanded.featuredPanelPortrait .featuredMeta {
+    grid-column: 1;
+    grid-row: 3;
+  }
+}
+
+@media (min-width: 761px) {
+  .featuredPanelExpanded.featuredPanelPortrait {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: 110px 1rem minmax(0, 1fr);
+    gap: 0.08rem;
+  }
+
+  .featuredPanelExpanded.featuredPanelPortrait .readingPanelResizeHandle {
+    min-height: 1rem;
+    margin: 0;
+  }
+
+  .featuredPanelExpanded.featuredPanelPortrait .studyCurrentCue {
+    font-size: 1.02rem;
+    line-height: 1.48;
+  }
+
+  .featuredPanelExpanded.featuredPanelPortrait .studyCurrentCue small {
+    font-size: 0.84rem;
+    line-height: 1.4;
+  }
+
+  .featuredPanelExpanded.featuredPanelPortrait .studyCueText {
+    font-size: 0.9rem;
+    line-height: 1.48;
+  }
+
+  .featuredPanelExpanded.featuredPanelPortrait .studyCue small {
+    font-size: 0.8rem;
+    line-height: 1.38;
+  }
+}
+
+@media (max-width: 760px) and (orientation: portrait) {
+  .featuredPanelExpanded .studyToggle {
+    display: flex;
+  }
+
+  .featuredPanelExpanded .featuredPlayButton {
+    display: none;
+  }
+
+  .featuredPanelExpanded.featuredPanelPortrait {
+    grid-template-rows: minmax(120px, 0.48fr) 2.45rem minmax(0, 1.52fr);
+    gap: 0.28rem;
+  }
+
+  .featuredPanelExpanded.featuredPanelPortrait .readingPanelResizeHandle {
+    min-height: 2.45rem;
+  }
+
+  .featuredPanelExpanded:not(.featuredPanelPortrait) {
+    grid-template-rows: minmax(68px, 0.16fr) 1.75rem minmax(0, 1.84fr);
+    gap: 0.16rem;
+  }
+
+  .featuredPanelExpanded:not(.featuredPanelPortrait) .featuredCover {
+    min-height: 0;
+    aspect-ratio: 4 / 1;
+  }
+
+  .featuredPanelExpanded:not(.featuredPanelPortrait) .readingPanelResizeHandle {
+    min-height: 1.75rem;
+  }
+
+  .featuredPanelExpanded .studyPanelHeader {
+    display: none;
+  }
+
+  .featuredPanelExpanded .studyPanel {
+    min-height: 0;
+    gap: 0.25rem;
+    padding: 0.38rem;
+  }
+
+  .featuredPanelExpanded .studyCurrentCue {
+    min-height: 0;
+    max-height: none;
+    padding: 0.5rem 0.58rem;
+    font-size: 0.82rem;
+    line-height: 1.28;
+    overflow: visible;
+  }
+
+  .featuredPanelExpanded .studyCurrentCue small {
+    font-size: 0.7rem;
+    line-height: 1.22;
+  }
+
+  .featuredPanelExpanded .studyTranscriptList {
+    flex: 1 1 3.8rem;
+    min-height: 3.8rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .featuredPanelExpanded .featuredPlayButton,
+  .featuredPanelExpanded .featuredMiniPlay {
+    transition: none;
+  }
+}
+
+/*
+ * Reading-first contract
+ * The transcript is the study surface, so its type must remain readable when
+ * the player is expanded instead of inheriting the compact control scale.
+ */
+.featuredPanelExpanded .featuredMeta:not(.featuredMetaStudyClosed) {
+  zoom: 1;
+}
+
+.featuredPanelExpanded .studyCurrentCue {
+  position: relative;
+  z-index: 1;
+  min-height: 4.25rem;
+  padding: 0.8rem 0.85rem;
+  font-size: clamp(0.95rem, 1.15vw, 1.12rem);
+  line-height: 1.55;
+  background: rgba(3, 13, 28, 0.96);
+}
+
+.featuredPanelExpanded .studyCurrentCue small {
+  font-size: clamp(0.8rem, 0.95vw, 0.95rem);
+  line-height: 1.45;
+}
+
+.featuredPanelExpanded .studyCue {
+  grid-template-columns: 3.1rem minmax(0, 1fr);
+  min-height: 3.25rem;
+  padding: 0.62rem 0.58rem;
+}
+
+.featuredPanelExpanded .studyCueTime {
+  padding-top: 0.18rem;
+  font-size: 0.68rem;
+}
+
+.featuredPanelExpanded .studyCueText {
+  gap: 0.35rem;
+  font-size: clamp(0.84rem, 1vw, 1rem);
+  line-height: 1.55;
+}
+
+.featuredPanelExpanded .studyCue small {
+  font-size: clamp(0.76rem, 0.9vw, 0.92rem);
+  line-height: 1.45;
+}
+
+.featuredPanelExpanded .studyTranscriptList {
+  min-height: 0;
+  align-content: start;
+  grid-auto-rows: max-content;
+  scroll-padding-block: 0.5rem;
+  contain: paint;
+}
+
+.featuredPanelExpanded .studyCue {
+  align-self: start;
+}
+
+@media (max-width: 760px) {
+  .featuredPanelExpanded .studyCurrentCue {
+    min-height: 3.9rem;
+    font-size: 0.94rem;
+  }
+
+  .featuredPanelExpanded .studyCue {
+    grid-template-columns: 2.8rem minmax(0, 1fr);
+    min-height: 3.1rem;
+    padding: 0.58rem 0.5rem;
+  }
+
+  .featuredPanelExpanded .studyCueText {
+    font-size: 0.84rem;
+    line-height: 1.5;
+  }
+
+  .featuredPanelExpanded .studyCue small {
+    font-size: 0.76rem;
+  }
+
+  .featuredPanelExpanded .featuredControlRow .skipButton,
+  .featuredPanelExpanded .featuredControlRow .featuredMiniPlay,
+  .featuredPanelExpanded .featuredControlRow .speedTriggerCompact,
+  .featuredPanelExpanded .featuredControlRow .captionButton,
+  .featuredPanelExpanded .volumeButton {
+    min-width: 2.5rem;
+    width: 2.5rem;
+    min-height: 2.5rem;
+    height: 2.5rem;
+  }
+
+  .featuredPanelExpanded .volumeButton {
+    width: 2.75rem;
+  }
+}
+
+@media (orientation: landscape) and (max-height: 600px) {
+  .featuredPanelExpanded:not(.featuredPanelPortrait) .studyToggle {
+    display: flex;
+  }
+
+  .featuredPanelExpanded.featuredPanelPortrait {
+    grid-template-rows: 76px 0.8rem minmax(0, 1fr);
+    gap: 0.2rem;
+  }
+
+  .featuredPanelExpanded.featuredPanelPortrait .featuredCover {
+    height: 76px;
+  }
+
+  .featuredPanelExpanded.featuredPanelPortrait .readingPanelResizeHandle {
+    min-height: 0.8rem;
+  }
+
+  .featuredPanelExpanded {
+    grid-template-rows: minmax(76px, 0.34fr) 0.8rem minmax(0, 1.66fr);
+    gap: 0.2rem;
+  }
+
+  .featuredPanelExpanded:not(.featuredPanelPortrait) {
+    grid-template-columns: minmax(0, calc(100% - var(--reading-panel-width, 80%) - 2.4rem)) 2rem minmax(240px, var(--reading-panel-width, 80%));
+    grid-template-rows: minmax(0, 1fr);
+    gap: 0.2rem;
+  }
+
+  .featuredPanelExpanded:not(.featuredPanelPortrait) .featuredCover,
+  .featuredPanelExpanded:not(.featuredPanelPortrait) .readingPanelResizeHandle,
+  .featuredPanelExpanded:not(.featuredPanelPortrait) .featuredMeta {
+    grid-row: 1;
+  }
+
+  .featuredPanelExpanded .featuredCover {
+    min-height: 0;
+    height: 76px;
+  }
+
+  .featuredPanelExpanded .readingPanelResizeHandle {
+    min-height: 0.8rem;
+  }
+
+  .featuredPanelExpanded .featuredMeta:not(.featuredMetaStudyClosed) {
+    gap: 0.16rem;
+    padding-top: 0.28rem;
+  }
+
+  .featuredPanelExpanded .featuredMeta:not(.featuredMetaStudyClosed) > .featuredStatusRow,
+  .featuredPanelExpanded .featuredMeta:not(.featuredMetaStudyClosed) > .featuredDescription,
+  .featuredPanelExpanded .featuredMeta:not(.featuredMetaStudyClosed) > h3,
+  .featuredPanelExpanded .featuredMeta:not(.featuredMetaStudyClosed) > p {
+    display: none;
+  }
+
+  .featuredPanelExpanded .studyToggle,
+  .featuredPanelExpanded .featuredPlayButton {
+    display: none;
+  }
+
+  .featuredPanelExpanded .studyArea,
+  .featuredPanelExpanded .studyPanel {
+    min-height: 0;
+  }
+
+  .featuredPanelExpanded .studyPanel {
+    gap: 0.2rem;
+    padding: 0.35rem;
+  }
+
+  .featuredPanelExpanded .studyPanelHeader strong {
+    font-size: 0.68rem;
+  }
+
+  .featuredPanelExpanded .studyCurrentCue {
+    min-height: 0;
+    max-height: 5.1rem;
+    padding: 0.45rem 0.55rem;
+    font-size: 0.74rem;
+    line-height: 1.2;
+    overflow-y: auto;
+  }
+
+  .featuredPanelExpanded .studyCurrentCue small {
+    font-size: 0.64rem;
+    line-height: 1.15;
+  }
+
+  .featuredPanelExpanded .studyCue {
+    min-height: 2.45rem;
+    padding: 0.42rem;
+  }
+
+  .featuredPanelExpanded .studyCueText {
+    font-size: 0.7rem;
+    line-height: 1.28;
+  }
+
+  .featuredPanelExpanded .studyCue small {
+    font-size: 0.64rem;
+    line-height: 1.18;
+  }
+
+  .featuredPanelExpanded .featuredControls {
+    gap: 0.12rem;
+    margin-top: 0.1rem;
+    padding-top: 0.2rem;
+  }
+
+  .featuredPanelExpanded .progressTimeRow {
+    height: 0.7rem;
+    min-height: 0.7rem;
+    margin: 0;
+    line-height: 0.7rem;
+  }
+
+  .featuredPanelExpanded .featuredProgressTrack {
+    height: 0.9rem;
+    min-height: 0.9rem;
+    margin: 0;
+  }
+
+  .featuredPanelExpanded .featuredProgressTrack::before,
+  .featuredPanelExpanded .featuredProgressBar {
+    height: 0.3rem;
+  }
+
+  .featuredPanelExpanded .featuredControlRow {
+    min-height: 2rem;
+    height: 2rem;
+    padding: 0;
+    margin: 0;
+  }
+
+  .featuredPanelExpanded .featuredControlRow > * {
+    min-width: 2rem;
+    width: 2rem;
+    min-height: 2rem;
+    height: 2rem;
+  }
+
+  .featuredPanelExpanded .volumeButton {
+    width: 2.25rem;
+  }
+
+  .featuredPanelExpanded .studyTranscriptList {
+    min-height: 2.5rem;
+  }
+}
+
+@media (max-width: 760px) {
+  .featuredPanelExpanded .featuredControlRow .skipButton,
+  .featuredPanelExpanded .featuredControlRow .featuredMiniPlay,
+  .featuredPanelExpanded .featuredControlRow .speedTriggerCompact,
+  .featuredPanelExpanded .featuredControlRow .captionButton,
+  .featuredPanelExpanded .volumeButton {
+    min-width: 2.5rem;
+    width: 2.5rem;
+    min-height: 2.5rem;
+    height: 2.5rem;
+  }
+
+  .featuredPanelExpanded .volumeButton {
+    width: 2.75rem;
+  }
+}
+
+/* Keep the horizontal study columns inside the card at every landscape height. */
+@media (orientation: landscape) {
+  .featuredPanelExpanded:not(.featuredPanelPortrait) {
+    grid-template-rows: minmax(0, 1fr);
+    align-items: stretch;
+  }
+
+  .featuredPanelExpanded:not(.featuredPanelPortrait) .featuredCover,
+  .featuredPanelExpanded:not(.featuredPanelPortrait) .readingPanelResizeHandle,
+  .featuredPanelExpanded:not(.featuredPanelPortrait) .featuredMeta {
+    min-height: 0;
+    max-height: 100%;
+    align-self: stretch;
+  }
+
+  .featuredPanelExpanded:not(.featuredPanelPortrait) .featuredMeta {
+    height: auto;
+    overflow: hidden;
+  }
+
+  .featuredPanelExpanded:not(.featuredPanelPortrait) .studyArea,
+  .featuredPanelExpanded:not(.featuredPanelPortrait) .studyPanel {
+    min-height: 0;
+  }
+
+  .featuredPanelExpanded:not(.featuredPanelPortrait) .studyPanel {
+    max-height: none;
+    overflow: hidden;
+  }
+
+  .featuredPanelExpanded:not(.featuredPanelPortrait) .studyTranscriptList {
+    min-height: 0;
+    overflow-y: auto;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .section,
+  .section *,
+  .section::before,
+  .section::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+@media (orientation: landscape) and (max-height: 600px) {
+  .featuredPanelExpanded.featuredPanelPortrait {
+    grid-template-rows: minmax(0, 0.78fr) 3.35rem minmax(0, 1.22fr);
+    gap: 0.5rem;
+  }
+
+  .featuredPanelExpanded.featuredPanelPortrait .featuredCover {
+    height: auto;
+  }
+
+  .featuredPanelExpanded.featuredPanelPortrait .readingPanelResizeHandle {
+    min-height: 3.35rem;
+  }
+
+  .featuredPanelExpanded.featuredPanelPortrait .featuredMeta:not(.featuredMetaStudyClosed) {
+    gap: 0.5rem;
+    padding-top: 0.72rem;
+  }
+
+  .featuredPanelExpanded.featuredPanelPortrait .featuredMeta:not(.featuredMetaStudyClosed) > .featuredStatusRow,
+  .featuredPanelExpanded.featuredPanelPortrait .featuredMeta:not(.featuredMetaStudyClosed) > h3,
+  .featuredPanelExpanded.featuredPanelPortrait .featuredMeta:not(.featuredMetaStudyClosed) > p {
+    display: block;
+  }
+
+  .featuredPanelExpanded.featuredPanelPortrait .studyPanel {
+    gap: 0.5rem;
+    padding: 0.72rem;
+  }
+
+  .featuredPanelExpanded.featuredPanelPortrait .studyCurrentCue {
+    max-height: none;
+    padding: 0.5rem 0.6rem;
+    font-size: 0.82rem;
+    line-height: 1.25;
+  }
+
+  .featuredPanelExpanded.featuredPanelPortrait .studyCurrentCue small {
+    font-size: 0.7rem;
+    line-height: 1.18;
+  }
+
+  .featuredPanelExpanded.featuredPanelPortrait .studyTranscriptList {
+    min-height: 3.5rem;
+  }
+}
+
+/* Keep the horizontal divider visually light while preserving its touch target. */
+@media (min-width: 761px) and (orientation: landscape) {
+  .featuredPanelExpanded:not(.featuredPanelPortrait) {
+    grid-template-columns: minmax(0, calc(100% - var(--reading-panel-width, 80%) - 1.45rem)) 0.9rem minmax(240px, var(--reading-panel-width, 80%));
+    gap: 0.28rem;
+  }
+
+  .featuredPanelExpanded:not(.featuredPanelPortrait) .readingPanelResizeHandle {
+    min-width: 0.9rem;
+  }
+
+  .featuredPanelExpanded:not(.featuredPanelPortrait) .readingPanelResizeHandle::before {
+    right: 0.32rem;
+    left: 0.32rem;
+    border-color: rgba(255, 214, 123, 0.22);
+    background: linear-gradient(180deg, rgba(10, 15, 24, 0.82), rgba(242, 179, 78, 0.12), rgba(10, 15, 24, 0.82));
+    box-shadow: inset 0 1px 0 rgba(255, 239, 177, 0.12), inset 0 -1px 2px rgba(0, 0, 0, 0.28);
+  }
+
+  .featuredPanelExpanded:not(.featuredPanelPortrait) .readingPanelResizeHandle span {
+    width: 0.1rem;
+    height: 3.4rem;
+    opacity: 0.62;
+    box-shadow: 0 0 8px rgba(242, 179, 78, 0.38);
+  }
+}
+
+@media (max-width: 760px) and (orientation: landscape) {
+  .featuredPanelExpanded:not(.featuredPanelPortrait) {
+    grid-template-columns: minmax(0, calc(100% - var(--reading-panel-width, 80%) - 1.35rem)) 0.85rem minmax(240px, var(--reading-panel-width, 80%));
+    gap: 0.18rem;
+  }
+
+  .featuredPanelExpanded:not(.featuredPanelPortrait) .readingPanelResizeHandle {
+    min-width: 0.85rem;
+  }
+
+  .featuredPanelExpanded:not(.featuredPanelPortrait) .readingPanelResizeHandle::before {
+    right: 0.28rem;
+    left: 0.28rem;
+    border-color: rgba(255, 214, 123, 0.2);
+  }
+
+  .featuredPanelExpanded:not(.featuredPanelPortrait) .readingPanelResizeHandle span {
+    width: 0.1rem;
+    height: 2.8rem;
+  }
+}
+
+/* In the expanded horizontal study view, keep orientation control centered
+ * in the panel so it cannot collide with the audio/text toggle. */
+@media (orientation: landscape) {
+  .featuredPanelExpanded:not(.featuredPanelPortrait) .studyOrientationButton:not(.studyCollapseButton) {
+    top: 0.62rem;
+    right: auto;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .featuredPanelExpanded:not(.featuredPanelPortrait) .studyOrientationButton:not(.studyCollapseButton):hover,
+  .featuredPanelExpanded:not(.featuredPanelPortrait) .studyOrientationButton:not(.studyCollapseButton):focus-visible {
+    transform: translateX(-50%) translateY(-1px);
+  }
+}
+
+/* Keep the close action in its own top-left safety zone on short landscape
+ * screens; study controls use the right side of the header. */
+@media (orientation: landscape) and (max-height: 600px) {
+  .closeFeatureButton {
+    top: 0.55rem;
+    right: auto;
+    left: 0.7rem;
+  }
+
+  .nextEpisodeArrow {
+    right: 0;
+    top: 30%;
+  }
+
+  .previousEpisodeArrow {
+    right: auto;
+    left: 0;
+  }
+}
+
+/* Keep portrait study controls reachable on narrow screens. */
+@media (max-width: 760px) {
+  .featuredPanelPortrait {
+    grid-template-rows: minmax(0, 0.62fr) 3.15rem minmax(0, 1.38fr);
+    overflow: hidden;
+  }
+
+  .featuredPanelPortrait .featuredCover {
+    grid-column: 1;
+    grid-row: 1;
+    min-height: 0;
+  }
+
+  .featuredPanelPortrait .readingPanelResizeHandle {
+    grid-column: 1;
+    grid-row: 2;
+    min-height: 3.15rem;
+  }
+
+  .featuredPanelPortrait .featuredMeta {
+    grid-column: 1;
+    grid-row: 3;
+    min-height: 0;
+    height: auto;
+    max-height: none;
+    height: auto;
+    overflow-y: auto;
+  }
+
+  .featuredPanelPortrait .studyArea {
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    min-height: 0;
+  }
+
+  .featuredPanelPortrait .studyPanel {
+    flex: 1 1 auto;
+    min-height: 0;
+    max-height: none;
+  }
+
+  .featuredPanelPortrait .studyTranscriptList {
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow-y: auto;
+  }
+}
+
+/* Use the extra width of the broad desktop landscape layout for easier reading. */
+@media (min-width: 1000px) and (orientation: landscape) and (min-height: 601px) {
+  .featuredPanelExpanded:not(.featuredPanelPortrait) .studyCueText {
+    font-size: clamp(0.92rem, 1.08vw, 1.08rem);
+    line-height: 1.5;
+  }
+
+  .featuredPanelExpanded:not(.featuredPanelPortrait) .studyCue small {
+    font-size: clamp(0.82rem, 0.96vw, 0.98rem);
+    line-height: 1.4;
+  }
+
+  .featuredPanelExpanded:not(.featuredPanelPortrait) .studyCueTime {
+    font-size: 0.72rem;
+  }
+
+  .featuredPanelExpanded:not(.featuredPanelPortrait) .studyCurrentCue {
+    font-size: clamp(1rem, 1.18vw, 1.16rem);
+    line-height: 1.5;
+  }
+
+  .featuredPanelExpanded:not(.featuredPanelPortrait) .studyCurrentCue small {
+    font-size: clamp(0.86rem, 0.98vw, 1rem);
+    line-height: 1.4;
+  }
+}
+
+/*
+ * Responsive reading scale
+ * Keep supporting copy and transcript text legible on tablets and phones
+ * without making the compact transport controls compete with the content.
+ */
+.featuredMeta h3 {
+  line-height: 1.08;
+}
+
+.featuredMeta > p {
+  line-height: 1.42;
+}
+
+@media (max-width: 800px) {
+  .featuredMeta > p {
+    font-size: clamp(0.78rem, 1.8vw, 0.92rem);
+    line-height: 1.45;
+  }
+
+  .studyToggle strong {
+    font-size: clamp(0.78rem, 2.4vw, 0.9rem);
+    line-height: 1.2;
+  }
+
+  .studyToggle small {
+    font-size: clamp(0.64rem, 1.9vw, 0.76rem);
+    line-height: 1.25;
+  }
+
+  .featuredPanelPortrait .studyCurrentCue,
+  .featuredPanelExpanded.featuredPanelPortrait .studyCurrentCue,
+  .featuredPanelExpanded:not(.featuredPanelPortrait) .studyCurrentCue {
+    font-size: clamp(0.9rem, 2.8vw, 1.02rem);
+    line-height: 1.4;
+  }
+
+  .featuredPanelPortrait .studyCurrentCue small,
+  .featuredPanelExpanded.featuredPanelPortrait .studyCurrentCue small,
+  .featuredPanelExpanded:not(.featuredPanelPortrait) .studyCurrentCue small {
+    font-size: clamp(0.74rem, 2.1vw, 0.84rem);
+    line-height: 1.32;
+  }
+
+  .featuredPanelPortrait .studyCueText,
+  .featuredPanelExpanded.featuredPanelPortrait .studyCueText,
+  .featuredPanelExpanded:not(.featuredPanelPortrait) .studyCueText {
+    font-size: clamp(0.78rem, 2.35vw, 0.92rem);
+    line-height: 1.42;
+  }
+
+  .featuredPanelPortrait .studyCue small,
+  .featuredPanelExpanded.featuredPanelPortrait .studyCue small,
+  .featuredPanelExpanded:not(.featuredPanelPortrait) .studyCue small {
+    font-size: clamp(0.72rem, 2vw, 0.82rem);
+    line-height: 1.35;
+  }
+
+  .featuredPanelPortrait .studyCueTime,
+  .featuredPanelExpanded.featuredPanelPortrait .studyCueTime,
+  .featuredPanelExpanded:not(.featuredPanelPortrait) .studyCueTime {
+    font-size: clamp(0.56rem, 1.65vw, 0.66rem);
+  }
+}
+
+/* When the study text is collapsed, give the released height back to the
+ * cover and keep only the reopen control in the lower reading area. */
+.featuredPanelExpanded.featuredPanelStudyClosed.featuredPanelPortrait {
+  grid-template-rows: minmax(0, 1fr) 1.75rem auto;
+}
+
+.featuredPanelExpanded.featuredPanelStudyClosed.featuredPanelPortrait .featuredMeta {
+  height: fit-content;
+  max-height: none;
+  overflow: visible;
+}
+
+@media (max-width: 760px) and (orientation: portrait) {
+.featuredPanelExpanded {
+  height: calc(100dvh - 1.4rem);
+  max-height: calc(100dvh - 1.4rem);
+  grid-template-rows: minmax(9.5rem, 0.45fr) 2.4rem minmax(18rem, 1.55fr);
+  overflow: hidden;
+}
+
+.featuredPanelExpanded .featuredMeta {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  height: auto;
+  overflow: hidden;
+}
+
+.featuredPanelExpanded .studyArea,
+.featuredPanelExpanded .studyPanel,
+.featuredPanelExpanded .studyTranscriptList {
+  min-height: 0;
+  overflow: hidden;
+}
+
+.featuredPanelExpanded .studyArea,
+.featuredPanelExpanded .studyPanel {
+  flex: 1 1 auto;
+}
+
+.featuredPanelExpanded .studyPanel {
+  display: grid;
+  grid-template-rows: auto auto minmax(7.5rem, 1fr);
+}
+
+.featuredPanelExpanded .studyTranscriptList {
+  min-height: 7.5rem;
+  overflow-y: auto;
+}
+
+.featuredPanelExpanded .featuredControls {
+  flex: 0 0 auto;
+  margin-top: 0.55rem;
+  padding-top: 0.55rem;
+  border-top: 1px solid rgba(255, 207, 112, 0.16);
+}
+
+.featuredPanelExpanded.featuredPanelPortrait .featuredMeta {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.featuredPanelExpanded.featuredPanelPortrait .studyArea {
+  flex: 1 1 auto;
+  min-height: 0;
+}
+
+.featuredPanelExpanded.featuredPanelPortrait .studyPanel {
+  flex: 1 1 auto;
+  min-height: 0;
+}
+
+.featuredPanelExpanded.featuredPanelPortrait .featuredControls {
+  flex: 0 0 auto;
+  margin-top: auto;
+  padding-top: 0.45rem;
+}
+}
+
+@media (min-width: 761px) {
+.featuredPanelExpanded .featuredControlRow {
+  display: grid !important;
+  grid-template-columns: repeat(6, minmax(0, 1fr)) !important;
+  align-items: center;
+  gap: 0.42rem !important;
+}
+
+.featuredPanelExpanded .featuredControlRow > .skipButton,
+.featuredPanelExpanded .featuredControlRow > .featuredMiniPlay,
+.featuredPanelExpanded .featuredControlRow > .speedControlCompact,
+.featuredPanelExpanded .featuredControlRow > .captionControlCompact,
+.featuredPanelExpanded .featuredControlRow > .featuredVolumeControl {
+  width: 100% !important;
+  min-width: 0 !important;
+  justify-self: stretch;
+}
+
+.featuredPanelExpanded .featuredControlRow > .skipButton,
+.featuredPanelExpanded .featuredControlRow > .featuredMiniPlay,
+.featuredPanelExpanded .featuredControlRow > .speedControlCompact > button,
+.featuredPanelExpanded .featuredControlRow > .captionControlCompact > button,
+.featuredPanelExpanded .featuredControlRow > .featuredVolumeControl .volumeButton {
+  width: 100% !important;
+  min-width: 0 !important;
+  min-height: 2.7rem !important;
+  height: 2.7rem !important;
+}
+}
+
+/* Final mobile safety zone: keep the orientation action clear of the close button. */
+@media (max-width: 760px) and (orientation: portrait) {
+.featuredPanelExpanded .studyOrientationButton:not(.studyCollapseButton) {
+  right: 4.9rem !important;
+  left: auto !important;
+  transform: none !important;
+}
+
+.featuredPanelExpanded .studyOrientationButton:not(.studyCollapseButton):hover,
+.featuredPanelExpanded .studyOrientationButton:not(.studyCollapseButton):focus-visible {
+  transform: translateY(-1px) !important;
+}
+}
+
+/* Keep the vertical orientation control aligned to the right side on phones. */
+@media (max-width: 760px) and (orientation: portrait) {
+.featuredPanelExpanded.featuredPanelPortrait .studyOrientationButton {
+  top: 0.62rem !important;
+  right: 3.4rem !important;
+  left: auto !important;
+  transform: none !important;
+}
+
+.featuredPanelExpanded.featuredPanelPortrait .studyOrientationButton:hover,
+.featuredPanelExpanded.featuredPanelPortrait .studyOrientationButton:focus-visible {
+  transform: translateY(-1px) !important;
+}
+}
+
+@media (max-width: 760px) and (orientation: portrait) {
+.featuredPanelExpanded.featuredPanelPortrait {
+  grid-template-rows: minmax(9.5rem, 0.45fr) 2.4rem minmax(18rem, 1.55fr);
+}
+
+.featuredPanelExpanded.featuredPanelPortrait .studyArea {
+  flex: 1 1 auto;
+  min-height: 0;
+}
+
+.featuredPanelExpanded.featuredPanelPortrait .studyPanel {
+  flex: 1 1 auto;
+  min-height: 0;
+  padding-bottom: 0.8rem;
+}
+
+.featuredPanelExpanded.featuredPanelPortrait .studyTranscriptList {
+  flex: 1 1 auto;
+  min-height: 7.5rem;
+  overflow-y: auto;
+}
+
+.featuredPanelExpanded.featuredPanelPortrait .featuredControls {
+  margin-top: 0.55rem;
+  padding-top: 0.55rem;
+  border-top: 1px solid rgba(255, 207, 112, 0.16);
+}
+}
+
+@media (max-width: 760px) {
+  .featuredPanelExpanded.featuredPanelStudyClosed.featuredPanelPortrait {
+    grid-template-rows: minmax(0, 1fr) 2.25rem auto;
+  }
+}
+
+/*
+ * Mobile reading layout
+ * Keep the cover, episode information and transport controls as separate
+ * blocks so the learner can scan them without text being layered over media.
+ */
+@media (max-width: 760px) and (orientation: portrait) {
+  .featuredOverlay {
+    align-items: flex-start;
+    padding: max(0.7rem, env(safe-area-inset-top)) 0.7rem max(0.7rem, env(safe-area-inset-bottom));
+    overflow-y: auto;
+  }
+
+  .featuredPanel,
+  .featuredPanel.featuredPanelPortrait {
+    width: min(100%, 31rem);
+    max-height: none;
+    min-height: 0;
+    height: auto;
+    padding: 0.6rem;
+    gap: 0.6rem;
+    border-radius: 1.35rem;
+    overflow: visible;
+  }
+
+  .featuredPanel:not(.featuredPanelExpanded) {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: auto;
+  }
+
+  .featuredPanel:not(.featuredPanelExpanded) .featuredCover {
+    min-height: clamp(12rem, 58vw, 18rem);
+    aspect-ratio: 1.35 / 1;
+    border-radius: 1rem;
+  }
+
+  .featuredPanel:not(.featuredPanelExpanded) .featuredMeta {
+    position: relative;
+    inset: auto;
+    height: auto;
+    max-height: none;
+    min-height: 0;
+    margin: 0;
+    padding: 0.9rem 0.8rem 0.75rem;
+    border: 1px solid rgba(255, 207, 112, 0.2);
+    border-radius: 1rem;
+    overflow: visible;
+    gap: 0.55rem;
+  }
+
+  .featuredPanel:not(.featuredPanelExpanded) .featuredMeta h3 {
+    max-width: 12ch;
+    font-size: clamp(1.55rem, 8vw, 2.35rem);
+    line-height: 0.98;
+  }
+
+  .featuredPanel:not(.featuredPanelExpanded) .featuredMeta > p {
+    max-width: 42ch;
+    font-size: clamp(0.78rem, 3.5vw, 0.95rem);
+    line-height: 1.4;
+  }
+
+  .featuredPanel:not(.featuredPanelExpanded) .featuredStatusRow {
+    margin: 0;
+  }
+
+  .featuredPanel:not(.featuredPanelExpanded) .featuredControls {
+    gap: 0.45rem;
+  }
+
+  .featuredPanelExpanded.featuredPanelPortrait {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: minmax(12rem, 0.62fr) 2.4rem minmax(15rem, 1.38fr);
+    gap: 0.35rem;
+    max-height: calc(100dvh - 1.4rem);
+    height: calc(100dvh - 1.4rem);
+    overflow: hidden;
+  }
+
+  .featuredPanelExpanded.featuredPanelPortrait .featuredCover {
+    min-height: 0;
+    aspect-ratio: auto;
+    border-radius: 1rem;
+  }
+
+  .featuredPanelExpanded.featuredPanelPortrait .featuredMeta {
+    position: relative;
+    inset: auto;
+    grid-column: 1;
+    grid-row: 3;
+    height: auto;
+    max-height: none;
+    margin: 0;
+    padding: 0.75rem;
+    overflow: hidden auto;
+    border: 1px solid rgba(255, 207, 112, 0.2);
+    border-radius: 1rem;
+  }
+
+  .featuredPanelExpanded .studyPanel {
+    max-height: none;
+    min-height: 0;
+    padding: 0.65rem;
+    gap: 0.5rem;
+  }
+
+  .featuredPanelExpanded .studyCurrentCue {
+    min-height: 3.8rem;
+    padding: 0.65rem;
+    font-size: 0.92rem;
+    line-height: 1.4;
+  }
+
+  .featuredPanelExpanded .studyTranscriptList {
+    min-height: 0;
+    overflow-y: auto;
+  }
+
+  .featuredPanelExpanded .studyCue {
+    grid-template-columns: 3rem minmax(0, 1fr);
+    min-height: 3rem;
+    padding: 0.5rem;
+  }
+
+  .featuredPanelExpanded .studyCueText {
+    font-size: 0.82rem;
+    line-height: 1.42;
+  }
+}
+
+@media (max-width: 760px) and (orientation: landscape) {
+  .featuredOverlay {
+    align-items: center;
+    padding: 0.55rem;
+    overflow-y: auto;
+  }
+
+  .featuredPanel,
+  .featuredPanel.featuredPanelPortrait {
+    width: min(96vw, 60rem);
+    max-height: calc(100dvh - 1.1rem);
+    min-height: 0;
+    height: auto;
+    padding: 0.55rem;
+    gap: 0.55rem;
+    border-radius: 1.2rem;
+  }
+
+  .featuredPanel:not(.featuredPanelExpanded) {
+    grid-template-columns: minmax(0, 1.05fr) minmax(15rem, 0.95fr);
+    grid-template-rows: auto;
+    align-items: stretch;
+  }
+
+  .featuredPanel:not(.featuredPanelExpanded) .featuredCover {
+    min-height: min(68vh, 22rem);
+    aspect-ratio: auto;
+    border-radius: 0.95rem;
+  }
+
+  .featuredPanel:not(.featuredPanelExpanded) .featuredMeta {
+    position: relative;
+    inset: auto;
+    min-height: 0;
+    padding: 0.8rem;
+    border: 1px solid rgba(255, 207, 112, 0.2);
+    border-radius: 0.95rem;
+    overflow: hidden auto;
+    gap: 0.45rem;
+  }
+
+  .featuredPanel:not(.featuredPanelExpanded) .featuredMeta h3 {
+    font-size: clamp(1.45rem, 4vw, 2.2rem);
+    line-height: 1;
+  }
+
+  .featuredPanel:not(.featuredPanelExpanded) .featuredMeta > p {
+    font-size: clamp(0.72rem, 1.8vw, 0.9rem);
+    line-height: 1.35;
+  }
+
+  .featuredPanelExpanded:not(.featuredPanelPortrait) {
+    grid-template-columns: minmax(0, 1fr) 1.8rem minmax(15rem, 0.9fr);
+    grid-template-rows: minmax(0, 1fr);
+    height: calc(100dvh - 1.1rem);
+  }
+
+  .featuredPanelExpanded:not(.featuredPanelPortrait) .featuredCover {
+    min-height: 0;
+  }
+
+  .featuredPanelExpanded:not(.featuredPanelPortrait) .featuredMeta {
+    position: relative;
+    inset: auto;
+    grid-column: 3;
+    grid-row: 1;
+    height: auto;
+    max-height: none;
+    margin: 0;
+    padding: 0.7rem;
+    overflow: hidden auto;
+    border: 1px solid rgba(255, 207, 112, 0.2);
+    border-radius: 0.95rem;
+  }
+
+  .featuredPanelExpanded:not(.featuredPanelPortrait) .readingPanelResizeHandle {
+    position: relative;
+    inset: auto;
+    grid-column: 2;
+    grid-row: 1;
+    min-height: 100%;
+  }
+
+  .featuredPanelExpanded .studyPanel {
+    max-height: none;
+    min-height: 0;
+    overflow: hidden auto;
+  }
+}
+
+@media (orientation: landscape) and (max-height: 600px) {
+  .featuredOverlay {
+    align-items: center;
+    padding: 0.45rem;
+    overflow-y: auto;
+  }
+
+  .featuredPanel:not(.featuredPanelExpanded) {
+    width: min(97vw, 70rem);
+    min-height: 0;
+    height: calc(100dvh - 0.9rem);
+    max-height: calc(100dvh - 0.9rem);
+    grid-template-columns: minmax(0, 1fr) 1.35rem minmax(15rem, 0.9fr);
+    grid-template-rows: minmax(0, 1fr);
+    gap: 0.5rem;
+    padding: 0.55rem;
+    overflow: hidden;
+  }
+
+  .featuredPanel:not(.featuredPanelExpanded) .featuredCover {
+    grid-column: 1;
+    grid-row: 1;
+    min-height: 0;
+    height: 100%;
+    aspect-ratio: auto;
+  }
+
+  .featuredPanel:not(.featuredPanelExpanded) .readingPanelResizeHandle {
+    grid-column: 2;
+    grid-row: 1;
+    min-height: 100%;
+  }
+
+  .featuredPanel:not(.featuredPanelExpanded) .featuredMeta {
+    grid-column: 3;
+    grid-row: 1;
+    position: relative;
+    inset: auto;
+    min-height: 0;
+    height: 100%;
+    max-height: none;
+    margin: 0;
+    padding: 0.75rem;
+    overflow: hidden auto;
+    border: 1px solid rgba(255, 207, 112, 0.2);
+    border-radius: 0.95rem;
+  }
+
+  .featuredPanel:not(.featuredPanelExpanded) .featuredMeta h3 {
+    font-size: clamp(1.35rem, 3vw, 2.2rem);
+    line-height: 1;
+  }
+
+  .featuredPanel:not(.featuredPanelExpanded) .featuredMeta > p {
+    font-size: clamp(0.7rem, 1.5vw, 0.9rem);
+    line-height: 1.35;
+  }
+
+  .featuredPanelExpanded:not(.featuredPanelPortrait) {
+    width: min(97vw, 70rem);
+    height: calc(100dvh - 0.9rem);
+    max-height: calc(100dvh - 0.9rem);
+    grid-template-columns: minmax(0, 1fr) 1.35rem minmax(15rem, 0.9fr);
+    grid-template-rows: minmax(0, 1fr);
+    gap: 0.5rem;
+    padding: 0.55rem;
+    overflow: hidden;
+  }
+
+  .featuredPanelExpanded:not(.featuredPanelPortrait) .featuredCover {
+    grid-column: 1;
+    grid-row: 1;
+    min-height: 0;
+  }
+
+  .featuredPanelExpanded:not(.featuredPanelPortrait) .readingPanelResizeHandle {
+    grid-column: 2;
+    grid-row: 1;
+    min-height: 100%;
+  }
+
+  .featuredPanelExpanded:not(.featuredPanelPortrait) .featuredMeta {
+    grid-column: 3;
+    grid-row: 1;
+    position: relative;
+    inset: auto;
+    height: 100%;
+    max-height: none;
+    margin: 0;
+    padding: 0.7rem;
+    overflow: hidden auto;
+    border: 1px solid rgba(255, 207, 112, 0.2);
+    border-radius: 0.95rem;
+  }
+}
+
+@media (max-width: 420px) {
+  .playerRow {
+    flex-wrap: nowrap;
+    align-items: center;
+    gap: 0.2rem;
+  }
+
+  .playerRow > .skipButton,
+  .playerRow > .mainFrameButton,
+  .playerRow > .speedControl,
+  .playerRow > .speedControlCompact,
+  .playerRow > .captionControl,
+  .playerRow > .captionControlCompact,
+  .playerRow > .volumeControl {
+    flex: 1 1 0;
+    min-width: 0;
+  }
+
+  .playerRow > .skipButton,
+  .playerRow > .mainFrameButton,
+  .playerRow > .speedControl button,
+  .playerRow > .speedControlCompact button,
+  .playerRow > .captionControl button,
+  .playerRow > .captionControlCompact button,
+  .playerRow > .volumeControl .volumeButton {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .playerRow > .mainFrameButton {
+    gap: 0.18rem;
+    padding-inline: 0.15rem;
+    font-size: 0.48rem;
+  }
+
+  .playerRow .volumeControl {
+    display: inline-flex;
+    width: auto;
+    justify-self: auto;
+    gap: 0;
+  }
+
+  .playerRow .volumeButton {
+    width: 100%;
+    height: 2.2rem;
+  }
+
+  .featureCard::before,
+  .featureCard::after {
+    display: none;
+  }
+
+  .progressTimeRow {
+    margin-top: 0.15rem;
+    margin-bottom: -0.2rem;
+  }
+}
+
+@media (max-width: 360px) {
+  .playerRow {
+    gap: 0.14rem;
+  }
+
+  .playerRow > .skipButton,
+  .playerRow > .mainFrameButton,
+  .playerRow > .speedControl button,
+  .playerRow > .speedControlCompact button,
+  .playerRow > .captionControl button,
+  .playerRow > .captionControlCompact button,
+  .playerRow > .volumeControl .volumeButton {
+    min-height: 2.05rem;
+    height: 2.05rem;
+  }
+
+  .playerRow .volumeButtonLabel {
+    font-size: 0.38rem;
+  }
+}
+
+@media (max-width: 760px) and (orientation: portrait) {
+  .featuredPanelExpanded {
+    height: calc(100dvh - 1.4rem) !important;
+    max-height: calc(100dvh - 1.4rem) !important;
+    grid-template-rows: minmax(9.5rem, 0.45fr) 2.4rem minmax(18rem, 1.55fr) !important;
+    overflow: hidden !important;
+  }
+
+  .featuredPanelExpanded .featuredMeta {
+    height: 100% !important;
+    min-height: 0 !important;
+    overflow: hidden !important;
+  }
+
+  .featuredPanelExpanded .featuredCover {
+    height: 100%;
+    min-height: 0;
+    align-self: stretch;
+  }
+
+  .featuredPanelExpanded .studyArea,
+  .featuredPanelExpanded .studyPanel {
+    min-height: 0 !important;
+    overflow: hidden !important;
+  }
+
+  .featuredPanelExpanded .studyPanel {
+    display: grid;
+    grid-template-rows: auto auto minmax(10rem, 1fr);
+    flex: 1 1 auto;
+  }
+
+  .featuredPanelExpanded .studyTranscriptList {
+    min-height: 10rem !important;
+    overflow-y: auto !important;
+  }
+
+  .featuredPanelExpanded .featuredControls {
+    margin-top: -0.1rem;
+    padding-top: 0.35rem;
+    border-top: 1px solid rgba(255, 207, 112, 0.16);
+    gap: 0.08rem;
+    transform: translateY(-0.24rem);
+  }
+
+  .featuredPanelExpanded .featuredProgressTrack {
+    height: 27px;
+    margin-top: -0.2rem;
+    margin-bottom: -0.16rem;
+  }
+}
+
+@media (min-width: 761px) {
+  .featuredPanelExpanded .featuredControlRow {
+    display: grid !important;
+    grid-template-columns: repeat(6, minmax(0, 1fr)) !important;
+    align-items: center;
+    gap: 0.42rem !important;
+  }
+
+  .featuredPanelExpanded .featuredControlRow > .skipButton,
+  .featuredPanelExpanded .featuredControlRow > .featuredMiniPlay,
+  .featuredPanelExpanded .featuredControlRow > .speedControlCompact,
+  .featuredPanelExpanded .featuredControlRow > .captionControlCompact,
+  .featuredPanelExpanded .featuredControlRow > .featuredVolumeControl {
+    width: 100% !important;
+    min-width: 0 !important;
+    justify-self: stretch;
+  }
+
+  .featuredPanelExpanded .featuredControlRow > .skipButton,
+  .featuredPanelExpanded .featuredControlRow > .featuredMiniPlay,
+  .featuredPanelExpanded .featuredControlRow > .speedControlCompact > button,
+  .featuredPanelExpanded .featuredControlRow > .captionControlCompact > button,
+  .featuredPanelExpanded .featuredControlRow > .featuredVolumeControl .volumeButton {
+    width: 100% !important;
+    min-width: 0 !important;
+    min-height: 2.7rem !important;
+    height: 2.7rem !important;
+  }
+}
+
+/* Final interaction baseline: preserve a comfortable hit area after all
+ * breakpoint-specific sizing rules have been applied. */
+.section .closeFeatureButton,
+.section .nextEpisodeArrow,
+.section .studyOrientationButton,
+.section .studyCollapseButton,
+.section .imagePlayButton,
+.section .nextEpisodeButton,
+.section .readingPanelResizeHandle,
+.section .skipButton,
+.section .featuredMiniPlay,
+.section .speedTrigger,
+.section .speedTriggerCompact,
+.section .captionButton,
+.section .volumeButton {
+  min-height: 44px;
+}
+
+.section .readingPanelResizeHandle,
+.section .skipButton,
+.section .featuredMiniPlay,
+.section .speedTrigger,
+.section .speedTriggerCompact,
+.section .captionButton,
+.section .volumeButton {
+  min-width: 44px;
+}
+
+.section .volumeButton {
+  width: 44px !important;
+  height: 44px !important;
+}
+
+.section .closeFeatureButton,
+.section .nextEpisodeArrow,
+.section .studyOrientationButton,
+.section .studyCollapseButton,
+.section .imagePlayButton,
+.section .nextEpisodeButton,
+.section .readingPanelResizeHandle,
+.section .skipButton,
+.section .featuredMiniPlay,
+.section .speedTrigger,
+.section .speedTriggerCompact,
+.section .captionButton,
+.section .volumeButton {
+  min-height: 44px !important;
+}
+
+.section .readingPanelResizeHandle,
+.section .skipButton,
+.section .featuredMiniPlay,
+.section .speedTrigger,
+.section .speedTriggerCompact,
+.section .captionButton,
+.section .volumeButton {
+  min-width: 44px !important;
+}
+
+.section .volumePopover {
+  top: auto;
+  right: 0;
+  bottom: calc(100% + 0.5rem);
+  transform: none;
+  max-height: min(10rem, calc(100dvh - 1.5rem));
+}
+
+.section .volumePopover input {
+  min-width: 44px;
+  min-height: 44px;
+}
+
+.section .featuredPanelExpanded .studyTranscriptList,
+.section .featuredPanelExpanded .featuredMeta {
+  scrollbar-width: thin;
+}
+
+.tvRemoteHint {
+  position: absolute;
+  top: 0.8rem;
+  left: 50%;
+  z-index: 4;
+  margin: 0;
+  padding: 0.35rem 0.75rem;
+  border: 1px solid rgb(255 255 255 / 18%);
+  border-radius: 999px;
+  background: rgb(8 13 28 / 78%);
+  color: rgb(255 255 255 / 78%);
+  font-size: 0.72rem;
+  letter-spacing: 0.02em;
+  pointer-events: none;
+  transform: translateX(-50%);
+  white-space: nowrap;
+}
+
+.featuredOverlay button:focus-visible,
+.featuredOverlay input:focus-visible,
+.featuredOverlay [role='slider']:focus-visible {
+  outline: 3px solid #f6c453;
+  outline-offset: 3px;
+}
+
+@media (max-width: 760px) {
+  .tvRemoteHint {
+    display: none;
+  }
+}
+
+@media (max-width: 360px) {
+  .section .featuredControlRow {
+    gap: 0.08rem !important;
+  }
+
+  .section .featuredControlRow > .skipButton,
+  .section .featuredControlRow > .featuredMiniPlay,
+  .section .featuredControlRow > .speedControlCompact,
+  .section .featuredControlRow > .captionControlCompact,
+  .section .featuredControlRow > .featuredVolumeControl {
+    flex: 0 0 44px !important;
+    width: 44px !important;
+    min-width: 44px !important;
+  }
+
+  .section .featuredControlRow .featuredMiniPlay {
+    height: 44px !important;
+    transform: none;
+  }
+
+  .section .readingPanelResizeHandle {
+    height: 44px !important;
+  }
+
+  .section .playerRow > .skipButton,
+  .section .playerRow > .mainFrameButton,
+  .section .playerRow > .speedControl button,
+  .section .playerRow > .speedControlCompact button,
+  .section .playerRow > .captionControl button,
+  .section .playerRow > .captionControlCompact button,
+  .section .playerRow > .volumeControl .volumeButton {
+    min-height: 44px !important;
+    height: 44px !important;
+  }
+}
+
+/* Final portrait study layout: give the transcript the dominant surface. */
+@media (max-width: 760px) and (orientation: portrait) {
+  .featuredPanelExpanded:not(.featuredPanelPortrait) {
+    grid-template-columns: minmax(0, 1fr) !important;
+    grid-template-rows: 4.25rem 2.75rem minmax(0, 1fr) !important;
+    gap: 0.2rem !important;
+    height: calc(100dvh - 1.4rem) !important;
+    max-height: calc(100dvh - 1.4rem) !important;
+    overflow: hidden !important;
+  }
+
+  .featuredPanelExpanded:not(.featuredPanelPortrait) .featuredCover {
+    grid-column: 1 !important;
+    grid-row: 1 !important;
+    width: 100% !important;
+    height: 100% !important;
+    min-height: 0 !important;
+    aspect-ratio: auto !important;
+  }
+
+  .featuredPanelExpanded:not(.featuredPanelPortrait) .readingPanelResizeHandle {
+    grid-column: 1 !important;
+    grid-row: 2 !important;
+    width: 100% !important;
+    min-height: 44px !important;
+  }
+
+  .featuredPanelExpanded:not(.featuredPanelPortrait) .featuredMeta {
+    grid-column: 1 !important;
+    grid-row: 3 !important;
+    display: flex !important;
+    min-height: 0 !important;
+    height: 100% !important;
+    padding: 0.42rem !important;
+    gap: 0.28rem !important;
+    overflow: hidden !important;
+  }
+
+  .featuredPanelExpanded:not(.featuredPanelPortrait) .featuredStatusRow,
+  .featuredPanelExpanded:not(.featuredPanelPortrait) .featuredMeta > h3,
+  .featuredPanelExpanded:not(.featuredPanelPortrait) .featuredMeta > p,
+  .featuredPanelExpanded:not(.featuredPanelPortrait) .studyPanelHeader {
+    display: none !important;
+  }
+
+  .featuredPanelExpanded:not(.featuredPanelPortrait) .studyArea {
+    display: flex !important;
+    flex: 1 1 auto !important;
+    min-height: 0 !important;
+    margin-top: 0 !important;
+    gap: 0.22rem !important;
+  }
+
+  .featuredPanelExpanded:not(.featuredPanelPortrait) .studyToggle {
+    flex: 0 0 auto;
+    min-height: 44px;
+    padding: 0.38rem 0.55rem;
+  }
+
+  .featuredPanelExpanded:not(.featuredPanelPortrait) .studyPanel {
+    display: flex !important;
+    flex: 1 1 auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    padding: 0.42rem !important;
+    gap: 0.3rem !important;
+    overflow: hidden !important;
+  }
+
+  .featuredPanelExpanded:not(.featuredPanelPortrait) .studyCurrentCue {
+    flex: 0 0 auto;
+    min-height: 3.2rem;
+    max-height: 5rem;
+    padding: 0.45rem 0.55rem;
+    font-size: 0.78rem;
+    line-height: 1.28;
+    overflow: auto;
+  }
+
+  .featuredPanelExpanded:not(.featuredPanelPortrait) .studyTranscriptList {
+    flex: 1 1 auto !important;
+    min-height: 0 !important;
+    overflow-y: auto !important;
+    padding-right: 0.15rem;
+  }
+
+  .featuredPanelExpanded:not(.featuredPanelPortrait) .studyCue {
+    min-height: 2.7rem;
+    padding: 0.4rem;
+  }
+
+  .featuredPanelExpanded:not(.featuredPanelPortrait) .studyCueText {
+    font-size: 0.78rem;
+    line-height: 1.3;
+  }
+
+  .featuredPanelExpanded:not(.featuredPanelPortrait) .featuredControls {
+    flex: 0 0 auto;
+    margin-top: 0.1rem !important;
+    padding-top: 0.25rem !important;
   }
 }

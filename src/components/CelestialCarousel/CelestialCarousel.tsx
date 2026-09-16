@@ -186,7 +186,7 @@ export default function CelestialCarousel() {
   };
 
   return (
-    <div className={styles.carouselContainer} ref={containerRef}>
+    <div className={styles.carouselContainer} ref={containerRef} id="inicio">
       <div className={styles.overlay}></div>
       <div
         className={styles.track}
@@ -200,7 +200,12 @@ export default function CelestialCarousel() {
         {/* Keep a third copy so the loop seam never exposes the empty track area. */}
         {[...IMAGES, ...IMAGES, ...IMAGES].map((src, idx) => (
           <div key={idx} className={styles.slide}>
-            <div className={styles.imagePlaceholder} style={{ backgroundImage: `url(${src})` }} />
+            <div
+              className={styles.imagePlaceholder}
+              style={{ backgroundImage: `url(${src})` }}
+              role="img"
+              aria-label={`Imagem da galeria Horizonte.espanhol ${(idx % IMAGES.length) + 1}`}
+            />
           </div>
         ))}
       </div>

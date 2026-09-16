@@ -5,6 +5,9 @@ type SpeedOption = 1 | 1.5 | 2;
 type SpeedMenu = 'compact' | 'full' | null;
 type CaptionMenu = 'cover' | 'compact' | 'full' | null;
 type CaptionLanguage = 'pt' | 'es' | null;
+type TvCommand = {
+  type?: 'tv-ready' | 'play' | 'pause' | 'play-pause' | 'next' | 'previous' | 'seek-forward' | 'seek-back' | 'close';
+};
 
 type TranscriptCue = {
   id: string;
@@ -170,9 +173,20 @@ export default function PodcastShowcase() {
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const transcriptListRef = useRef<HTMLDivElement | null>(null);
   const togglePlaybackRef = useRef<() => Promise<void>>(() => Promise.resolve());
+  const tvCommandRef = useRef<(command: TvCommand) => void>(() => undefined);
+  const selectEpisodeRef = useRef<(episodeId: number) => void>(() => undefined);
   const coverTouchStartRef = useRef<{ x: number; y: number } | null>(null);
+  const coverHoldTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const coverHoldIntervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const coverHoldDirectionRef = useRef<-1 | 1>(1);
+  const coverHoldSecondsRef = useRef(0);
+  const coverLastTapRef = useRef<{ time: number; x: number; y: number } | null>(null);
+  const [coverSeekFeedback, setCoverSeekFeedback] = useState<{ direction: -1 | 1; seconds: number } | null>(null);
   const readingPanelPointerStartRef = useRef<{ x: number; y: number; pointerType: string } | null>(null);
   const readingPanelPointerMovedRef = useRef(false);
+  const featuredMetaRef = useRef<HTMLDivElement>(null);
+  const closeFeatureButtonRef = useRef<HTMLButtonElement>(null);
+  const featureOpenerRef = useRef<HTMLElement | null>(null);
   const [selectedEpisodeId, setSelectedEpisodeId] = useState(1);
   const [isPlaying, setIsPlaying] = useState(false);
   const [isAudioLoading, setIsAudioLoading] = useState(false);
@@ -191,10 +205,59 @@ export default function PodcastShowcase() {
   const [isSeeking, setIsSeeking] = useState(false);
   const [captionLanguage, setCaptionLanguage] = useState<CaptionLanguage>(null);
   const [captionMenu, setCaptionMenu] = useState<CaptionMenu>(null);
-  const [isStudyOpen, setIsStudyOpen] = useState(false);
-  const [showTranslation, setShowTranslation] = useState(true);
   const [transcriptCues, setTranscriptCues] = useState<TranscriptCue[]>([]);
-  const [readingPanelWidth, setReadingPanelWidth] = useState(39);
+  const [readingPanelWidth, setReadingPanelWidth] = useState(78);
+  const [isPortraitStudyMode, setIsPortraitStudyMode] = useState(true);
+  const [isOrientationSyncEnabled, setIsOrientationSyncEnabled] = useState(false);
+
+  const updateReadingPanelWidth = (nextWidth: number | ((width: number) => number)) => {
+    const update = () => setReadingPanelWidth(nextWidth);
+    const viewTransitionDocument = document as Document & {
+      startViewTransition?: (callback: () => void) => void;
+    };
+
+    if (typeof viewTransitionDocument.startViewTransition === 'function') {
+      viewTransitionDocument.startViewTransition(update);
+      return;
+    }
+
+    update();
+  };
+
+  useEffect(() => {
+    featuredMetaRef.current?.scrollTo({ top: 0 });
+  }, [readingPanelWidth]);
+
+  useEffect(() => {
+    if (!isFeatureMode) {
+      return undefined;
+    }
+
+    closeFeatureButtonRef.current?.focus();
+    return undefined;
+  }, [isFeatureMode]);
+
+  useEffect(() => {
+    if (!isFeatureMode || !isOrientationSyncEnabled) {
+      return undefined;
+    }
+
+    const orientationQuery = window.matchMedia('(orientation: landscape)');
+    const syncStudyMode = () => {
+      setIsPortraitStudyMode(!orientationQuery.matches);
+    };
+
+    orientationQuery.addEventListener('change', syncStudyMode);
+    window.addEventListener('orientationchange', syncStudyMode);
+    window.addEventListener('resize', syncStudyMode);
+
+    return () => {
+      orientationQuery.removeEventListener('change', syncStudyMode);
+      window.removeEventListener('orientationchange', syncStudyMode);
+      window.removeEventListener('resize', syncStudyMode);
+    };
+  }, [isFeatureMode, isOrientationSyncEnabled]);
+
   const [isResizingReadingPanel, setIsResizingReadingPanel] = useState(false);
 
   useEffect(() => {
@@ -297,6 +360,8 @@ export default function PodcastShowcase() {
       setIsVolumeMenuOpen(false);
       setIsEpisodeComplete(true);
       setIsFeatureMode(true);
+      setIsPortraitStudyMode(false);
+      setIsOrientationSyncEnabled(false);
     };
 
     const handleCanPlay = () => {
@@ -338,16 +403,147 @@ export default function PodcastShowcase() {
     }
 
     const previousOverflow = document.body.style.overflow;
+    const getFocusableElements = (dialog: HTMLElement) => Array.from(dialog.querySelectorAll<HTMLElement>(
+      'button:not([disabled]), input:not([disabled]), [tabindex]:not([tabindex="-1"])',
+    )).filter((element) => element.getClientRects().length > 0);
+
+    const moveFocusSpatially = (direction: 'left' | 'right' | 'up' | 'down') => {
+      const dialog = document.querySelector<HTMLElement>('[role="dialog"][aria-modal="true"]');
+      const activeElement = document.activeElement instanceof HTMLElement ? document.activeElement : null;
+      if (!dialog || !activeElement || activeElement.getAttribute('role') === 'slider') {
+        return false;
+      }
+
+      const currentRect = activeElement.getBoundingClientRect();
+      const currentCenter = {
+        x: currentRect.left + currentRect.width / 2,
+        y: currentRect.top + currentRect.height / 2,
+      };
+      const candidates = getFocusableElements(dialog)
+        .filter((element) => element !== activeElement)
+        .map((element) => {
+          const rect = element.getBoundingClientRect();
+          const center = { x: rect.left + rect.width / 2, y: rect.top + rect.height / 2 };
+          const deltaX = center.x - currentCenter.x;
+          const deltaY = center.y - currentCenter.y;
+          const isInDirection = direction === 'left'
+            ? deltaX < -4
+            : direction === 'right'
+              ? deltaX > 4
+              : direction === 'up'
+                ? deltaY < -4
+                : deltaY > 4;
+
+          if (!isInDirection) {
+            return null;
+          }
+
+          const primaryDistance = direction === 'left' || direction === 'right'
+            ? Math.abs(deltaX)
+            : Math.abs(deltaY);
+          const secondaryDistance = direction === 'left' || direction === 'right'
+            ? Math.abs(deltaY)
+            : Math.abs(deltaX);
+
+          return { element, score: primaryDistance + secondaryDistance * 2 };
+        })
+        .filter((candidate): candidate is { element: HTMLElement; score: number } => candidate !== null)
+        .sort((first, second) => first.score - second.score);
+
+      const nextElement = candidates[0]?.element;
+      if (!nextElement) {
+        return false;
+      }
+
+      nextElement.focus();
+      return true;
+    };
+
     const handleKeyDown = (event: globalThis.KeyboardEvent) => {
-      if (event.key === 'Escape') {
-        setIsFeatureMode(false);
-        setIsLockedOnFirstEpisode(false);
-        setCaptionMenu(null);
-        audioRef.current?.pause();
-        setIsPlaying(false);
-        setOpenSpeedMenu(null);
-        setIsVolumeMenuOpen(false);
-        setIsStudyOpen(false);
+      const target = event.target instanceof HTMLElement ? event.target : null;
+      const isTyping = target?.matches('input, textarea, select, [contenteditable="true"]') ?? false;
+      const isSlider = target?.getAttribute('role') === 'slider';
+
+      if ((event.key === 'Escape' || event.key === 'Backspace') && !isTyping) {
+        event.preventDefault();
+        closeFeatureMode();
+        return;
+      }
+
+      if (isTyping) {
+        return;
+      }
+
+      if (event.key === 'MediaPlayPause' || event.code === 'MediaPlayPause') {
+        event.preventDefault();
+        void togglePlaybackRef.current();
+        return;
+      }
+
+      if (event.key === 'MediaTrackNext' || event.key === 'PageDown') {
+        event.preventDefault();
+        seekBySeconds(10);
+        return;
+      }
+
+      if (event.key === 'MediaTrackPrevious' || event.key === 'PageUp') {
+        event.preventDefault();
+        seekBySeconds(-10);
+        return;
+      }
+
+      if (event.key === 'AudioVolumeUp') {
+        event.preventDefault();
+        setVolume((currentVolume) => Math.min(1, Math.round((currentVolume + 0.1) * 100) / 100));
+        return;
+      }
+
+      if (event.key === 'AudioVolumeDown') {
+        event.preventDefault();
+        setVolume((currentVolume) => Math.max(0, Math.round((currentVolume - 0.1) * 100) / 100));
+        return;
+      }
+
+      if (event.key === 'AudioVolumeMute') {
+        event.preventDefault();
+        setVolume((currentVolume) => currentVolume > 0 ? 0 : 1);
+        return;
+      }
+
+      if ((event.key === 'ArrowLeft' || event.key === 'ArrowRight'
+        || event.key === 'ArrowUp' || event.key === 'ArrowDown') && !isSlider) {
+        if (moveFocusSpatially(event.key.slice(5).toLowerCase() as 'left' | 'right' | 'up' | 'down')) {
+          event.preventDefault();
+        }
+        return;
+      }
+
+      if (event.key !== 'Tab') {
+        return;
+      }
+
+      const dialog = document.querySelector<HTMLElement>('[role="dialog"][aria-modal="true"]');
+      if (!dialog) {
+        return;
+      }
+
+      const focusableElements = getFocusableElements(dialog);
+
+      if (focusableElements.length === 0) {
+        event.preventDefault();
+        closeFeatureButtonRef.current?.focus();
+        return;
+      }
+
+      const firstElement = focusableElements[0];
+      const lastElement = focusableElements[focusableElements.length - 1];
+
+      if (event.shiftKey && document.activeElement === firstElement) {
+        event.preventDefault();
+        lastElement.focus();
+      } else if (!event.shiftKey && document.activeElement === lastElement) {
+        event.preventDefault();
+        firstElement.focus();
       }
     };
 
@@ -359,22 +555,6 @@ export default function PodcastShowcase() {
       document.removeEventListener('keydown', handleKeyDown);
     };
   }, [isFeatureMode]);
-
-  useEffect(() => {
-    if (isLockedOnFirstEpisode) {
-      return undefined;
-    }
-
-    const timer = window.setInterval(() => {
-      setSelectedEpisodeId((currentId) => {
-        const currentIndex = EPISODES.findIndex((episode) => episode.id === currentId);
-        const nextEpisode = EPISODES[(currentIndex + 1) % EPISODES.length];
-        return nextEpisode.id;
-      });
-    }, 4800);
-
-    return () => window.clearInterval(timer);
-  }, [isLockedOnFirstEpisode]);
 
   const ensureAudioSource = (episodeId: number) => {
     if (episodeId !== 1) {
@@ -407,8 +587,12 @@ export default function PodcastShowcase() {
       return;
     }
 
+    featureOpenerRef.current = document.activeElement instanceof HTMLElement ? document.activeElement : null;
     setSelectedEpisodeId(episodeId);
     setIsFeatureMode(true);
+    setIsPortraitStudyMode(false);
+    setIsOrientationSyncEnabled(false);
+    setReadingPanelWidth(78);
     setIsLockedOnFirstEpisode(true);
     setIsEpisodeComplete(false);
     setCaptionMenu(null);
@@ -422,6 +606,7 @@ export default function PodcastShowcase() {
       setProgress(0);
     }
   };
+  selectEpisodeRef.current = handleSelectEpisode;
 
   const handleTogglePlayback = async () => {
     const audio = audioRef.current;
@@ -430,7 +615,13 @@ export default function PodcastShowcase() {
       return;
     }
 
+    if (!isFeatureMode) {
+      featureOpenerRef.current = document.activeElement instanceof HTMLElement ? document.activeElement : null;
+    }
     setIsFeatureMode(true);
+    setIsPortraitStudyMode(false);
+    setIsOrientationSyncEnabled(false);
+    setReadingPanelWidth(78);
     setSelectedEpisodeId(1);
     setIsLockedOnFirstEpisode(true);
     setIsEpisodeComplete(false);
@@ -459,10 +650,23 @@ export default function PodcastShowcase() {
 
   togglePlaybackRef.current = handleTogglePlayback;
 
+  const closeFeatureMode = () => {
+    setIsFeatureMode(false);
+    setIsPortraitStudyMode(true);
+    setIsOrientationSyncEnabled(false);
+    setIsLockedOnFirstEpisode(false);
+    setCaptionMenu(null);
+    setOpenSpeedMenu(null);
+    setIsVolumeMenuOpen(false);
+    audioRef.current?.pause();
+    setIsPlaying(false);
+    window.setTimeout(() => featureOpenerRef.current?.focus(), 0);
+  };
+
   useEffect(() => {
     const handleSpacebar = (event: globalThis.KeyboardEvent) => {
-      const target = event.target as HTMLElement | null;
-      const isTyping = target?.matches('input, textarea, select, [contenteditable="true"]');
+      const target = event.target instanceof HTMLElement ? event.target : null;
+      const isTyping = target?.matches('input, textarea, select, [contenteditable="true"]') ?? false;
       const isButton = target?.closest('button, [role="button"], [role="slider"]');
 
       if (event.code !== 'Space' || isTyping || isButton || !audioRef.current?.src || isAudioLoading) {
@@ -517,8 +721,57 @@ export default function PodcastShowcase() {
   const handlePreviewNextEpisode = () => handlePreviewEpisode(1);
   const handlePreviewPreviousEpisode = () => handlePreviewEpisode(-1);
 
+  useEffect(() => {
+    const handleTvCommand = (event: Event) => {
+      tvCommandRef.current((event as CustomEvent<TvCommand>).detail);
+    };
+
+    window.addEventListener('horizonte:tv-command', handleTvCommand);
+    return () => window.removeEventListener('horizonte:tv-command', handleTvCommand);
+  }, []);
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('display') !== 'tv' || params.get('focus') !== 'podcast') {
+      return;
+    }
+
+    selectEpisodeRef.current(1);
+    window.setTimeout(() => {
+      document.getElementById('podcast')?.scrollIntoView({ block: 'start' });
+    }, 0);
+  }, []);
+
+  tvCommandRef.current = (command) => {
+    if (command.type === 'play' && !isPlaying) {
+      void handleTogglePlayback();
+    } else if (command.type === 'pause' && isPlaying) {
+      void handleTogglePlayback();
+    } else if (command.type === 'play-pause') {
+      void handleTogglePlayback();
+    } else if (command.type === 'next') {
+      handlePreviewNextEpisode();
+    } else if (command.type === 'previous') {
+      handlePreviewPreviousEpisode();
+    } else if (command.type === 'seek-forward') {
+      seekBySeconds(10);
+    } else if (command.type === 'seek-back') {
+      seekBySeconds(-10);
+    } else if (command.type === 'close') {
+      closeFeatureMode();
+    }
+  };
+
   const activeEpisode = EPISODES.find((episode) => episode.id === selectedEpisodeId) ?? EPISODES[0];
   const isPrimaryEpisode = activeEpisode.id === 1;
+  const isStudyTextExpanded = !isPortraitStudyMode && readingPanelWidth >= 60;
+
+  const toggleStudyText = () => {
+    const shouldExpand = !isStudyTextExpanded;
+    setIsOrientationSyncEnabled(false);
+    setIsPortraitStudyMode(!shouldExpand);
+    updateReadingPanelWidth(shouldExpand ? 80 : 39);
+  };
 
   const handleVolumeChange = (event: ChangeEvent<HTMLInputElement>) => {
     setVolume(Number(event.target.value));
@@ -544,10 +797,14 @@ export default function PodcastShowcase() {
           setOpenSpeedMenu((current) => (current === menuKey ? null : menuKey));
         }}
         aria-label="Ajustar velocidade de reprodução"
+        aria-expanded={openSpeedMenu === menuKey}
+        aria-haspopup="menu"
       >
         <span className={styles.speedTriggerIcon} aria-hidden="true">
           <svg viewBox="0 0 24 24" aria-hidden="true">
-            <path d="M4.5 14.5c0-4.6 3.7-8.3 8.3-8.3.6 0 1.2.1 1.7.2l.7-1.6c-.8-.2-1.7-.4-2.6-.4-6.2 0-11.2 5-11.2 11.2 0 .8.1 1.5.3 2.2l1.6-.7c-.2-.6-.3-1.2-.3-1.8zm7.4 5.9c-1.4 0-2.6-.6-3.5-1.5l-1.1 1.1c1.3 1.4 3.2 2.3 5.2 2.3 3.9 0 7.1-3.2 7.1-7.1 0-1.4-.4-2.8-1.2-3.9l-1.3 1.1c.5.8.7 1.7.7 2.7 0 2.8-2.3 5.1-5.1 5.1zm8.6-11.5h-1.7v3.5l2.8 2.8.9-1.1-2-2V9.9zM12 5.8a7.2 7.2 0 0 1 7.2 7.2h-1.6A5.6 5.6 0 0 0 12 7.4V5.8z"/>
+            <path d="M4 15a8 8 0 1 1 16 0" />
+            <path d="M12 15l3.8-4.2" />
+            <path d="M3.5 15h1.8m13.4 0h1.8" />
           </svg>
         </span>
         <span className={styles.speedTriggerLabel}>{speed}x</span>
@@ -655,10 +912,9 @@ export default function PodcastShowcase() {
   const studyCues = portugueseCues.length > 0 ? portugueseCues : spanishCues;
   const activePortugueseCue = portugueseCues.find((cue) => currentTime >= cue.startTime && currentTime < cue.endTime);
   const activeSpanishCue = spanishCues.find((cue) => currentTime >= cue.startTime && currentTime < cue.endTime);
-  const activeStudyCue = activePortugueseCue ?? activeSpanishCue;
 
   useEffect(() => {
-    if (!activePortugueseCue || !isStudyOpen || !transcriptListRef.current) {
+    if (!activePortugueseCue || !transcriptListRef.current) {
       return;
     }
 
@@ -666,7 +922,7 @@ export default function PodcastShowcase() {
       `[data-cue-id="${CSS.escape(activePortugueseCue.id)}"]`,
     );
     activeElement?.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
-  }, [activePortugueseCue, isStudyOpen]);
+  }, [activePortugueseCue]);
 
   const seekToCue = (cue: TranscriptCue) => {
     const audio = audioRef.current;
@@ -677,13 +933,6 @@ export default function PodcastShowcase() {
     audio.currentTime = cue.startTime;
     setCurrentTime(cue.startTime);
     setProgress(audio.duration > 0 ? (cue.startTime / audio.duration) * 100 : 0);
-  };
-
-  const repeatActiveCue = () => {
-    if (activeStudyCue) {
-      seekToCue(activeStudyCue);
-    }
-    void audioRef.current?.play();
   };
 
   const seekToPosition = (track: HTMLDivElement, clientX: number) => {
@@ -737,6 +986,39 @@ export default function PodcastShowcase() {
     setProgress((nextTime / audio.duration) * 100);
   };
 
+  const clearCoverHold = () => {
+    if (coverHoldTimeoutRef.current) {
+      clearTimeout(coverHoldTimeoutRef.current);
+      coverHoldTimeoutRef.current = null;
+    }
+    if (coverHoldIntervalRef.current) {
+      clearInterval(coverHoldIntervalRef.current);
+      coverHoldIntervalRef.current = null;
+    }
+    coverHoldSecondsRef.current = 0;
+  };
+
+  const showCoverSeekFeedback = (direction: -1 | 1, seconds: number) => {
+    setCoverSeekFeedback({ direction, seconds });
+    window.setTimeout(() => setCoverSeekFeedback(null), 650);
+  };
+
+  const startCoverHold = (event: PointerEvent<HTMLDivElement>) => {
+    clearCoverHold();
+    coverHoldDirectionRef.current = event.clientX < event.currentTarget.getBoundingClientRect().left + event.currentTarget.clientWidth / 2 ? -1 : 1;
+    coverHoldTimeoutRef.current = setTimeout(() => {
+      const direction = coverHoldDirectionRef.current;
+      coverHoldSecondsRef.current = 2;
+      seekBySeconds(direction * 2);
+      showCoverSeekFeedback(direction, coverHoldSecondsRef.current);
+      coverHoldIntervalRef.current = setInterval(() => {
+        coverHoldSecondsRef.current += 2;
+        seekBySeconds(direction * 2);
+        showCoverSeekFeedback(direction, coverHoldSecondsRef.current);
+      }, 100);
+    }, 320);
+  };
+
   const handleSeekKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
     const audio = audioRef.current;
 
@@ -764,11 +1046,21 @@ export default function PodcastShowcase() {
       x: event.clientX,
       y: event.clientY,
     };
+    startCoverHold(event);
+  };
+
+  const handleCoverPointerMove = (event: PointerEvent<HTMLDivElement>) => {
+    const touchStart = coverTouchStartRef.current;
+    if (!touchStart || Math.hypot(event.clientX - touchStart.x, event.clientY - touchStart.y) > 18) {
+      clearCoverHold();
+    }
   };
 
   const handleCoverPointerUp = (event: PointerEvent<HTMLDivElement>) => {
     const touchStart = coverTouchStartRef.current;
     coverTouchStartRef.current = null;
+    const wasHolding = coverHoldIntervalRef.current !== null;
+    clearCoverHold();
 
     if (!touchStart || event.pointerType !== 'touch' || !isPrimaryEpisode) {
       return;
@@ -777,6 +1069,19 @@ export default function PodcastShowcase() {
     const deltaX = event.clientX - touchStart.x;
     const deltaY = event.clientY - touchStart.y;
     if (Math.abs(deltaX) < 56 || Math.abs(deltaX) <= Math.abs(deltaY)) {
+      if (wasHolding || Math.abs(deltaX) > 18 || Math.abs(deltaY) > 18) {
+        return;
+      }
+
+      const now = performance.now();
+      const previousTap = coverLastTapRef.current;
+      coverLastTapRef.current = { time: now, x: event.clientX, y: event.clientY };
+      if (previousTap && now - previousTap.time < 300 && Math.hypot(event.clientX - previousTap.x, event.clientY - previousTap.y) < 48) {
+        const direction = event.clientX < event.currentTarget.getBoundingClientRect().left + event.currentTarget.clientWidth / 2 ? -1 : 1;
+        seekBySeconds(direction * 10);
+        showCoverSeekFeedback(direction, 10);
+        coverLastTapRef.current = null;
+      }
       return;
     }
 
@@ -784,32 +1089,10 @@ export default function PodcastShowcase() {
     seekBySeconds(deltaX > 0 ? -10 : 10);
   };
 
-  const resizeReadingPanel = (event: PointerEvent<HTMLButtonElement>) => {
-    const panel = event.currentTarget.parentElement;
-    if (!panel) {
-      return;
-    }
-
-    const bounds = panel.getBoundingClientRect();
-    const nextWidth = ((bounds.right - event.clientX) / bounds.width) * 100;
-    setReadingPanelWidth(Math.min(70, Math.max(30, nextWidth)));
-  };
-
   const handleReadingPanelKeyDown = (event: KeyboardEvent<HTMLButtonElement>) => {
-    if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
+    if (event.key === 'Enter' || event.key === ' ' || event.key.startsWith('Arrow')) {
       event.preventDefault();
-      const direction = event.key === 'ArrowLeft' ? -1 : 1;
-      setReadingPanelWidth((width) => Math.min(70, Math.max(30, width + direction * 3)));
-    }
-
-    if (event.key === 'Home') {
-      event.preventDefault();
-      setReadingPanelWidth(30);
-    }
-
-    if (event.key === 'End') {
-      event.preventDefault();
-      setReadingPanelWidth(70);
+      updateReadingPanelWidth((width) => width >= 60 ? 39 : 80);
     }
   };
 
@@ -823,9 +1106,6 @@ export default function PodcastShowcase() {
     event.currentTarget.setPointerCapture(event.pointerId);
     setIsResizingReadingPanel(true);
 
-    if (event.pointerType !== 'touch') {
-      resizeReadingPanel(event);
-    }
   };
 
   const handleReadingPanelPointerMove = (event: PointerEvent<HTMLButtonElement>) => {
@@ -837,12 +1117,12 @@ export default function PodcastShowcase() {
     const moved = Math.hypot(event.clientX - start.x, event.clientY - start.y) > 6;
     if (moved) {
       readingPanelPointerMovedRef.current = true;
-      resizeReadingPanel(event);
     }
   };
 
   const handleReadingPanelPointerUp = (event: PointerEvent<HTMLButtonElement>) => {
     const start = readingPanelPointerStartRef.current;
+    const wasMoved = readingPanelPointerMovedRef.current;
     const deltaX = start ? event.clientX - start.x : 0;
     const deltaY = start ? event.clientY - start.y : 0;
     const isMobileGesture = start?.pointerType === 'touch'
@@ -861,8 +1141,11 @@ export default function PodcastShowcase() {
 
     if (isVerticalSwipe) {
       event.preventDefault();
-      setIsStudyOpen(deltaY < 0);
+      updateReadingPanelWidth(deltaY < 0 ? 80 : 39);
+    } else if (!wasMoved) {
+      updateReadingPanelWidth((width) => width >= 60 ? 39 : 80);
     }
+
   };
 
   const PlayIcon = ({ paused }: { paused: boolean }) => (
@@ -872,32 +1155,30 @@ export default function PodcastShowcase() {
   );
 
   return (
-    <section className={styles.section} aria-label="Episódios do podcast">
+    <section className={styles.section} aria-label="Episódios do podcast" id="podcast">
       <div className={styles.sectionGlow} aria-hidden="true" />
 
       {isFeatureMode && (
-        <div className={`${styles.featuredOverlay} ${isEpisodeTransitioning ? styles.featuredOverlayTransitioning : ''}`}>
+        <div
+          className={`${styles.featuredOverlay} ${isEpisodeTransitioning ? styles.featuredOverlayTransitioning : ''}`}
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="podcast-featured-title"
+          aria-describedby="podcast-featured-description"
+        >
           <div className={styles.transitionCurtain} aria-hidden="true" />
           <button
             type="button"
             className={styles.closeFeatureButton}
-            onClick={() => {
-              setIsFeatureMode(false);
-              setIsLockedOnFirstEpisode(false);
-              setCaptionMenu(null);
-              setOpenSpeedMenu(null);
-              setIsVolumeMenuOpen(false);
-              setIsStudyOpen(false);
-
-              if (audioRef.current) {
-                audioRef.current.pause();
-              }
-
-              setIsPlaying(false);
-            }}
+            ref={closeFeatureButtonRef}
+            aria-label="Cerrar reproductor del podcast"
+            onClick={closeFeatureMode}
           >
-            Fechar
+            Cerrar
           </button>
+          <p className={styles.tvRemoteHint}>
+            Smart TV: setas para navegar, OK para selecionar, Play/Pause para ouvir
+          </p>
 
           {activeEpisode.id > 1 && (
             <button
@@ -928,7 +1209,7 @@ export default function PodcastShowcase() {
           )}
 
           <div
-            className={`${styles.featuredPanel} ${isResizingReadingPanel ? styles.featuredPanelResizing : ''}`}
+            className={`${styles.featuredPanel} ${!isPortraitStudyMode ? styles.featuredPanelExpanded : ''} ${isPortraitStudyMode ? styles.featuredPanelPortrait : ''} ${!isPortraitStudyMode && readingPanelWidth < 60 ? styles.featuredPanelStudyClosed : ''} ${isResizingReadingPanel ? styles.featuredPanelResizing : ''}`}
             style={{ '--reading-panel-width': `${readingPanelWidth}%` } as CSSProperties}
           >
             <div
@@ -936,11 +1217,23 @@ export default function PodcastShowcase() {
               style={{ backgroundImage: `url(${activeEpisode.featuredImage ?? activeEpisode.image})` }}
               aria-label={activeEpisode.title}
               onPointerDown={handleCoverPointerDown}
+              onPointerMove={handleCoverPointerMove}
               onPointerUp={handleCoverPointerUp}
               onPointerCancel={() => {
                 coverTouchStartRef.current = null;
+                clearCoverHold();
               }}
             >
+              {coverSeekFeedback && (
+                <div
+                  className={`${styles.coverSeekFeedback} ${coverSeekFeedback.direction < 0 ? styles.coverSeekFeedbackBack : styles.coverSeekFeedbackForward}`}
+                  role="status"
+                  aria-live="polite"
+                >
+                  <span aria-hidden="true">{coverSeekFeedback.direction < 0 ? '«' : '»'}</span>
+                  <strong>{coverSeekFeedback.direction < 0 ? '-' : '+'}{coverSeekFeedback.seconds}s</strong>
+                </div>
+              )}
               {renderCaptionSelector({ onCover: true })}
               {captionLanguage && (activePortugueseCue || activeSpanishCue) && (
                 <div className={styles.liveCaptionCard} role="status" aria-live="polite">
@@ -969,100 +1262,139 @@ export default function PodcastShowcase() {
               }}
               onKeyDown={handleReadingPanelKeyDown}
               role="slider"
+              tabIndex={0}
               aria-label="Deslize para abrir ou fechar o texto do episódio"
               aria-valuemin={30}
-              aria-valuemax={70}
+              aria-valuemax={80}
               aria-valuenow={Math.round(readingPanelWidth)}
-              aria-valuetext="Deslize para cima para abrir o texto e para baixo para fechar"
+              aria-valuetext={readingPanelWidth >= 60 ? 'Conteúdo expandido sobre a imagem. Ative para recolher' : 'Conteúdo recolhido. Ative para expandir sobre a imagem'}
             >
               <span aria-hidden="true" />
             </button>
 
-            <div className={styles.featuredMeta}>
+            {readingPanelWidth >= 60 && (
+              <>
+                <button
+                  type="button"
+                  className={styles.studyOrientationButton}
+                  onClick={() => {
+                    setIsPortraitStudyMode((portrait) => !portrait);
+                    setIsOrientationSyncEnabled((enabled) => !enabled);
+                  }}
+                  aria-label={isPortraitStudyMode ? 'Mudar estudo para o modo horizontal' : 'Mudar estudo para o modo vertical'}
+                  aria-pressed={isPortraitStudyMode}
+                  title={isPortraitStudyMode ? 'Mudar para horizontal e acompanhar a orientação do celular' : 'Mudar para vertical e pausar a sincronização'}
+                >
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M7 4.5h6.5A2.5 2.5 0 0 1 16 7v3.5M17 19.5h-6.5A2.5 2.5 0 0 1 8 17v-3.5" />
+                    <path d="m16 7 2.5 2.5L16 12M8 17l-2.5-2.5L8 12" />
+                  </svg>
+                  <span>{isPortraitStudyMode ? 'Horizontal' : 'Vertical'}</span>
+                </button>
+
+              </>
+            )}
+
+            <div
+              ref={featuredMetaRef}
+              className={`${styles.featuredMeta} ${!isPortraitStudyMode && readingPanelWidth < 60 ? styles.featuredMetaStudyClosed : ''}`}
+            >
               <div className={styles.featuredStatusRow}>
                 <span className={styles.featuredLivePill}>
                   {isPrimaryEpisode ? (isPlaying ? 'Em reprodução' : 'Episódio disponível') : 'Em breve'}
                 </span>
+                <span className={styles.lineTag}>{activeEpisode.label}</span>
                 <span className={styles.featuredRuntime}>{isPrimaryEpisode ? '18 min' : 'Ainda não lançado'}</span>
               </div>
 
-              <span className={styles.lineTag}>{activeEpisode.label}</span>
-
-              <h3>{activeEpisode.title}</h3>
-              <p>{activeEpisode.description}</p>
+              <h3 id="podcast-featured-title">{activeEpisode.title}</h3>
+              <p id="podcast-featured-description">{activeEpisode.description}</p>
 
               {isPrimaryEpisode && (
-                <div className={styles.studyArea}>
-                  <button
-                    type="button"
+                <div
+                  className={`${styles.studyArea} ${isStudyTextExpanded ? styles.studyTextExpanded : ''} ${!isStudyTextExpanded ? styles.studyTextCollapsed : ''}`}
+                >
+                  <div
                     className={styles.studyToggle}
-                    onClick={() => setIsStudyOpen((open) => !open)}
-                    aria-expanded={isStudyOpen}
-                    aria-controls="episode-study-panel"
+                    role="button"
+                    tabIndex={0}
+                    onClick={toggleStudyText}
+                    onKeyDown={(event) => {
+                      if (event.key === 'Enter' || event.key === ' ') {
+                        event.preventDefault();
+                        toggleStudyText();
+                      }
+                    }}
+                    aria-expanded={isStudyTextExpanded}
+                    aria-label={isStudyTextExpanded ? 'Recolher texto do episódio' : 'Abrir texto completo do episódio'}
                   >
                     <span>
                       <strong>Texto do episódio</strong>
                       <small>Escute, leia e pratique no seu ritmo</small>
                     </span>
-                    <span className={styles.studyToggleIcon} aria-hidden="true">{isStudyOpen ? '−' : '+'}</span>
-                  </button>
+                    {!isPortraitStudyMode && (
+                      <button
+                        type="button"
+                        className={`${styles.studyOrientationButton} ${styles.studyCollapseButton}`}
+                        onClick={(event) => {
+                          event.stopPropagation();
+                          toggleStudyText();
+                        }}
+                        aria-label={readingPanelWidth >= 60 ? 'Recolher conteúdo e mostrar somente o áudio' : 'Mostrar texto do episódio'}
+                        title={readingPanelWidth >= 60 ? 'Somente áudio' : 'Mostrar texto'}
+                      >
+                        <svg viewBox="0 0 24 24" aria-hidden="true">
+                          <path d="M5 8h14M5 12h14M5 16h9" />
+                          <path d={readingPanelWidth >= 60 ? 'm17 14 3 3-3 3' : 'm17 14-3 3 3 3'} />
+                        </svg>
+                        <span>{readingPanelWidth >= 60 ? 'Somente áudio' : 'Mostrar texto'}</span>
+                      </button>
+                    )}
+                  </div>
 
-                  {isStudyOpen && (
-                    <div id="episode-study-panel" className={styles.studyPanel}>
-                      <div className={styles.studyPanelHeader}>
-                        <div>
-                          <span className={styles.studyEyebrow}>Modo estudo</span>
-                          <strong>Compreenda cada frase</strong>
-                        </div>
-                        <button
-                          type="button"
-                          className={styles.translationToggle}
-                          onClick={() => setShowTranslation((visible) => !visible)}
-                          aria-pressed={showTranslation}
-                        >
-                          {showTranslation ? 'Ocultar tradução' : 'Mostrar tradução'}
-                        </button>
+                  <div id="episode-study-panel" className={styles.studyPanel}>
+                    <div className={styles.studyPanelHeader}>
+                      <div>
+                        <span className={styles.studyEyebrow}>Modo estudo</span>
+                        <strong>Compreenda cada frase</strong>
                       </div>
-
-                      {transcriptCues.length === 0 ? (
-                        <div className={styles.studyEmptyState}>
-                          <span className={styles.studyEmptyIcon} aria-hidden="true">Aa</span>
-                          <p>A transcrição sincronizada será adicionada aqui para você acompanhar, repetir e praticar cada frase.</p>
-                        </div>
-                      ) : (
-                        <>
-                          <div className={styles.studyCurrentCue} aria-live="polite">
-                            <span>{activePortugueseCue?.text ?? activeSpanishCue?.text ?? 'Continue ouvindo para acompanhar a próxima frase.'}</span>
-                            {showTranslation && activeSpanishCue && <small>{activeSpanishCue.text}</small>}
-                          </div>
-                          <div ref={transcriptListRef} className={styles.studyTranscriptList}>
-                            {studyCues.map((cue, index) => {
-                              const translation = portugueseCues.length > 0 ? spanishCues[index] : undefined;
-                              const isActive = cue.id === activePortugueseCue?.id || cue.id === activeSpanishCue?.id;
-                              return (
-                                <button
-                                  type="button"
-                                  key={cue.id}
-                                  data-cue-id={cue.id}
-                                  className={`${styles.studyCue} ${isActive ? styles.studyCueActive : ''}`}
-                                  onClick={() => seekToCue(cue)}
-                                >
-                                  <span className={styles.studyCueTime}>{formatTime(cue.startTime)}</span>
-                                  <span className={styles.studyCueText}>
-                                    <strong>{cue.text}</strong>
-                                    {showTranslation && translation && <small>{translation.text}</small>}
-                                  </span>
-                                </button>
-                              );
-                            })}
-                          </div>
-                          <button type="button" className={styles.repeatCueButton} onClick={repeatActiveCue}>
-                            Repetir frase
-                          </button>
-                        </>
-                      )}
                     </div>
-                  )}
+
+                    {transcriptCues.length === 0 ? (
+                      <div className={styles.studyEmptyState}>
+                        <span className={styles.studyEmptyIcon} aria-hidden="true">Aa</span>
+                        <p>A transcrição sincronizada será adicionada aqui para você acompanhar, repetir e praticar cada frase.</p>
+                      </div>
+                    ) : (
+                      <>
+                        <div className={styles.studyCurrentCue} aria-live="polite">
+                          <span>{activePortugueseCue?.text ?? activeSpanishCue?.text ?? 'Continue ouvindo para acompanhar a próxima frase.'}</span>
+                          {activeSpanishCue && <small>{activeSpanishCue.text}</small>}
+                        </div>
+                        <div ref={transcriptListRef} className={styles.studyTranscriptList}>
+                          {studyCues.map((cue, index) => {
+                            const translation = portugueseCues.length > 0 ? spanishCues[index] : undefined;
+                            const isActive = cue.id === activePortugueseCue?.id || cue.id === activeSpanishCue?.id;
+                            return (
+                              <button
+                                type="button"
+                                key={cue.id}
+                                data-cue-id={cue.id}
+                                className={`${styles.studyCue} ${isActive ? styles.studyCueActive : ''}`}
+                                onClick={() => seekToCue(cue)}
+                              >
+                                <span className={styles.studyCueTime}>{formatTime(cue.startTime)}</span>
+                                <span className={styles.studyCueText}>
+                                  <strong>{cue.text}</strong>
+                                  {translation && <small>{translation.text}</small>}
+                                </span>
+                              </button>
+                            );
+                          })}
+                        </div>
+                      </>
+                    )}
+                  </div>
                 </div>
               )}
 
@@ -1086,20 +1418,6 @@ export default function PodcastShowcase() {
                   {activeEpisode.id !== 1 && (
                     <span className={styles.featuredComingSoon}>Em breve</span>
                   )}
-                  <button
-                    type="button"
-                    className={styles.featuredPlayButton}
-                    disabled={!isPrimaryEpisode || isAudioLoading}
-                    onClick={(event) => {
-                      event.stopPropagation();
-                      if (isPrimaryEpisode) {
-                        void handleTogglePlayback();
-                      }
-                    }}
-                  >
-                    <PlayIcon paused={!isPlaying} />
-                    {isPlaying ? 'Pause' : 'Play'}
-                  </button>
                   {audioError && <p className={styles.audioError} role="alert">{audioError}</p>}
 
                   <div className={styles.featuredControls}>
@@ -1108,20 +1426,20 @@ export default function PodcastShowcase() {
                       <span>{isPrimaryEpisode ? formatTime(duration) : 'Em breve'}</span>
                     </div>
                     <div
-                      className={`${styles.featuredProgressTrack} ${isSeeking ? styles.progressTrackSeeking : ''}`}
-                      onPointerDown={isPrimaryEpisode ? handleSeekPointerDown : undefined}
-                      onPointerMove={isPrimaryEpisode ? handleSeekPointerMove : undefined}
-                      onPointerUp={isPrimaryEpisode ? handleSeekPointerUp : undefined}
-                      onPointerCancel={isPrimaryEpisode ? handleSeekPointerUp : undefined}
-                      role={isPrimaryEpisode ? 'slider' : undefined}
-                      aria-label={isPrimaryEpisode ? `Avançar no podcast: ${formatTime(currentTime)} de ${formatTime(duration)}. Arraste com o dedo para buscar` : 'Episódio em breve'}
-                      aria-valuemin={0}
-                      aria-valuemax={100}
-                      aria-valuenow={Math.round(progress)}
-                      aria-valuetext={`${formatTime(currentTime)} de ${formatTime(duration)}. Arraste com o dedo para buscar`}
-                      aria-disabled={!isPrimaryEpisode}
-                      tabIndex={isPrimaryEpisode ? 0 : -1}
-                      onKeyDown={isPrimaryEpisode ? handleSeekKeyDown : undefined}
+                        className={`${styles.featuredProgressTrack} ${isSeeking ? styles.progressTrackSeeking : ''}`}
+                        onPointerDown={isPrimaryEpisode ? handleSeekPointerDown : undefined}
+                        onPointerMove={isPrimaryEpisode ? handleSeekPointerMove : undefined}
+                        onPointerUp={isPrimaryEpisode ? handleSeekPointerUp : undefined}
+                        onPointerCancel={isPrimaryEpisode ? handleSeekPointerUp : undefined}
+                        role={isPrimaryEpisode ? 'slider' : undefined}
+                        aria-label={isPrimaryEpisode ? `Avançar no podcast: ${formatTime(currentTime)} de ${formatTime(duration)}. Arraste com o dedo para buscar` : 'Episódio em breve'}
+                        aria-valuemin={0}
+                        aria-valuemax={100}
+                        aria-valuenow={Math.round(progress)}
+                        aria-valuetext={`${formatTime(currentTime)} de ${formatTime(duration)}. Arraste com o dedo para buscar`}
+                        aria-disabled={!isPrimaryEpisode}
+                        tabIndex={isPrimaryEpisode ? 0 : -1}
+                        onKeyDown={isPrimaryEpisode ? handleSeekKeyDown : undefined}
                     >
                       <span className={styles.featuredProgressBar} style={{ width: `${progress}%` }} />
                     </div>
@@ -1202,7 +1520,11 @@ export default function PodcastShowcase() {
         </div>
       )}
 
-      <div className={`${styles.container} ${isFeatureMode ? styles.containerFeatureMode : ''}`}>
+      <div
+        className={`${styles.container} ${isFeatureMode ? styles.containerFeatureMode : ''}`}
+        aria-hidden={isFeatureMode}
+        inert={isFeatureMode || undefined}
+      >
         <div className={styles.headerRow}>
           <span className={styles.methodText}>Conheça o método</span>
           <span className={styles.handle}>@Horizonteespanhol</span>
@@ -1240,24 +1562,25 @@ export default function PodcastShowcase() {
                   </div>
                 )}
 
-                <div className={styles.mainFrameActions}>
+                {isPrimaryEpisode && (
                   <button
                     type="button"
-                    className={styles.mainFrameButton}
+                    className={styles.imagePlayButton}
                     onClick={(event) => {
                       event.stopPropagation();
-                      if (activeEpisode.id === 1) {
-                        void handleTogglePlayback();
-                        return;
-                      }
-
-                      handleSelectEpisode(activeEpisode.id);
+                      void handleTogglePlayback();
                     }}
-                    disabled={!isPrimaryEpisode}
+                    aria-label={isPlaying ? 'Pausar episódio' : 'Começar episódio'}
+                    disabled={isAudioLoading}
                   >
-                    {isPlaying ? 'Pause' : 'Play'}
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                      {isPlaying
+                        ? <path d="M7 5h3.5v14H7V5zm6.5 0H17v14h-3.5V5z" />
+                        : <path d="M8 5.2v13.6L19 12 8 5.2z" />}
+                    </svg>
+                    <span>{isPlaying ? 'Pausar' : 'Começar'}</span>
                   </button>
-                </div>
+                )}
 
                 <div className={styles.copyOverlay}>
                   <span className={styles.lineTag}>{activeEpisode.label}</span>
@@ -1280,10 +1603,13 @@ export default function PodcastShowcase() {
                 <button
                   key={episode.id}
                   type="button"
-                  className={`${styles.filmFrame} ${selectedEpisodeId === episode.id ? styles.filmFrameActive : ''}`}
+                  className={`${styles.filmFrame} ${selectedEpisodeId === episode.id ? styles.filmFrameActive : ''} ${episode.id !== 1 ? styles.filmFrameComingSoon : ''}`}
                   onClick={() => handleSelectEpisode(episode.id)}
                   disabled={isLockedOnFirstEpisode && episode.id !== 1}
-                  aria-label={`Selecionar episódio ${episode.title}`}
+                  aria-disabled={episode.id !== 1}
+                  aria-label={episode.id === 1
+                    ? `Selecionar episódio ${episode.title}`
+                    : `Episódio ${episode.title}, em breve e indisponível para reprodução`}
                 >
                   <span className={styles.frameThumb} style={{ backgroundImage: `url(${episode.image})` }} />
                   <span className={styles.frameMeta}>
@@ -1309,12 +1635,13 @@ export default function PodcastShowcase() {
             </button>
             <button
               type="button"
-              className={styles.playButton}
+              className={`${styles.mainFrameButton} ${!isPrimaryEpisode ? styles.mainFrameComingSoon : ''}`}
               disabled={!isPrimaryEpisode || isAudioLoading}
               onClick={() => void handleTogglePlayback()}
               aria-label={isPrimaryEpisode ? (isPlaying ? 'Pausar episódio' : 'Reproduzir episódio') : 'Episódio em breve'}
             >
               <PlayIcon paused={!isPlaying} />
+              <span>{isPrimaryEpisode ? (isPlaying ? 'Pause' : 'Play') : 'Em breve'}</span>
             </button>
 
             {renderSpeedSelector({})}

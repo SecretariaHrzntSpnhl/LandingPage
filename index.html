@@ -4,13 +4,21 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="robots" content="index, follow" />
-    <meta name="description" content="Español para brasileños y Espanhol para brasileiros. Descubra a excelência no ensino de espanhol. Participe do nosso desafio de proficiência e dê o primeiro passo para a sua fluência. Matricule-se hoje mesmo!" />
-    <meta name="keywords" content="Español para brasileños, Espanhol para brasileiros, curso de espanhol, escola de espanhol, aulas de espanhol, espanhol para brasileiros" />
-    <meta property="og:title" content="Horizonte.espanhol" />
-    <meta property="og:description" content="Español para brasileños y Espanhol para brasileiros. Descubra a excelência no ensino de espanhol e avance para a sua fluência com aulas práticas e culturais." />
+    <meta name="googlebot" content="index, follow, max-image-preview:large" />
+    <meta name="description" content="Aprenda espanhol para brasileiros com aulas práticas, podcast e jogos interativos. Estude no celular, tablet, computador ou Smart TV e pratique no seu ritmo." />
+    <meta name="keywords" content="curso de espanhol para brasileiros, aulas de espanhol online, jogos para aprender espanhol, podcast em espanhol, espanhol no celular, espanhol no tablet, espanhol na Smart TV" />
+    <meta name="author" content="Horizonte.espanhol" />
+    <meta name="application-name" content="Horizonte.espanhol" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Horizonte.espanhol" />
+    <meta property="og:title" content="Aprenda espanhol em qualquer tela | Horizonte.espanhol" />
+    <meta property="og:description" content="Aulas, podcast e jogos interativos para estudar espanhol no celular, tablet, computador ou Smart TV." />
+    <meta property="og:url" content="https://horizonteespanhol.com.br/" />
+    <meta property="og:image" content="https://horizonteespanhol.com.br/images/logo-horizonte.png" />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Horizonte.espanhol" />
-    <meta name="twitter:description" content="Español para brasileños y Espanhol para brasileiros. Descubra a excelência no ensino de espanhol e avance para a sua fluência com aulas práticas e culturais." />
+    <meta name="twitter:title" content="Aprenda espanhol em qualquer tela | Horizonte.espanhol" />
+    <meta name="twitter:description" content="Aulas, podcast e jogos interativos para estudar espanhol no celular, tablet, computador ou Smart TV." />
+    <meta name="twitter:image" content="https://horizonteespanhol.com.br/images/logo-horizonte.png" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="shortcut icon" href="/favicon.svg" />
     <link rel="mask-icon" href="/favicon.svg" color="#ffffff" />
@@ -18,16 +26,55 @@
     <link rel="alternate icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
     <link rel="canonical" href="https://horizonteespanhol.com.br/" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://fonts.cdnfonts.com" />
     <meta name="apple-mobile-web-app-title" content="Horizonte.espanhol" />
-    <meta name="theme-color" content="#ffffff" />
-    <title>Horizonte.espanhol</title>
+    <meta name="theme-color" content="#062b61" />
+    <title>Curso de espanhol online com jogos e podcast | Horizonte.espanhol</title>
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
-        "@type": "Organization",
-        "name": "Horizonte.espanhol",
-        "description": "Español para brasileños y Espanhol para brasileiros. Curso de espanhol para brasileiros com foco em conversação, cultura e fluência.",
-        "url": "https://horizonteespanhol.com.br"
+        "@graph": [
+          {
+            "@type": "EducationalOrganization",
+            "@id": "https://horizonteespanhol.com.br/#organization",
+            "name": "Horizonte.espanhol",
+            "description": "Curso de espanhol para brasileiros com foco em conversação, cultura, jogos e fluência.",
+            "url": "https://horizonteespanhol.com.br/",
+            "logo": "https://horizonteespanhol.com.br/images/logo-horizonte.png",
+            "knowsLanguage": ["pt-BR", "es"]
+          },
+          {
+            "@type": "WebSite",
+            "@id": "https://horizonteespanhol.com.br/#website",
+            "url": "https://horizonteespanhol.com.br/",
+            "name": "Horizonte.espanhol",
+            "inLanguage": "pt-BR",
+            "publisher": { "@id": "https://horizonteespanhol.com.br/#organization" }
+          },
+          {
+            "@type": "Course",
+            "@id": "https://horizonteespanhol.com.br/#course",
+            "name": "Curso de espanhol online para brasileiros",
+            "description": "Aulas práticas, podcast com transcript e jogos interativos de proficiência para aprender espanhol em diferentes dispositivos.",
+            "provider": { "@id": "https://horizonteespanhol.com.br/#organization" },
+            "courseMode": ["online", "blended"],
+            "educationalLevel": "Iniciante a avançado",
+            "availableLanguage": ["pt-BR", "es"],
+            "isAccessibleForFree": true,
+            "url": "https://horizonteespanhol.com.br/#desafios"
+          },
+          {
+            "@type": "PodcastSeries",
+            "@id": "https://horizonteespanhol.com.br/#podcast",
+            "name": "Podcast Horizonte.espanhol",
+            "description": "Podcast educativo para praticar espanhol com áudio, transcript e legendas.",
+            "inLanguage": ["pt-BR", "es"],
+            "url": "https://horizonteespanhol.com.br/#podcast",
+            "publisher": { "@id": "https://horizonteespanhol.com.br/#organization" }
+          }
+        ]
       }
     </script>
   </head>
