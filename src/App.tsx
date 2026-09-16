@@ -26,62 +26,10 @@ type PresentationReceiver = {
   };
 };
 
-type PresentationRequest = new (urls: string[]) => {
-  start: () => Promise<PresentationSession>;
-};
-
-type PresentationWindow = Window & {
-  PresentationRequest?: PresentationRequest;
-};
-
 type PresentationNavigator = Navigator & {
   presentation?: {
     receiver?: PresentationReceiver;
   };
-};
-
-type TvPlatform = 'android' | 'iphone' | 'other';
-
-const getTvPlatform = (): TvPlatform => {
-  if (typeof navigator === 'undefined') {
-    return 'other';
-  }
-
-  if (/android/i.test(navigator.userAgent)) {
-    return 'android';
-  }
-
-  if (/iphone|ipad|ipod/i.test(navigator.userAgent)) {
-    return 'iphone';
-  }
-
-  return 'other';
-};
-
-const getTvModeUrl = (requestedFocus?: 'jogos' | 'podcast') => {
-  if (typeof window === 'undefined') {
-    return '';
-  }
-
-  const url = new URL(window.location.href);
-  url.searchParams.set('display', 'tv');
-  const focus = requestedFocus
-    ?? (new URLSearchParams(window.location.search).get('focus') === 'podcast' ? 'podcast' : 'jogos');
-  url.searchParams.set('focus', focus === 'podcast' ? 'podcast' : 'jogos');
-  url.hash = focus === 'podcast' ? 'podcast' : 'jogos';
-  return url.toString();
-};
-
-const supportsNativeTvHandoff = () => {
-  if (typeof window === 'undefined' || typeof navigator === 'undefined') {
-    return false;
-  }
-
-  const hasPresentationApi = typeof (window as PresentationWindow).PresentationRequest === 'function';
-  const mobileOrTablet = /android|iphone|ipad|ipod|mobile|tablet/i.test(navigator.userAgent)
-    || window.matchMedia('(pointer: coarse)').matches;
-
-  return hasPresentationApi || (mobileOrTablet && typeof navigator.share === 'function');
 };
 
 function App() {
@@ -93,12 +41,6 @@ function App() {
     const savedTheme = window.localStorage.getItem('theme');
     return savedTheme === 'light' || savedTheme === 'dark' ? savedTheme : 'dark';
   });
-  const [canConnectToTv] = useState(supportsNativeTvHandoff);
-  const [connectionMessage, setConnectionMessage] = useState<string | null>(null);
-  const [isDeviceSupportOpen, setIsDeviceSupportOpen] = useState(false);
-  const [tvConnection, setTvConnection] = useState<PresentationSession | null>(null);
-  const isTvConnected = tvConnection?.state === 'connected';
-  const tvPlatform = getTvPlatform();
   const isTvMode = typeof window !== 'undefined'
     && new URLSearchParams(window.location.search).get('display') === 'tv';
   const tvFocus = typeof window !== 'undefined'
@@ -154,101 +96,11 @@ function App() {
     };
   }, []);
 
-  const handleConnectToTv = async (focus: 'jogos' | 'podcast' = 'jogos') => {
-    const presentationConstructor = (window as PresentationWindow).PresentationRequest;
-
-    if (presentationConstructor) {
-      try {
-        const request = new presentationConstructor([getTvModeUrl(focus)]);
-        const connection = await request.start();
-        connection.onstatechange = () => {
-          if (connection.state === 'connected') {
-            connection.send?.(JSON.stringify({ type: 'tv-ready', focus }));
-            setConnectionMessage(focus === 'podcast'
-              ? 'TV conectada. O podcast foi aberto no modo TV; use Play/Pause, setas e avanço para controlar.'
-              : 'TV conectada. Os jogos foram abertos no modo TV; use o controle da TV para navegar.');
-          } else if (connection.state === 'closed' || connection.state === 'terminated') {
-            setTvConnection(null);
-            setConnectionMessage(null);
-          }
-          setTvConnection(connection);
-        };
-        setTvConnection(connection);
-      } catch (error) {
-        if (error instanceof Error && error.name !== 'NotAllowedError' && error.name !== 'AbortError') {
-          setConnectionMessage('Não foi possível iniciar a conexão direta. Verifique se o celular e a TV estão na mesma rede.');
-        }
-      }
-      return;
-    }
-
-    if (typeof navigator.share === 'function') {
-      try {
-        await navigator.share({
-          title: 'Horizonte.espanhol na TV',
-          text: tvPlatform === 'iphone'
-            ? 'Abra o modo TV no iPhone e escolha uma opção de transmissão ou uma TV compatível.'
-            : 'Abra o modo TV do Horizonte.espanhol na sua TV para jogar com o controle.',
-          url: getTvModeUrl(focus),
-        });
-        setConnectionMessage(tvPlatform === 'iphone'
-          ? 'No menu de compartilhamento, escolha uma opção de transmissão ou espelhamento de tela. O iPhone não permite iniciar a transmissão diretamente pelo navegador.'
-          : 'Abra o link na TV ou escolha uma opção de transmissão no menu do celular. O modo TV já começa nos jogos.');
-      } catch (error) {
-        if (error instanceof Error && error.name !== 'AbortError') {
-          setConnectionMessage('A conexão foi cancelada pelo dispositivo.');
-        }
-      }
-      return;
-    }
-
-    handleOpenTvMode(focus);
-  };
-
-  const handleOpenTvMode = (focus: 'jogos' | 'podcast') => {
-    window.open(getTvModeUrl(focus), '_blank', 'noopener,noreferrer');
-    setConnectionMessage(focus === 'podcast'
-      ? 'O modo TV do podcast foi aberto. Use Play/Pause, setas e avanço no controle.'
-      : 'O modo TV dos jogos foi aberto. Use o controle para selecionar e jogar.');
-  };
-
-  const handleDisconnectFromTv = () => {
-    tvConnection?.close?.();
-    tvConnection?.terminate?.();
-    setTvConnection(null);
-    setConnectionMessage(null);
-  };
-
-  const sendTvCommand = (type: string) => {
-    tvConnection?.send?.(JSON.stringify({ type }));
-    setConnectionMessage('Comando enviado para a TV.');
-  };
-
-  useEffect(() => {
-    if (!isDeviceSupportOpen) {
-      return;
-    }
-
-    const previousOverflow = document.body.style.overflow;
-    const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === 'Escape' || event.key === 'Backspace') {
-        event.preventDefault();
-        setIsDeviceSupportOpen(false);
-      }
-    };
-
-    document.body.style.overflow = 'hidden';
-    document.addEventListener('keydown', handleKeyDown);
-    return () => {
-      document.body.style.overflow = previousOverflow;
-      document.removeEventListener('keydown', handleKeyDown);
-    };
-  }, [isDeviceSupportOpen]);
-
   return (
     <div className="app-container">
       <Header theme={theme} onToggleTheme={() => setTheme((current) => (current === 'dark' ? 'light' : 'dark'))} />
       <CelestialCarousel />
+      {/* TV connection UI temporarily offline while the QR receiver flow is tested locally.
       {!isTvMode && (
         <section className="device-support device-support--inline" aria-label="Experiência na TV">
           <div className={`device-support__floating device-support__floating--inline ${isTvConnected ? 'is-connected' : ''}`}>
@@ -263,8 +115,10 @@ function App() {
           </div>
         </section>
       )}
+      */}
       <PodcastShowcase />
       <GamesSection />
+      {/* Re-enable this modal together with the TV invitation after local QR testing.
       {isDeviceSupportOpen && (
         <div className="device-support__backdrop" role="presentation" onClick={() => setIsDeviceSupportOpen(false)}>
           <section
@@ -398,6 +252,7 @@ function App() {
           </section>
         </div>
       )}
+      */}
       <LeadForm />
       <Footer />
     </div>
