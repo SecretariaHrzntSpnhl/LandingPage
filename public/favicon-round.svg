@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-label="Horizonteespanhol">
+  <defs>
+    <clipPath id="favicon-circle">
+      <circle cx="128" cy="128" r="120" />
+    </clipPath>
+  </defs>
+  <circle cx="128" cy="128" r="128" fill="#ffffff" />
+  <image
+    href="/images/logo-horizonte.png"
+    x="8"
+    y="8"
+    width="240"
+    height="240"
+    preserveAspectRatio="xMidYMid slice"
+    clip-path="url(#favicon-circle)"
+  />
+</svg>
