@@ -84,6 +84,7 @@
     
     <!-- Formulários ocultos para o Netlify detectar no build -->
     <form name="registro-juego" data-netlify="true" netlify-honeypot="bot-field" hidden>
+      <input type="hidden" name="form-name" value="registro-juego" />
       <input type="text" name="nome" />
       <input type="email" name="email" />
       <input type="tel" name="telefone" />
@@ -99,6 +100,7 @@
     </form>
     
     <form name="consulta-directa" data-netlify="true" netlify-honeypot="bot-field" hidden>
+      <input type="hidden" name="form-name" value="consulta-directa" />
       <input type="text" name="nome" />
       <input type="email" name="email" />
       <input type="tel" name="telefone" />
